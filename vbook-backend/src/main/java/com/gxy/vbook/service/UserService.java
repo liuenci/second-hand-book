@@ -1,10 +1,9 @@
 package com.gxy.vbook.service;
 
+import com.gxy.vbook.common.ServerResponse;
 import com.gxy.vbook.pojo.User;
-
-import java.util.List;
 
 public interface UserService {
 
-    List<User> findAllList();
+    ServerResponse save(String name, String password);
 }

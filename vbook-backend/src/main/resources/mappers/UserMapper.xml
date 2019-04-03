@@ -98,4 +98,11 @@
     <include refid="Base_Column_List" />
     from user
   </select>
+
+  <select id="selectByName" resultType="com.gxy.vbook.pojo.User" parameterType="string">
+    select
+    <include refid="Base_Column_List" />
+    from user
+    where name = #{name}
+  </select>
 </mapper>
