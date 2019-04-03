@@ -3,8 +3,6 @@ package com.gxy.vbook.dao;
 import com.gxy.vbook.pojo.User;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-
-import java.util.List;
 @Mapper
 public interface UserMapper {
     int deleteByPrimaryKey(Integer id);
@@ -18,8 +16,6 @@ public interface UserMapper {
     int updateByPrimaryKeySelective(User record);
 
     int updateByPrimaryKey(User record);
-
-    List<User> selectList();
 
     User selectByName(String name);
 

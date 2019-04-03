@@ -15,7 +15,7 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @PostMapping
+    @PostMapping("register")
     public ServerResponse<User> register(@RequestParam("name") String name, @RequestParam("password") String password) {
         return userService.save(name, password);
     }
@@ -23,6 +23,11 @@ public class UserController {
     @PostMapping("login")
     public ServerResponse<User> login(@RequestParam("name") String name, @RequestParam("password") String password) {
         return userService.login(name, password);
+    }
+
+    @PostMapping("update")
+    public ServerResponse<User> update(@RequestParam("id") Integer id, @RequestParam("phone") String phone, @RequestParam("email") String email) {
+        return userService.update(id, phone, email);
     }
 
 }

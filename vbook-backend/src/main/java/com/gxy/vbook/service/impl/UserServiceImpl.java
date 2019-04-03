@@ -35,4 +35,14 @@ public class UserServiceImpl implements UserService {
         }
         return ServerResponse.createBySuccess(user);
     }
+
+    @Override
+    public ServerResponse update(int id, String phone, String email) {
+        User u = new User();
+        u.setId(id);
+        u.setPhone(phone);
+        u.setEmail(email);
+        int result= userMapper.updateByPrimaryKeySelective(u);
+        return ServerResponse.createBySuccess();
+    }
 }

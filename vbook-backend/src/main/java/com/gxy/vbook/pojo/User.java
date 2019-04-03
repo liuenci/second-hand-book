@@ -7,14 +7,20 @@ public class User {
 
     private String password;
 
+    private String phone;
+
+    private String email;
+
     private Double balance;
 
     private Byte role;
 
-    public User(Integer id, String name, String password, Double balance, Byte role) {
+    public User(Integer id, String name, String password, String phone, String email, Double balance, Byte role) {
         this.id = id;
         this.name = name;
         this.password = password;
+        this.phone = phone;
+        this.email = email;
         this.balance = balance;
         this.role = role;
     }
@@ -45,6 +51,22 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password == null ? null : password.trim();
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone == null ? null : phone.trim();
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email == null ? null : email.trim();
     }
 
     public Double getBalance() {

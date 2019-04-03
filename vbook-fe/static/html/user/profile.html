@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>个人信息修改</title>
+    </head>
+    <body>
+        <div>
+            <h2>会员信息修改</h2>
+            <p>id:</p>
+            <br>
+            <input type="text" name="id" id="id">
+            <p>用户名:</p>
+            <br>
+            <input type="text" name="name" id="name">
+            <br>
+            <p>手机号:</p>
+            <br>
+            <input type="text" name="phone" id="phone">
+            <br>
+            <p>邮箱:</p>
+            <br>
+            <input type="text" name="email" id="email">
+            <br>
+            <button type="button" id="btn-user-update">提交</button>
+        </div>
+
+    </body>
+    <script src="../../js/common/jquery-3.1.1.min.js"></script>
+    <script>
+$(function(){
+    $('#btn-user-update').click(function(){
+        $.ajax({
+            url: 'http://localhost:8080/user/update',
+            type: 'post',
+            data: {
+                id: $('#id').val(),
+                phone: $('#phone').val(),
+                email: $('#email').val()
+            },
+            success : function(result){
+                if(result.status == 0 && result.data != null) {
+                    alert('修改成功')
+                    window.location = './login.html'
+                }
+            } 
+        })
+    })
+})
+</script>
+</html>

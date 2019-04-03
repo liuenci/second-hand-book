@@ -6,12 +6,14 @@
       <idArg column="id" jdbcType="INTEGER" javaType="java.lang.Integer" />
       <arg column="name" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="password" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="phone" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="email" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="balance" jdbcType="DOUBLE" javaType="java.lang.Double" />
       <arg column="role" jdbcType="TINYINT" javaType="java.lang.Byte" />
     </constructor>
   </resultMap>
   <sql id="Base_Column_List" >
-    id, name, password, balance, role
+    id, name, password, phone, email, balance, role
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
@@ -25,9 +27,11 @@
   </delete>
   <insert id="insert" parameterType="com.gxy.vbook.pojo.User" >
     insert into user (id, name, password, 
-      balance, role)
+      phone, email, balance, 
+      role)
     values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
-      #{balance,jdbcType=DOUBLE}, #{role,jdbcType=TINYINT})
+      #{phone,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{balance,jdbcType=DOUBLE}, 
+      #{role,jdbcType=TINYINT})
   </insert>
   <insert id="insertSelective" parameterType="com.gxy.vbook.pojo.User" >
     insert into user
@@ -40,6 +44,12 @@
       </if>
       <if test="password != null" >
         password,
+      </if>
+      <if test="phone != null" >
+        phone,
+      </if>
+      <if test="email != null" >
+        email,
       </if>
       <if test="balance != null" >
         balance,
@@ -58,6 +68,12 @@
       <if test="password != null" >
         #{password,jdbcType=VARCHAR},
       </if>
+      <if test="phone != null" >
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        #{email,jdbcType=VARCHAR},
+      </if>
       <if test="balance != null" >
         #{balance,jdbcType=DOUBLE},
       </if>
@@ -75,6 +91,12 @@
       <if test="password != null" >
         password = #{password,jdbcType=VARCHAR},
       </if>
+      <if test="phone != null" >
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        email = #{email,jdbcType=VARCHAR},
+      </if>
       <if test="balance != null" >
         balance = #{balance,jdbcType=DOUBLE},
       </if>
@@ -88,16 +110,12 @@
     update user
     set name = #{name,jdbcType=VARCHAR},
       password = #{password,jdbcType=VARCHAR},
+      phone = #{phone,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
       balance = #{balance,jdbcType=DOUBLE},
       role = #{role,jdbcType=TINYINT}
     where id = #{id,jdbcType=INTEGER}
   </update>
-
-  <select id="selectList" resultMap="BaseResultMap">
-    select
-    <include refid="Base_Column_List" />
-    from user
-  </select>
 
   <select id="selectByName" resultType="com.gxy.vbook.pojo.User" parameterType="string">
     select
