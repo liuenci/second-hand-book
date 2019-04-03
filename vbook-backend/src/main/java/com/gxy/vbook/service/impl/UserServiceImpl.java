@@ -26,4 +26,13 @@ public class UserServiceImpl implements UserService {
         int result = userMapper.insert(insertUser);
         return ServerResponse.createBySuccess(insertUser);
     }
+
+    @Override
+    public ServerResponse login(String name, String password) {
+        User user = userMapper.selectByNameAndPassword(name, password);
+        if (user == null) {
+            return ServerResponse.createByErrorCodeMessage(ResponseCode.USER_NOT_EXIST.getCode(),ResponseCode.USER_NOT_EXIST.getDesc());
+        }
+        return ServerResponse.createBySuccess(user);
+    }
 }

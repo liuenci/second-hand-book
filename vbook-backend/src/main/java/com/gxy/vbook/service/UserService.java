@@ -6,4 +6,6 @@ import com.gxy.vbook.pojo.User;
 public interface UserService {
 
     ServerResponse save(String name, String password);
+
+    ServerResponse login(String name, String password);
 }

@@ -4,27 +4,25 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <title>Document</title>
-        <script src="../../js/common/jquery-3.1.1.min.js"></script>
+        <title>登录</title>
     </head>
     <body>
-        <h2>会员注册</h2>
-        <br>
-        <p>用户名：</p>
-        <input type='text' name='name' id='name'>
-        <br>
-        <p>密码：</p>
-        <input type='password' name='password' id="password">
-        <br>
-        <br>
-        <button type='button' id='btn-user-register'>注册</button>
+        <h2>会员登录</h2>
+        <div>
+            <p>用户名:</p>
+            <input type="text" name="name" id="name">
+            <p>密码:</p>
+            <input type="password" name="password" id="password">
+            <br>
+            <button type="button" id="btn-user-login">登录</button>
+        </div>
     </body>
     <script src="../../js/common/jquery-3.1.1.min.js"></script>
     <script>
 $(function(){
-    $('#btn-user-register').click(function(){
+    $('#btn-user-login').click(function(){
         $.ajax({
-            url: 'http://localhost:8080/user',
+            url: 'http://localhost:8080/user/login',
             type: 'post',
             data: {
                 name: $('#name').val(),
@@ -32,11 +30,10 @@ $(function(){
             },
             success : function(result){
                 if(result.status == 0 && result.data != null) {
-                    alert('注册成功')
-                    window.location = './login.html'
+                    window.location = '../../../index.html'
                 }
-                if(result.status == 1) {
-                    alert('用户名已注册')
+                if(result.status == 11) {
+                    alert('用户不存在')
                     window.location = './register.html'
                 }
             }

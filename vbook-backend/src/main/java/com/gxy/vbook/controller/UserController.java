@@ -20,4 +20,9 @@ public class UserController {
         return userService.save(name, password);
     }
 
+    @PostMapping("login")
+    public ServerResponse<User> login(@RequestParam("name") String name, @RequestParam("password") String password) {
+        return userService.login(name, password);
+    }
+
 }
