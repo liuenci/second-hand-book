@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>我的购物车</title>
+    </head>
+    <body>
+        <h2>我的购物车</h2>
+        <div id="container">
+            <ul>
+                <li>
+                    <div>
+                        书名:SpringBoot第四版 价格:￥12
+                    </div>
+                </li>
+                <li>
+                    <div>
+                        书名:Spring实战 价格:￥21
+                    </div>
+                </li>
+                <li>
+                    <div>
+                        书名:Java编程思想 价格:￥10
+                    </div>
+                </li>
+            </ul>
+            <br>
+            总价:￥43
+            <button type="button">立即购买</button>
+        </div>
+    </body>
+    <script src="../../js/common/jquery-3.1.1.min.js"></script>
+    <script>
+$(function(){
+    $.ajax({
+            url: 'http://localhost:8080/user/login',
+            type: 'post',
+            data: {
+                name: $('#name').val(),
+                password: $('#password').val()
+            },
+            success : function(result){
+                if(result.status == 0 && result.data != null) {
+                    alert('登录成功')
+                    window.location = '../../../index.html'
+                }
+                if(result.status == 11) {
+                    alert('用户不存在')
+                    window.location = './register.html'
+                }
+            }
+            
+        })
+    $('#btn-user-login').click(function(){
+        
+    })
+})
+</script>
+</html>
