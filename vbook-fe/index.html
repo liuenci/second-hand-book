@@ -11,6 +11,66 @@
     </script>
 </head>
 <body>
-    hello world
+    <input type="text" name="search" placeholder="搜索" id="search">
+    <button type="button" id="btn-book-search">搜索</button>
+    <br>
+    <div>
+        <ul id="ul-tree">
+        </ul>
+    </div>
 </body>
+<script src="./static/js/common/jquery-3.1.1.min.js"></script>
+    <script>
+$(function(){
+    $('#btn-book-search').click(function(){
+        $('#ul-tree').empty();
+        $.ajax({
+            url: 'http://localhost:8080/book/list',
+            type: 'get',
+            data: {
+                name: $('#search').val(),
+            },
+            success : function(result){
+                if(result.status == 0) {
+                    if(result.data.length > 0) {
+                        for (let i = 0; i < result.data.length; i++) {
+                            var element = result.data[i];
+                            var li = $('<li>')
+                            var div = $('<div>')
+                            div.text('编号：'+ element.id + '书名：' + element.name + '价格：' + element.price )
+                            div.append('<button>添加到购物车</button>')
+                            li.append(div)
+                            $('#ul-tree').append(li)
+                        }
+                    }
+                }
+            }
+            
+        })
+    })
+    $.ajax({
+            url: 'http://localhost:8080/book/list',
+            type: 'get',
+            data: {
+                name: $('#search').val(),
+            },
+            success : function(result){
+                if(result.status == 0) {
+                    if(result.data.length > 0) {
+                        for (let i = 0; i < result.data.length; i++) {
+                            var element = result.data[i];
+                            var li = $('<li>')
+                            var div = $('<div>')
+                            div.text('编号：'+ element.id + '书名：' + element.name + '价格：' + element.price )
+                            div.append('<button>添加到购物车</button>')
+                            li.append(div)
+                            $('#ul-tree').append(li)
+                        }
+                    }
+                }
+            }
+            
+        })
+})
+</script>
 </html>

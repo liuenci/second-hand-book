@@ -2,6 +2,9 @@ package com.gxy.vbook.dao;
 
 import com.gxy.vbook.pojo.Book;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 @Mapper
 public interface BookMapper {
@@ -17,5 +20,5 @@ public interface BookMapper {
 
     int updateByPrimaryKey(Book record);
 
-
+    List<Book> selectListByName(@Param("name") String name);
 }

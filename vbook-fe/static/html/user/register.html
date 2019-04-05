@@ -24,7 +24,7 @@
 $(function(){
     $('#btn-user-register').click(function(){
         $.ajax({
-            url: 'http://localhost:8080/user',
+            url: 'http://localhost:8080/user/register',
             type: 'post',
             data: {
                 name: $('#name').val(),

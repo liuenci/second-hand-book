@@ -1,36 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <title>登录</title>
-    </head>
-    <body>
-        <h2>会员登录</h2>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+        <h2>添加书籍</h2>
         <div>
-            <p>用户名:</p>
-            <input type="text" name="name" id="name">
-            <p>密码:</p>
-            <input type="password" name="password" id="password">
+            <p>用户id:</p>
             <br>
-            <button type="button" id="btn-user-login">登录</button>
+            <input type="text" name="id" id="id">
+            <p>书名:</p>
+            <input type="text" name="name" id="name">
+            <p>价格:</p>
+            <input type="text" name="price" id="price">
+            <br>
+            <button type="button" id="btn-book-add">添加</button>
         </div>
     </body>
     <script src="../../js/common/jquery-3.1.1.min.js"></script>
     <script>
 $(function(){
-    $('#btn-user-login').click(function(){
+    $('#btn-book-add').click(function(){
         $.ajax({
-            url: 'http://localhost:8080/user/login',
+            url: 'http://localhost:8080/book/add',
             type: 'post',
             data: {
+                userId: $('#id').val(),
                 name: $('#name').val(),
-                password: $('#password').val()
+                price: $('#price').val()
             },
             success : function(result){
                 if(result.status == 0 && result.data != null) {
-                    alert('登录成功')
                     window.location = '../../../index.html'
                 }
                 if(result.status == 11) {
