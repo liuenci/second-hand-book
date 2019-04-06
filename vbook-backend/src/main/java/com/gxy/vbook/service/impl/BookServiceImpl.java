@@ -28,6 +28,7 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public ServerResponse findList(String name) {
+        name = new StringBuffer().append("%").append(name).append("%").toString();
         List<Book> list = bookMapper.selectListByName(name);
         return ServerResponse.createBySuccess(list);
     }

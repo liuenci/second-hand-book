@@ -1,35 +1,39 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.gxy.vbook.dao.CartMapper" >
-  <resultMap id="BaseResultMap" type="com.gxy.vbook.pojo.Cart" >
+<mapper namespace="com.gxy.vbook.dao.OrderItemMapper" >
+  <resultMap id="BaseResultMap" type="com.gxy.vbook.pojo.OrderItem" >
     <constructor >
       <idArg column="id" jdbcType="INTEGER" javaType="java.lang.Integer" />
       <arg column="userId" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="orderNo" jdbcType="INTEGER" javaType="java.lang.Integer" />
       <arg column="bookId" jdbcType="INTEGER" javaType="java.lang.Integer" />
       <arg column="quantity" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="totalPrice" jdbcType="DECIMAL" javaType="java.math.BigDecimal" />
     </constructor>
   </resultMap>
   <sql id="Base_Column_List" >
-    id, userId, bookId, quantity
+    id, userId, orderNo, bookId, quantity, totalPrice
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
-    from cart
+    from orderitem
     where id = #{id,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
-    delete from cart
+    delete from orderitem
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.gxy.vbook.pojo.Cart" >
-    insert into cart (id, userId, bookId, 
-      quantity)
-    values (#{id,jdbcType=INTEGER}, #{userid,jdbcType=INTEGER}, #{bookid,jdbcType=INTEGER}, 
-      #{quantity,jdbcType=VARCHAR})
+  <insert id="insert" parameterType="com.gxy.vbook.pojo.OrderItem" >
+    insert into orderitem (id, userId, orderNo, 
+      bookId, quantity, totalPrice
+      )
+    values (#{id,jdbcType=INTEGER}, #{userid,jdbcType=INTEGER}, #{orderno,jdbcType=INTEGER}, 
+      #{bookid,jdbcType=INTEGER}, #{quantity,jdbcType=VARCHAR}, #{totalprice,jdbcType=DECIMAL}
+      )
   </insert>
-  <insert id="insertSelective" parameterType="com.gxy.vbook.pojo.Cart" >
-    insert into cart
+  <insert id="insertSelective" parameterType="com.gxy.vbook.pojo.OrderItem" >
+    insert into orderitem
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
         id,
@@ -37,11 +41,17 @@
       <if test="userid != null" >
         userId,
       </if>
+      <if test="orderno != null" >
+        orderNo,
+      </if>
       <if test="bookid != null" >
         bookId,
       </if>
       <if test="quantity != null" >
         quantity,
+      </if>
+      <if test="totalprice != null" >
+        totalPrice,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
@@ -51,19 +61,28 @@
       <if test="userid != null" >
         #{userid,jdbcType=INTEGER},
       </if>
+      <if test="orderno != null" >
+        #{orderno,jdbcType=INTEGER},
+      </if>
       <if test="bookid != null" >
         #{bookid,jdbcType=INTEGER},
       </if>
       <if test="quantity != null" >
         #{quantity,jdbcType=VARCHAR},
       </if>
+      <if test="totalprice != null" >
+        #{totalprice,jdbcType=DECIMAL},
+      </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.gxy.vbook.pojo.Cart" >
-    update cart
+  <update id="updateByPrimaryKeySelective" parameterType="com.gxy.vbook.pojo.OrderItem" >
+    update orderitem
     <set >
       <if test="userid != null" >
         userId = #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="orderno != null" >
+        orderNo = #{orderno,jdbcType=INTEGER},
       </if>
       <if test="bookid != null" >
         bookId = #{bookid,jdbcType=INTEGER},
@@ -71,21 +90,19 @@
       <if test="quantity != null" >
         quantity = #{quantity,jdbcType=VARCHAR},
       </if>
+      <if test="totalprice != null" >
+        totalPrice = #{totalprice,jdbcType=DECIMAL},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.gxy.vbook.pojo.Cart" >
-    update cart
+  <update id="updateByPrimaryKey" parameterType="com.gxy.vbook.pojo.OrderItem" >
+    update orderitem
     set userId = #{userid,jdbcType=INTEGER},
+      orderNo = #{orderno,jdbcType=INTEGER},
       bookId = #{bookid,jdbcType=INTEGER},
-      quantity = #{quantity,jdbcType=VARCHAR}
+      quantity = #{quantity,jdbcType=VARCHAR},
+      totalPrice = #{totalprice,jdbcType=DECIMAL}
     where id = #{id,jdbcType=INTEGER}
   </update>
-
-  <select id="selectListByUserId" parameterType="integer" resultType="com.gxy.vbook.pojo.Cart">
-    select
-    <include refid="Base_Column_List"/>
-    from cart
-    where userId = #{userId}
-  </select>
 </mapper>

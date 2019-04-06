@@ -35,20 +35,11 @@
     <script>
 $(function(){
     $.ajax({
-            url: 'http://localhost:8080/user/login',
-            type: 'post',
-            data: {
-                name: $('#name').val(),
-                password: $('#password').val()
-            },
+            url: 'http://localhost:8080/cart/list',
+            type: 'get',
             success : function(result){
                 if(result.status == 0 && result.data != null) {
-                    alert('登录成功')
                     window.location = '../../../index.html'
-                }
-                if(result.status == 11) {
-                    alert('用户不存在')
-                    window.location = './register.html'
                 }
             }
             

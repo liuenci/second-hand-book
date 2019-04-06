@@ -18,4 +18,14 @@ public class CartServiceImpl implements CartService {
         List<Cart> list = cartMapper.selectListByUserId(userId);
         return ServerResponse.createBySuccess(list);
     }
+
+    @Override
+    public ServerResponse add(int bookId, int count,int userId) {
+        Cart cart = new Cart();
+        cart.setBookid(bookId);
+        cart.setQuantity(count);
+        cart.setUserid(userId);
+        int result = cartMapper.insert(cart);
+        return ServerResponse.createBySuccess(result);
+    }
 }

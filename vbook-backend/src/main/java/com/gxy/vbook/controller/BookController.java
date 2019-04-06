@@ -1,7 +1,6 @@
 package com.gxy.vbook.controller;
 
 import com.gxy.vbook.common.ServerResponse;
-import com.gxy.vbook.dao.BookMapper;
 import com.gxy.vbook.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
