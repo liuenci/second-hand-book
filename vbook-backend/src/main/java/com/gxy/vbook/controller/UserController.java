@@ -6,10 +6,7 @@ import com.gxy.vbook.pojo.User;
 import com.gxy.vbook.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 
@@ -41,4 +38,8 @@ public class UserController {
         return userService.update(id, phone, email);
     }
 
+    @GetMapping("profile")
+    public ServerResponse<User> profile(){
+        return userService.profile();
+    }
 }

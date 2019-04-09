@@ -1,17 +1,21 @@
 package com.gxy.vbook.service.impl;
 
+import com.gxy.vbook.common.Const;
 import com.gxy.vbook.common.ResponseCode;
 import com.gxy.vbook.common.ServerResponse;
 import com.gxy.vbook.dao.UserMapper;
 import com.gxy.vbook.pojo.User;
 import com.gxy.vbook.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
 @Service
 public class UserServiceImpl implements UserService {
     @Autowired
     private UserMapper userMapper;
+    @Autowired
+    private RedisTemplate<String, String> redisTemplate;
 
     @Override
     public ServerResponse save(String name, String password) {
@@ -22,6 +26,7 @@ public class UserServiceImpl implements UserService {
         User insertUser = new User();
         insertUser.setName(name);
         insertUser.setPassword(password);
+        insertUser.setBalance(0D);
         int result = userMapper.insert(insertUser);
         return ServerResponse.createBySuccess(insertUser);
     }
@@ -43,5 +48,15 @@ public class UserServiceImpl implements UserService {
         u.setEmail(email);
         int result= userMapper.updateByPrimaryKeySelective(u);
         return ServerResponse.createBySuccess();
+    }
+
+    @Override
+    public ServerResponse profile() {
+        Integer userId = Integer.parseInt(redisTemplate.opsForValue().get(Const.CURRENT_USER));
+        if (userId == null) {
+            ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), ResponseCode.NEED_LOGIN.getDesc());
+        }
+        User user = userMapper.selectByPrimaryKey(userId);
+        return ServerResponse.createBySuccess(user);
     }
 }

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>个人信息</title>
+</head>
+
+<body>
+    <table>
+        <tr>
+            <td>姓名</td>
+            <td>
+                <p id="name"></p>
+            </td>
+        </tr>
+        <tr>
+            <td>手机号</td>
+            <td>
+                <p id="phone"></p>
+            </td>
+        </tr>
+        <tr>
+            <td>邮箱</td>
+            <td>
+                <p id="email"></p>
+            </td>
+        </tr>
+        <tr>
+            <td>账户余额</td>
+            <td>
+                <p id="balance"></p>
+            </td>
+        </tr>
+    </table>
+</body>
+<script src="../../js/common/jquery-3.1.1.min.js"></script>
+<script>
+    $(function () {
+        $.ajax({
+            url: 'http://localhost:8080/user/profile',
+            type: 'get',
+            success: function (result) {
+                if (result.status == 0 && result.data != null) {
+                    var user = result.data;
+                    $('#name').html(user.name)
+                    $('#phone').html(user.phone == null ? '暂未填写' : user.phone)
+                    $('#email').html(user.email == null ? '暂未填写' : user.email)
+                    $('#balance').html(user.balance)
+                }
+            }
+        })
+    })
+</script>
+
+</html>

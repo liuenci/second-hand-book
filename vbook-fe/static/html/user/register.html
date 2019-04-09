@@ -1,48 +1,51 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <title>Document</title>
-        <script src="../../js/common/jquery-3.1.1.min.js"></script>
-    </head>
-    <body>
-        <h2>会员注册</h2>
-        <br>
-        <p>用户名：</p>
-        <input type='text' name='name' id='name'>
-        <br>
-        <p>密码：</p>
-        <input type='password' name='password' id="password">
-        <br>
-        <br>
-        <button type='button' id='btn-user-register'>注册</button>
-    </body>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
     <script src="../../js/common/jquery-3.1.1.min.js"></script>
-    <script>
-$(function(){
-    $('#btn-user-register').click(function(){
-        $.ajax({
-            url: 'http://localhost:8080/user/register',
-            type: 'post',
-            data: {
-                name: $('#name').val(),
-                password: $('#password').val()
-            },
-            success : function(result){
-                if(result.status == 0 && result.data != null) {
-                    alert('注册成功')
-                    window.location = './login.html'
+</head>
+
+<body>
+    <h2>会员注册</h2>
+    <br>
+    <p>用户名：</p>
+    <input type='text' name='name' id='name'>
+    <br>
+    <p>密码：</p>
+    <input type='password' name='password' id="password">
+    <br>
+    <br>
+    <button type='button' id='btn-user-register'>注册</button>
+</body>
+<script src="../../js/common/jquery-3.1.1.min.js"></script>
+<script>
+    $(function () {
+        $('#btn-user-register').click(function () {
+            $.ajax({
+                url: 'http://localhost:8080/user/register',
+                type: 'post',
+                data: {
+                    name: $('#name').val(),
+                    password: $('#password').val()
+                },
+                success: function (result) {
+                    if (result.status == 0 && result.data != null) {
+                        alert('注册成功')
+                        window.location = './login.html'
+                    }
+                    if (result.status == 1) {
+                        alert('用户名已注册')
+                        window.location = './register.html'
+                    }
                 }
-                if(result.status == 1) {
-                    alert('用户名已注册')
-                    window.location = './register.html'
-                }
-            }
-            
+
+            })
         })
     })
-})
 </script>
+
 </html>
