@@ -88,4 +88,10 @@
     from cart
     where userId = #{userId}
   </select>
+
+  <delete id="deleteByUserId" parameterType="integer">
+    delete
+    from cart
+    where userId = #{userId}
+  </delete>
 </mapper>

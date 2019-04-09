@@ -5,7 +5,7 @@
     <constructor >
       <idArg column="id" jdbcType="INTEGER" javaType="java.lang.Integer" />
       <arg column="name" jdbcType="VARCHAR" javaType="java.lang.String" />
-      <arg column="price" jdbcType="DECIMAL" javaType="java.math.BigDecimal" />
+      <arg column="price" jdbcType="DOUBLE" javaType="java.lang.Double" />
       <arg column="userId" jdbcType="INTEGER" javaType="java.lang.Integer" />
       <arg column="status" jdbcType="TINYINT" javaType="java.lang.Byte" />
     </constructor>

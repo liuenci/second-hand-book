@@ -1,4 +1,4 @@
-package com.gxy.vbook.pojo;
+package com.gxy.vbook.vo;
 
 import lombok.*;
 
@@ -7,14 +7,8 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class Book {
-    private Integer id;
-
+public class CartVo {
     private String name;
-
     private Double price;
-
-    private Integer userid;
-
-    private Byte status;
+    private Integer quantity;
 }

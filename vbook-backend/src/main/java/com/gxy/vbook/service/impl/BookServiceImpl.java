@@ -20,7 +20,7 @@ public class BookServiceImpl implements BookService {
         Book book = new Book();
         book.setUserid(id);
         book.setName(name);
-        book.setPrice(new BigDecimal(String.valueOf(price)));
+        book.setPrice(price);
         book.setStatus(Byte.parseByte("1"));
         bookMapper.insert(book);
         return ServerResponse.createBySuccess(book);

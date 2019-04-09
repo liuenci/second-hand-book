@@ -1,52 +1,82 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <title>我的购物车</title>
-    </head>
-    <body>
-        <h2>我的购物车</h2>
-        <div id="container">
-            <ul>
-                <li>
-                    <div>
-                        书名:SpringBoot第四版 价格:￥12
-                    </div>
-                </li>
-                <li>
-                    <div>
-                        书名:Spring实战 价格:￥21
-                    </div>
-                </li>
-                <li>
-                    <div>
-                        书名:Java编程思想 价格:￥10
-                    </div>
-                </li>
-            </ul>
-            <br>
-            总价:￥43
-            <button type="button">立即购买</button>
-        </div>
-    </body>
-    <script src="../../js/common/jquery-3.1.1.min.js"></script>
-    <script>
-$(function(){
-    $.ajax({
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>我的购物车</title>
+</head>
+
+<body>
+    <h2>我的购物车</h2>
+    <div id="container">
+        <ul id="ul-tree">
+            <li>
+                <div>
+                    书名:SpringBoot第四版 价格:￥12
+                </div>
+            </li>
+            <li>
+                <div>
+                    书名:Spring实战 价格:￥21
+                </div>
+            </li>
+            <li>
+                <div>
+                    书名:Java编程思想 价格:￥10
+                </div>
+            </li>
+        </ul>
+        <br>
+        总价:￥<span id="total-price">0</span>
+        <button type="button" id="btn-user-pay">立即购买</button>
+    </div>
+</body>
+<script src="../../js/common/jquery-3.1.1.min.js"></script>
+<script>
+    $(function () {
+        var total = 0
+        $.ajax({
             url: 'http://localhost:8080/cart/list',
             type: 'get',
-            success : function(result){
-                if(result.status == 0 && result.data != null) {
-                    window.location = '../../../index.html'
+            success: function (result) {
+                if (result.status == 0 && result.data != null) {
+                    $('#ul-tree').empty()
+                    for (let i = 0; i < result.data.length; i++) {
+                        const element = result.data[i];
+                        var li = $('<li>')
+                        var div = $('<div>')
+                        div.html('书名：' + element.name + '价格：' + element.price + '数量：' + element.quantity)
+                        li.append(div)
+                        $('#ul-tree').append(li)
+                        total = total + element.price * element.quantity
+                    }
+                    $('#total-price').text(total)
                 }
             }
-            
+
         })
-    $('#btn-user-login').click(function(){
-        
+        $('#btn-user-pay').click(function () {
+            if (total == 0) {
+                alert('你还没有添加书籍')
+            } else {
+                alert('支付成功')
+
+                $.ajax({
+                    url: 'http://localhost:8080/order/pay',
+                    type: 'post',
+                    success: function (result) {
+                        if (result.status == 0) {
+                            alert('支付成功')
+                        }
+                    }
+
+                })
+            }
+
+        })
     })
-})
 </script>
+
 </html>

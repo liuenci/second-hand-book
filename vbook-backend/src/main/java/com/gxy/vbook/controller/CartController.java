@@ -24,7 +24,11 @@ public class CartController {
     private RedisTemplate<String, String> redisTemplate;
 
     @RequestMapping("list")
-    public ServerResponse list(@RequestParam("userId") Integer userId) {
+    public ServerResponse list() {
+        Integer userId = Integer.parseInt(redisTemplate.opsForValue().get(Const.CURRENT_USER));
+        if (userId == null) {
+            return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(),ResponseCode.NEED_LOGIN.getDesc());
+        }
         return cartService.list(userId);
     }
 

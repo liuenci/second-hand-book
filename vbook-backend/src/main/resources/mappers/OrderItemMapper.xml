@@ -8,7 +8,7 @@
       <arg column="orderNo" jdbcType="INTEGER" javaType="java.lang.Integer" />
       <arg column="bookId" jdbcType="INTEGER" javaType="java.lang.Integer" />
       <arg column="quantity" jdbcType="VARCHAR" javaType="java.lang.String" />
-      <arg column="totalPrice" jdbcType="DECIMAL" javaType="java.math.BigDecimal" />
+      <arg column="totalPrice" jdbcType="DOUBLE" javaType="java.lang.Double" />
     </constructor>
   </resultMap>
   <sql id="Base_Column_List" >
