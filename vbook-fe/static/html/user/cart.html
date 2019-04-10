@@ -61,8 +61,6 @@
             if (total == 0) {
                 alert('你还没有添加书籍')
             } else {
-                alert('支付成功')
-
                 $.ajax({
                     url: 'http://localhost:8080/order/pay',
                     type: 'post',

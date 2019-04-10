@@ -1,4 +1,4 @@
-package com.gxy.vbook.controller;
+package com.gxy.vbook.controller.user;
 
 import com.gxy.vbook.common.ServerResponse;
 import com.gxy.vbook.service.BookService;

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>我的订单</title>
+</head>
+
+<body>
+    <table>
+        <thead>
+            <tr>
+                <td>id</td>
+                <td>订单号</td>
+                <td>价格</td>
+                <td>创建时间</td>
+                <td>详情</td>
+            </tr>
+        </thead>
+        <tbody id="tbody">
+
+        </tbody>
+    </table>
+</body>
+<script src="../../js/common/jquery-3.1.1.min.js"></script>
+<script>
+    $(function () {
+        $.ajax({
+            url: 'http://localhost:8080/user/order/list',
+            type: 'get',
+            success: function (result) {
+                if (result.status == 0 && result.data != null) {
+                    var res = result.data;
+                    for (let i = 0; i < res.length; i++) {
+                        const element = res[i];
+                        var tr = $('<tr>')
+                        var td1 = $('<td>')
+                        td1.html(element.id)
+                        var td2 = $('<td>')
+                        td2.html(element.orderno)
+                        var td3 = $('<td>')
+                        td3.html(element.totalprice == null ? 0 : element.totalprice)
+                        var td4 = $('<td>')
+                        td4.html(element.createtime)
+                        var td5 = $('<td>')
+                        var button = $('<button class="detail">详情</button>')
+                        td5.append(button)
+                        tr.append(td1)
+                        tr.append(td2)
+                        tr.append(td3)
+                        tr.append(td4)
+                        tr.append(td5)
+                        $('#tbody').append(tr)
+                    }
+                }
+            }
+        })
+    })
+</script>
+
+</html>
