@@ -16,27 +16,44 @@
             <a class="navbar-brand" href="../../../index.html">二手书交易平台</a>
         </div>
         <div>
-            <ul class="nav navbar-nav">
-                <li class="active"><a href="#">登录</a></li>
-                <li><a href="#">注册</a></li>
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        admin
-                        <b class="caret"></b>
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li><a href="#">个人信息</a></li>
-                        <li><a href="#">我的订单</a></li>
-                        <li><a href="#">我的购物车</a></li>
-                        <li class="divider"></li>
-                        <li><a href="#">分离的链接</a></li>
-                        <li class="divider"></li>
-                        <li><a href="#">另一个分离的链接</a></li>
-                    </ul>
-                </li>
+            <ul class="nav navbar-nav navbar-right">
+                <li id="btn-user-login"><a href="../user/login.html" target="_blank">登录</a></li>
+                <li id="btn-user-register"><a href="../user/register.html" target="_blank">注册</a></li>
+                <li id="btn-user-profile"><a href="../user/profile.html" target="_blank">查看个人信息</a></li>
+                <li id="btn-user-cart"><a href="../user/cart.html" target="_blank">我的购物车</a></li>
+                <li id="btn-user-order"><a href="../user/order.html" target="_blank">我的订单</a></li>
+                <li id="btn-user-logout"><a href="javascript:void(0)">退出登录</a></li>
             </ul>
         </div>
         </div>
     </nav>
 </body>
+<script>
+$(function(){
+    $.ajax({
+        url: 'http://localhost:8080/user/online',
+        success: function(result) {
+            if(result.status == 0) {
+                $('#btn-user-login').remove();
+                $('#btn-user-register').remove();
+            } else {
+                $('#btn-user-profile').remove();
+                $('#btn-user-cart').remove();
+                $('#btn-user-order').remove();
+                $('#btn-user-logout').remove();
+            }
+        }
+    })
+    $('#btn-user-logout').click(function(){
+        $.ajax({
+        url: 'http://localhost:8080/user/logout',
+        success: function(result) {
+            if(result.status == 0) {
+                window.location = window.location
+            }
+        }
+    })
+    })
+})
+</script>
 </html>

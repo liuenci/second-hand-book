@@ -1,46 +1,65 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <title>登录</title>
-    </head>
-    <body>
-        <h2>会员登录</h2>
-        <div>
-            <p>用户名:</p>
-            <input type="text" name="name" id="name">
-            <p>密码:</p>
-            <input type="password" name="password" id="password">
-            <br>
-            <button type="button" id="btn-user-login">登录</button>
-        </div>
-    </body>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>会员登录</title>
+    <link rel="stylesheet" href="../../css/common/bootstrap.css">
     <script src="../../js/common/jquery-3.1.1.min.js"></script>
-    <script>
-$(function(){
-    $('#btn-user-login').click(function(){
-        $.ajax({
-            url: 'http://localhost:8080/user/login',
-            type: 'post',
-            data: {
-                name: $('#name').val(),
-                password: $('#password').val()
-            },
-            success : function(result){
-                if(result.status == 0 && result.data != null) {
-                    alert('登录成功')
-                    window.location = '../../../index.html'
+    <script src="../../js/common/bootstrap.js"></script>
+</head>
+
+<body>
+    <embed src="../common/header.html" width="100%" height="72px" />
+
+    <form class="form-horizontal" role="form">
+        <div class="form-group">
+            <label for="firstname" class="col-sm-2 control-label">用户名</label>
+            <div class="col-sm-4">
+                <input type="text" class="form-control" id="name" placeholder="请输入名字">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="lastname" class="col-sm-2 control-label">密码</label>
+            <div class="col-sm-4">
+                <input type="password" class="form-control" id="password" placeholder="请输入密码">
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <button type="button" class="btn btn-default" id="btn-user-login">登录</button>
+            </div>
+        </div>
+    </form>
+    <embed src="../common/footer.html" width="100%" height="72px" style="position: absolute;bottom:0px" />
+</body>
+<script src="../../js/common/jquery-3.1.1.min.js"></script>
+<script>
+    $(function () {
+        $('#btn-user-login').click(function () {
+            $.ajax({
+                url: 'http://localhost:8080/user/login',
+                type: 'post',
+                data: {
+                    name: $('#name').val(),
+                    password: $('#password').val()
+                },
+                success: function (result) {
+                    if (result.status == 0 && result.data != null) {
+                        alert('登录成功')
+                        window.location = '../../../index.html'
+                    }
+                    if (result.status == 11) {
+                        alert('用户不存在')
+                        window.location = './register.html'
+                    }
                 }
-                if(result.status == 11) {
-                    alert('用户不存在')
-                    window.location = './register.html'
-                }
-            }
-            
+
+            })
         })
     })
-})
 </script>
+
 </html>

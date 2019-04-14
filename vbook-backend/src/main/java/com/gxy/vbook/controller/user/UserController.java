@@ -1,6 +1,7 @@
 package com.gxy.vbook.controller.user;
 
 import com.gxy.vbook.common.Const;
+import com.gxy.vbook.common.ResponseCode;
 import com.gxy.vbook.common.ServerResponse;
 import com.gxy.vbook.pojo.User;
 import com.gxy.vbook.service.UserService;
@@ -41,5 +42,20 @@ public class UserController {
     @GetMapping("profile")
     public ServerResponse<User> profile(){
         return userService.profile();
+    }
+
+    @RequestMapping("online")
+    public ServerResponse isLogin(){
+        String userId = redisTemplate.opsForValue().get(Const.CURRENT_USER);
+        if (userId == null) {
+            return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), ResponseCode.NOT_ADMIN.getDesc());
+        }
+        return userService.profile();
+    }
+
+    @RequestMapping("logout")
+    public ServerResponse logout(){
+        redisTemplate.delete(Const.CURRENT_USER);
+        return ServerResponse.createBySuccess();
     }
 }
