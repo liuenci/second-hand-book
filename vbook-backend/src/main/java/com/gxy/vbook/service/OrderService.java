@@ -7,4 +7,8 @@ public interface OrderService {
     ServerResponse pay(int userId);
 
     ServerResponse list(int userId);
+
+    ServerResponse list();
+
+    ServerResponse item(String orderId);
 }

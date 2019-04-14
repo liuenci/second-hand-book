@@ -11,4 +11,6 @@ public interface UserService {
     ServerResponse update(int id, String phone, String email);
 
     ServerResponse profile();
+
+    ServerResponse list();
 }

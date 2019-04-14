@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class UserServiceImpl implements UserService {
     @Autowired
@@ -58,5 +60,15 @@ public class UserServiceImpl implements UserService {
         }
         User user = userMapper.selectByPrimaryKey(userId);
         return ServerResponse.createBySuccess(user);
+    }
+
+    @Override
+    public ServerResponse list() {
+        Integer userId = Integer.parseInt(redisTemplate.opsForValue().get(Const.CURRENT_USER));
+        if (userId == null) {
+            ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), ResponseCode.NEED_LOGIN.getDesc());
+        }
+        List<User> list = userMapper.selectAllList();
+        return ServerResponse.createBySuccess(list);
     }
 }

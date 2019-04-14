@@ -1,15 +1,14 @@
 package com.gxy.vbook.service.impl;
 
+import com.gxy.vbook.common.Const;
 import com.gxy.vbook.common.ResponseCode;
 import com.gxy.vbook.common.ServerResponse;
 import com.gxy.vbook.dao.*;
-import com.gxy.vbook.pojo.Book;
-import com.gxy.vbook.pojo.Cart;
-import com.gxy.vbook.pojo.Order;
-import com.gxy.vbook.pojo.OrderItem;
+import com.gxy.vbook.pojo.*;
 import com.gxy.vbook.service.OrderService;
 import com.gxy.vbook.utils.BigDecimalUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -34,6 +33,9 @@ public class OrderServiceImpl implements OrderService {
 
     @Autowired
     private OrderMapper orderMapper;
+
+    @Autowired
+    private RedisTemplate<String,String> redisTemplate;
 
     @Transactional(rollbackFor = Exception.class)
     @Override
@@ -71,6 +73,28 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public ServerResponse list(int userId) {
         List<Order> list = orderMapper.selectListByUserId(userId);
+        return ServerResponse.createBySuccess(list);
+    }
+
+    @Override
+    public ServerResponse list() {
+        Integer userId = Integer.parseInt(redisTemplate.opsForValue().get(Const.CURRENT_USER));
+        User admin = userMapper.selectByPrimaryKey(userId);
+        if (admin.getRole() != 0) {
+            return ServerResponse.createByErrorCodeMessage(ResponseCode.NOT_ADMIN.getCode(), ResponseCode.NOT_ADMIN.getDesc());
+        }
+        List<Order> list = orderMapper.selectAllList();
+        return ServerResponse.createBySuccess(list);
+    }
+
+    @Override
+    public ServerResponse item(String orderNo) {
+        Integer userId = Integer.parseInt(redisTemplate.opsForValue().get(Const.CURRENT_USER));
+        User admin = userMapper.selectByPrimaryKey(userId);
+        if (admin.getRole() != 0) {
+            return ServerResponse.createByErrorCodeMessage(ResponseCode.NOT_ADMIN.getCode(), ResponseCode.NOT_ADMIN.getDesc());
+        }
+        List<OrderItem> list = orderItemMapper.selectByOrderNo(orderNo);
         return ServerResponse.createBySuccess(list);
     }
 }

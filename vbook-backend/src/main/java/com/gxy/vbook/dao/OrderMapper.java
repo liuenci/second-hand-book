@@ -20,4 +20,7 @@ public interface OrderMapper {
     int updateByPrimaryKey(Order record);
 
     List<Order> selectListByUserId(Integer userId);
+
+
+    List<Order> selectAllList();
 }

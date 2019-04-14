@@ -3,6 +3,8 @@ package com.gxy.vbook.dao;
 import com.gxy.vbook.pojo.OrderItem;
 import org.apache.ibatis.annotations.Mapper;
 
+import java.util.List;
+
 @Mapper
 public interface OrderItemMapper {
     int deleteByPrimaryKey(Integer id);
@@ -16,4 +18,6 @@ public interface OrderItemMapper {
     int updateByPrimaryKeySelective(OrderItem record);
 
     int updateByPrimaryKey(OrderItem record);
+
+    List<OrderItem> selectByOrderNo(String orderNo);
 }

@@ -1,6 +1,5 @@
 package com.gxy.vbook.pojo;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 
 import java.util.Date;

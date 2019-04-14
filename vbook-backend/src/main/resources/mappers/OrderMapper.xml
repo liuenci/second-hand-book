@@ -80,4 +80,11 @@
         userId = #{userId}
     </select>
 
+    <select id="selectAllList" resultType="com.gxy.vbook.pojo.Order">
+        select
+        <include refid="Base_Column_List"/>
+        from
+        vbook_order
+    </select>
+
 </mapper>

@@ -6,6 +6,7 @@ public enum ResponseCode {
     NEED_LOGIN(10, "NEED_LOGIN"),
     USER_NOT_EXIST(11, "USER_NOT_EXIST"),
     BLANCE_NOT_ENOUGH(12,"BLANCE_NOT_ENOUGH"),
+    NOT_ADMIN(3,"NOT_ADMIN"),
     ILLEGAL_ARGUMENT(2, "ILLEGAL_ARGUMENT");
 
     private final int code;

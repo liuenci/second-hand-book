@@ -105,4 +105,11 @@
       totalPrice = #{totalprice,jdbcType=DECIMAL}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+  <select id="selectByOrderNo" resultType="com.gxy.vbook.pojo.OrderItem" parameterType="string">
+    select
+    <include refid="Base_Column_List"/>
+    from orderItem
+    where orderNo = #{orderNo}
+  </select>
 </mapper>
