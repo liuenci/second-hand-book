@@ -1,53 +1,91 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <title>个人信息修改</title>
-    </head>
-    <body>
-        <div>
-            <h2>会员信息修改</h2>
-            <p>id:</p>
-            <br>
-            <input type="text" name="id" id="id">
-            <p>用户名:</p>
-            <br>
-            <input type="text" name="name" id="name">
-            <br>
-            <p>手机号:</p>
-            <br>
-            <input type="text" name="phone" id="phone">
-            <br>
-            <p>邮箱:</p>
-            <br>
-            <input type="text" name="email" id="email">
-            <br>
-            <button type="button" id="btn-user-update">提交</button>
-        </div>
 
-    </body>
-    <script src="../../js/common/jquery-3.1.1.min.js"></script>
-    <script>
-$(function(){
-    $('#btn-user-update').click(function(){
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>个人信息修改</title>
+    <link rel="stylesheet" href="../../css/common/bootstrap.css">
+</head>
+
+<body>
+    <embed src="../common/header.html" width="100%" height="72px" />
+
+    <form class="form-horizontal" role="form">
+        <input type="hidden" id="id">
+        <div class="form-group">
+            <label for="name" class="col-sm-2 control-label">用户名</label>
+            <div class="col-sm-4">
+                <input type="text" class="form-control" id="name" placeholder="请输入名字" readonly>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="password" class="col-sm-2 control-label">密码</label>
+            <div class="col-sm-4">
+                <input type="password" class="form-control" id="password" placeholder="请输入密码">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="email" class="col-sm-2 control-label">邮箱</label>
+            <div class="col-sm-4">
+                <input type="text" class="form-control" id="email" placeholder="请输入邮箱">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="phone" class="col-sm-2 control-label">手机号</label>
+            <div class="col-sm-4">
+                <input type="text" class="form-control" id="phone" placeholder="请输入手机号">
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <button type="button" class="btn btn-default" id="btn-user-update">更新</button>
+            </div>
+        </div>
+    </form>
+    <embed src="../common/footer.html" width="100%" height="72px" style="position: absolute;bottom:0px" />
+</body>
+<script src="../../js/common/jquery-3.1.1.min.js"></script>
+<script src="../../js/common/bootstrap.js"></script>
+<script>
+    $(function () {
         $.ajax({
-            url: 'http://localhost:8080/user/update',
-            type: 'post',
-            data: {
-                id: $('#id').val(),
-                phone: $('#phone').val(),
-                email: $('#email').val()
-            },
-            success : function(result){
-                if(result.status == 0 && result.data != null) {
-                    alert('修改成功')
-                    window.location = './login.html'
+            url: 'http://localhost:8080/user/profile',
+            type: 'get',
+            success: function (result) {
+                if (result.status == 0 && result.data != null) {
+                    var user = result.data;
+                    $('#id').val(user.id),
+                    $('#name').val(user.name)
+                    $('#phone').val(user.phone == null ? '暂未填写' : user.phone)
+                    $('#email').val(user.email == null ? '暂未填写' : user.email)
+                    $('#password').val(user.password)
                 }
-            } 
+            }
         })
     })
-})
 </script>
+<script>
+    $(function () {
+        $('#btn-user-update').click(function () {
+            $.ajax({
+                url: 'http://localhost:8080/user/update',
+                type: 'post',
+                data: {
+                    id: $('#id').val(),
+                    phone: $('#phone').val(),
+                    email: $('#email').val(),
+                    password: $('#password').val()
+                },
+                success: function (result) {
+                    if (result.status == 0) {
+                        alert('修改成功')
+                    }
+                }
+            })
+        })
+    })
+</script>
+
 </html>

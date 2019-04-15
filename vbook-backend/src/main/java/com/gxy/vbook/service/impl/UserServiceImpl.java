@@ -46,13 +46,14 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public ServerResponse update(int id, String phone, String email) {
+    public ServerResponse update(int id, String phone, String email, String password) {
         User u = new User();
         u.setId(id);
         u.setPhone(phone);
         u.setEmail(email);
+        u.setPassword(password);
         int result= userMapper.updateByPrimaryKeySelective(u);
-        return ServerResponse.createBySuccess();
+        return ServerResponse.createBySuccess(u);
     }
 
     @Override

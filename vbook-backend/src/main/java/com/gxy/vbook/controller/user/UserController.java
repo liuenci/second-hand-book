@@ -26,7 +26,7 @@ public class UserController {
     }
 
     @PostMapping("login")
-    public ServerResponse<User> login(HttpSession session, @RequestParam("name") String name, @RequestParam("password") String password) {
+    public ServerResponse<User> login(@RequestParam("name") String name, @RequestParam("password") String password) {
         ServerResponse<User> response = userService.login(name,password);
         if (response.isSuccess()) {
             redisTemplate.opsForValue().set(Const.CURRENT_USER, response.getData().getId().toString());
@@ -35,8 +35,8 @@ public class UserController {
     }
 
     @PostMapping("update")
-    public ServerResponse<User> update(@RequestParam("id") Integer id, @RequestParam("phone") String phone, @RequestParam("email") String email) {
-        return userService.update(id, phone, email);
+    public ServerResponse<User> update(@RequestParam("id") Integer id, @RequestParam("phone") String phone, @RequestParam("email") String email,@RequestParam("password") String password ) {
+        return userService.update(id, phone, email,password);
     }
 
     @GetMapping("profile")

@@ -8,7 +8,7 @@ public interface UserService {
 
     ServerResponse login(String name, String password);
 
-    ServerResponse update(int id, String phone, String email);
+    ServerResponse update(int id, String phone, String email,String password);
 
     ServerResponse profile();
 
