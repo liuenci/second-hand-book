@@ -9,7 +9,7 @@
       <arg column="phone" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="email" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="balance" jdbcType="DOUBLE" javaType="java.lang.Double" />
-      <arg column="role" jdbcType="TINYINT" javaType="java.lang.Byte" />
+      <arg column="role" jdbcType="TINYINT" javaType="java.lang.Integer" />
     </constructor>
   </resultMap>
   <sql id="Base_Column_List" >

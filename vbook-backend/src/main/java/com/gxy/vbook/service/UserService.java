@@ -4,7 +4,7 @@ import com.gxy.vbook.common.ServerResponse;
 
 public interface UserService {
 
-    ServerResponse save(String name, String password);
+    ServerResponse save(String name, String password, String email, String phone);
 
     ServerResponse login(String name, String password);
 

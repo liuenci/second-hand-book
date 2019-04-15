@@ -5,23 +5,48 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-    <script src="../../js/common/jquery-3.1.1.min.js"></script>
+    <title>会员注册</title>
+    <link rel="stylesheet" href="../../css/common/bootstrap.css">
 </head>
 
 <body>
-    <h2>会员注册</h2>
-    <br>
-    <p>用户名：</p>
-    <input type='text' name='name' id='name'>
-    <br>
-    <p>密码：</p>
-    <input type='password' name='password' id="password">
-    <br>
-    <br>
-    <button type='button' id='btn-user-register'>注册</button>
+    <embed src="../common/header.html" width="100%" height="72px" />
+
+    <form class="form-horizontal" role="form">
+        <div class="form-group">
+            <label for="name" class="col-sm-2 control-label">用户名</label>
+            <div class="col-sm-4">
+                <input type="text" class="form-control" id="name" placeholder="请输入名字">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="password" class="col-sm-2 control-label">密码</label>
+            <div class="col-sm-4">
+                <input type="password" class="form-control" id="password" placeholder="请输入密码">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="email" class="col-sm-2 control-label">邮箱</label>
+            <div class="col-sm-4">
+                <input type="text" class="form-control" id="email" placeholder="请输入邮箱">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="phone" class="col-sm-2 control-label">手机号</label>
+            <div class="col-sm-4">
+                <input type="text" class="form-control" id="phone" placeholder="请输入手机号">
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <button type="button" class="btn btn-default" id="btn-user-register">注册</button>
+            </div>
+        </div>
+    </form>
+    <embed src="../common/footer.html" width="100%" height="72px" style="position: absolute;bottom:0px" />
 </body>
 <script src="../../js/common/jquery-3.1.1.min.js"></script>
+<script src="../../js/common/bootstrap.js"></script>
 <script>
     $(function () {
         $('#btn-user-register').click(function () {
@@ -30,7 +55,9 @@
                 type: 'post',
                 data: {
                     name: $('#name').val(),
-                    password: $('#password').val()
+                    password: $('#password').val(),
+                    email: $('#email').val(),
+                    phone: $('#phone').val()
                 },
                 success: function (result) {
                     if (result.status == 0 && result.data != null) {

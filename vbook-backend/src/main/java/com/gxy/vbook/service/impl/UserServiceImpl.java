@@ -20,7 +20,7 @@ public class UserServiceImpl implements UserService {
     private RedisTemplate<String, String> redisTemplate;
 
     @Override
-    public ServerResponse save(String name, String password) {
+    public ServerResponse save(String name, String password,String email, String phone) {
         User user = userMapper.selectByName(name);
         if (user != null) {
             return ServerResponse.createByErrorCodeMessage(ResponseCode.ERROR.getCode(),ResponseCode.ERROR.getDesc());
@@ -29,6 +29,9 @@ public class UserServiceImpl implements UserService {
         insertUser.setName(name);
         insertUser.setPassword(password);
         insertUser.setBalance(0D);
+        insertUser.setRole(1);
+        insertUser.setEmail(email);
+        insertUser.setPhone(phone);
         int result = userMapper.insert(insertUser);
         return ServerResponse.createBySuccess(insertUser);
     }

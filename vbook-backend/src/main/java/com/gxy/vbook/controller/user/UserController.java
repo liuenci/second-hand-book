@@ -21,8 +21,8 @@ public class UserController {
     private RedisTemplate<String,String> redisTemplate;
 
     @PostMapping("register")
-    public ServerResponse<User> register(@RequestParam("name") String name, @RequestParam("password") String password) {
-        return userService.save(name, password);
+    public ServerResponse<User> register(@RequestParam("name") String name, @RequestParam("password") String password,@RequestParam("email") String email,@RequestParam("phone") String phone) {
+        return userService.save(name, password, email, phone);
     }
 
     @PostMapping("login")
