@@ -6,53 +6,77 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>我的购物车</title>
+    <link rel="stylesheet" href="../../css/common/bootstrap.css">
+    <link rel="stylesheet" href="../../css/common/bootstrap-table.css">
 </head>
 
 <body>
-    <h2>我的购物车</h2>
-    <div id="container">
-        <ul id="ul-tree">
-            <li>
-                <div>
-                    书名:SpringBoot第四版 价格:￥12
-                </div>
-            </li>
-            <li>
-                <div>
-                    书名:Spring实战 价格:￥21
-                </div>
-            </li>
-            <li>
-                <div>
-                    书名:Java编程思想 价格:￥10
-                </div>
-            </li>
-        </ul>
-        <br>
-        总价:￥<span id="total-price">0</span>
-        <button type="button" id="btn-user-pay">立即购买</button>
+    <embed src="../common/header.html" width="100%" height="72px" />
+    <div class="container">
+        <table id="table">
+            <thead>
+                <tr>
+                    <th data-field="id">编号</th>
+                    <th data-field="name">书名</th>
+                    <th data-field="price">价格</th>
+                    <th data-field="opt">操作</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+        <div style="margin-top: 20px;margin-right: 0px;float:right;">
+            <h4>共计<span id="total_price">1</span>元</h4>
+            <button type="button" class="btn btn-default btn-info" id="btn-user-pay">立即支付</button>
+        </div>
     </div>
+    <embed src="../common/footer.html" width="100%" height="72px" style="position: absolute;bottom:0px" />
 </body>
 <script src="../../js/common/jquery-3.1.1.min.js"></script>
+<script src="../../js/common/bootstrap.js"></script>
+<script src="../../js/common/bootstrap-table.js"></script>
 <script>
+    var _table = $('#table');
+    //初始化bootstrap table ，并且启动它
+    function init() {
+        _table.bootstrapTable({
+            url: 'http://localhost:8080/cart/list',
+            method: 'get',
+            toolbar: "#toolbar",
+            pagination: "false",
+            striped: true, // 是否显示行间隔色
+            //search : "true",
+            uniqueId: "id",
+            dataType: "json",
+            pagination: false, // 是否分页
+            sortable: false, // 是否启用排序
+            columns: [{
+                field: 'bookId',
+                title: '编号'
+            },
+            {
+                field: 'name',
+                title: '书名'
+            },
+            {
+                field: 'price',
+                title: '价格'
+            },
+            {
+                field: 'quantity',
+                title: '数量'
+            }]
+        });
+    }
     $(function () {
+        init()
         var total = 0
         $.ajax({
-            url: 'http://localhost:8080/cart/list',
+            url: 'http://localhost:8080/cart/totalPrice',
             type: 'get',
             success: function (result) {
-                if (result.status == 0 && result.data != null) {
-                    $('#ul-tree').empty()
-                    for (let i = 0; i < result.data.length; i++) {
-                        const element = result.data[i];
-                        var li = $('<li>')
-                        var div = $('<div>')
-                        div.html('书名：' + element.name + '价格：' + element.price + '数量：' + element.quantity)
-                        li.append(div)
-                        $('#ul-tree').append(li)
-                        total = total + element.price * element.quantity
-                    }
-                    $('#total-price').text(total)
+                if (result.status == 0) {
+                    total = result.data
+                    $('#total_price').text(result.data)
                 }
             }
 
@@ -62,11 +86,12 @@
                 alert('你还没有添加书籍')
             } else {
                 $.ajax({
-                    url: 'http://localhost:8080/order/pay',
+                    url: 'http://localhost:8080/user/order/pay',
                     type: 'post',
                     success: function (result) {
                         if (result.status == 0) {
                             alert('支付成功')
+                            window.location = "order.html"
                         }
                     }
 

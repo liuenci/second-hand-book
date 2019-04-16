@@ -1,18 +1,17 @@
 package com.gxy.vbook.controller.user;
 
 import com.gxy.vbook.common.Const;
+import com.gxy.vbook.common.PageResponse;
 import com.gxy.vbook.common.ResponseCode;
 import com.gxy.vbook.common.ServerResponse;
-import com.gxy.vbook.pojo.User;
 import com.gxy.vbook.service.CartService;
+import com.gxy.vbook.vo.CartVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 @RequestMapping("cart")
@@ -24,11 +23,8 @@ public class CartController {
     private RedisTemplate<String, String> redisTemplate;
 
     @RequestMapping("list")
-    public ServerResponse list() {
+    public PageResponse list() {
         Integer userId = Integer.parseInt(redisTemplate.opsForValue().get(Const.CURRENT_USER));
-        if (userId == null) {
-            return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(),ResponseCode.NEED_LOGIN.getDesc());
-        }
         return cartService.list(userId);
     }
 
@@ -40,5 +36,18 @@ public class CartController {
         }
         ServerResponse response = cartService.add(bookId, count, userId);
         return ServerResponse.createBySuccess(response);
+    }
+    @GetMapping("totalPrice")
+    public ServerResponse totalPrice(){
+        Integer userId = Integer.parseInt(redisTemplate.opsForValue().get(Const.CURRENT_USER));
+        PageResponse response = cartService.list(userId);
+        List<CartVo> list = response.getRows();
+        Double totalPrice = 0D;
+        for (CartVo cartVo : list) {
+            Double price = cartVo.getPrice();
+            Integer quantity = cartVo.getQuantity();
+            totalPrice += price * quantity;
+        }
+        return ServerResponse.createBySuccess(totalPrice);
     }
 }

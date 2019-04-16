@@ -1,5 +1,6 @@
 package com.gxy.vbook.service.impl;
 
+import com.gxy.vbook.common.PageResponse;
 import com.gxy.vbook.common.ServerResponse;
 import com.gxy.vbook.dao.BookMapper;
 import com.gxy.vbook.dao.CartMapper;
@@ -20,18 +21,22 @@ public class CartServiceImpl implements CartService {
     @Autowired
     private BookMapper bookMapper;
     @Override
-    public ServerResponse list(int userId) {
+    public PageResponse list(int userId) {
         List<Cart> list = cartMapper.selectListByUserId(userId);
         List<CartVo> cartVos = new ArrayList<>();
         for (Cart cart : list) {
             CartVo cartVo = new CartVo();
             String name = bookMapper.selectByPrimaryKey(cart.getBookid()).getName();
+            cartVo.setBookId(cart.getBookid());
             cartVo.setName(name);
             cartVo.setPrice(bookMapper.selectByPrimaryKey(cart.getBookid()).getPrice());
             cartVo.setQuantity(cart.getQuantity());
             cartVos.add(cartVo);
         }
-        return ServerResponse.createBySuccess(cartVos);
+        PageResponse response = new PageResponse();
+        response.setTotal(list.size());
+        response.setRows(cartVos);
+        return response;
     }
 
     @Override

@@ -24,9 +24,9 @@
     where id = #{id,jdbcType=INTEGER}
   </delete>
     <insert id="insert" parameterType="com.gxy.vbook.pojo.Order" >
-    insert into vbook_order (id, orderNo, createTime
+    insert into vbook_order (id, userId, orderNo, totalPrice, createTime
       )
-    values (#{id,jdbcType=INTEGER}, #{orderno,jdbcType=VARCHAR}, #{createtime,jdbcType=TIMESTAMP}
+    values (#{id,jdbcType=INTEGER},#{userId}, #{orderno,jdbcType=VARCHAR}, #{totalPrice},#{createtime,jdbcType=TIMESTAMP}
       )
   </insert>
     <insert id="insertSelective" parameterType="com.gxy.vbook.pojo.Order">

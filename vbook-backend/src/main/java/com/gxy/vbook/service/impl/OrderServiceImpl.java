@@ -52,6 +52,8 @@ public class OrderServiceImpl implements OrderService {
             return ServerResponse.createByErrorCodeMessage(ResponseCode.BLANCE_NOT_ENOUGH.getCode(), ResponseCode.BLANCE_NOT_ENOUGH.getDesc());
         }
         Order order = new Order();
+        order.setUserId(userId);
+        order.setTotalPrice(totalPrice.doubleValue());
         order.setOrderno(UUID.randomUUID().toString());
         order.setCreatetime(new Date());
         // 插入订单主表
