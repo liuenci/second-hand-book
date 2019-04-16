@@ -1,5 +1,6 @@
 package com.gxy.vbook.service.impl;
 
+import com.gxy.vbook.common.PageResponse;
 import com.gxy.vbook.common.ServerResponse;
 import com.gxy.vbook.dao.BookMapper;
 import com.gxy.vbook.pojo.Book;
@@ -27,9 +28,12 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public ServerResponse findList(String name) {
+    public PageResponse findList(String name) {
         name = new StringBuffer().append("%").append(name).append("%").toString();
         List<Book> list = bookMapper.selectListByName(name);
-        return ServerResponse.createBySuccess(list);
+        PageResponse<Book> response = new PageResponse<>();
+        response.setRows(list);
+        response.setTotal(list.size());
+        return response;
     }
 }

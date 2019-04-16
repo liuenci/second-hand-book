@@ -33,7 +33,7 @@ public class CartController {
     }
 
     @PostMapping("add")
-    public ServerResponse add(HttpSession session, @RequestParam(value = "count", defaultValue = "1", required = false) Integer count, Integer bookId) {
+    public ServerResponse add(@RequestParam(value = "count", defaultValue = "1", required = false) Integer count, Integer bookId) {
         Integer userId = Integer.parseInt(redisTemplate.opsForValue().get(Const.CURRENT_USER));
         if (userId == null) {
             return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), ResponseCode.NEED_LOGIN.getDesc());
