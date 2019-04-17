@@ -6,58 +6,77 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>我的订单</title>
+    <link rel="stylesheet" href="../../css/common/bootstrap.css">
+    <link rel="stylesheet" href="../../css/common/bootstrap-table.css">
 </head>
 
 <body>
-    <table>
-        <thead>
-            <tr>
-                <td>id</td>
-                <td>订单号</td>
-                <td>价格</td>
-                <td>创建时间</td>
-                <td>详情</td>
-            </tr>
-        </thead>
-        <tbody id="tbody">
-
-        </tbody>
-    </table>
+    <embed src="../common/header.html" width="100%" height="72px" />
+    <div class="container">
+        <h3>订单列表</h2>
+        <table id="table">
+            <thead>
+                <tr>
+                    <th data-field="id">编号</th>
+                    <th data-field="name">书名</th>
+                    <th data-field="price">价格</th>
+                    <th data-field="opt">操作</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+    <embed src="../common/footer.html" width="100%" height="72px" style="position: absolute;bottom:0px" />
 </body>
 <script src="../../js/common/jquery-3.1.1.min.js"></script>
+<script src="../../js/common/bootstrap.js"></script>
+<script src="../../js/common/bootstrap-table.js"></script>
 <script>
-    $(function () {
-        $.ajax({
+    var _table = $('#table');
+    //初始化bootstrap table ，并且启动它
+    function init() {
+        _table.bootstrapTable({
             url: 'http://localhost:8080/user/order/list',
-            type: 'get',
-            success: function (result) {
-                if (result.status == 0 && result.data != null) {
-                    var res = result.data;
-                    for (let i = 0; i < res.length; i++) {
-                        const element = res[i];
-                        var tr = $('<tr>')
-                        var td1 = $('<td>')
-                        td1.html(element.id)
-                        var td2 = $('<td>')
-                        td2.html(element.orderno)
-                        var td3 = $('<td>')
-                        td3.html(element.totalprice == null ? 0 : element.totalprice)
-                        var td4 = $('<td>')
-                        td4.html(element.createtime)
-                        var td5 = $('<td>')
-                        var button = $('<button class="detail">详情</button>')
-                        td5.append(button)
-                        tr.append(td1)
-                        tr.append(td2)
-                        tr.append(td3)
-                        tr.append(td4)
-                        tr.append(td5)
-                        $('#tbody').append(tr)
-                    }
-                }
-            }
-        })
+            method: 'get',
+            toolbar: "#toolbar",
+            pagination: "false",
+            striped: true, // 是否显示行间隔色
+            //search : "true",
+            uniqueId: "id",
+            dataType: "json",
+            pagination: false, // 是否分页
+            sortable: false, // 是否启用排序
+            columns: [{
+                field: 'orderno',
+                title: '订单号'
+            },
+            {
+                field: 'totalPrice',
+                title: '订单金额'
+            },
+            {
+                field: 'createtime',
+                title: '价格'
+            },
+            {
+                field: 'opt',
+                title: '操作',
+                width: 120,
+                align: 'center',
+                valign: 'middle',
+                formatter: actionFormatter,
+            }]
+        });
+    }
+    //操作栏的格式化
+    function actionFormatter(value, row, index) {
+        var id = row.id
+        var result = "";
+        result += "<button class='btn btn-default btn-primary btn-order-item' onclick='add(this)'>订单详情</button>";
+        return result;
+    }
+    $(function () {
+        init()
     })
 </script>
-
 </html>

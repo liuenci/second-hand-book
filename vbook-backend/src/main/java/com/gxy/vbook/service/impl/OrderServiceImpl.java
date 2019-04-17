@@ -1,6 +1,7 @@
 package com.gxy.vbook.service.impl;
 
 import com.gxy.vbook.common.Const;
+import com.gxy.vbook.common.PageResponse;
 import com.gxy.vbook.common.ResponseCode;
 import com.gxy.vbook.common.ServerResponse;
 import com.gxy.vbook.dao.*;
@@ -73,9 +74,12 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public ServerResponse list(int userId) {
+    public PageResponse list(int userId) {
         List<Order> list = orderMapper.selectListByUserId(userId);
-        return ServerResponse.createBySuccess(list);
+        PageResponse response = new PageResponse();
+        response.setRows(list);
+        response.setTotal(list.size());
+        return response;
     }
 
     @Override
