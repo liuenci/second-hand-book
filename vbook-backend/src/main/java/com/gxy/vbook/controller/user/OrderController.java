@@ -8,10 +8,7 @@ import com.gxy.vbook.dao.OrderMapper;
 import com.gxy.vbook.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("user/order")
@@ -36,5 +33,9 @@ public class OrderController {
     public PageResponse list(){
         Integer userId = Integer.parseInt(redisTemplate.opsForValue().get(Const.CURRENT_USER));
         return orderService.list(userId);
+    }
+    @GetMapping("{orderNo}")
+    public PageResponse orderItemList(@PathVariable("orderNo") String orderNo){
+        return orderService.orderItemList(orderNo);
     }
 }

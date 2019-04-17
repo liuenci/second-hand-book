@@ -14,18 +14,33 @@
     <embed src="../common/header.html" width="100%" height="72px" />
     <div class="container">
         <h3>订单列表</h2>
-        <table id="table">
-            <thead>
-                <tr>
-                    <th data-field="id">编号</th>
-                    <th data-field="name">书名</th>
-                    <th data-field="price">价格</th>
-                    <th data-field="opt">操作</th>
-                </tr>
-            </thead>
-            <tbody></tbody>
-        </table>
+            <table id="table"></table>
     </div>
+    <div class="modal fade" id="order_items_id" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">
+                        订单详情
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    <table id="order_item_table"></table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">
+                        关闭
+                    </button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">
+                        确定
+                    </button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
     <embed src="../common/footer.html" width="100%" height="72px" style="position: absolute;bottom:0px" />
 </body>
 <script src="../../js/common/jquery-3.1.1.min.js"></script>
@@ -72,11 +87,45 @@
     function actionFormatter(value, row, index) {
         var id = row.id
         var result = "";
-        result += "<button class='btn btn-default btn-primary btn-order-item' onclick='add(this)'>订单详情</button>";
+        result += "<button class='btn btn-default btn-primary btn-order-item' data-toggle='modal' onclick='get_data(this)'>订单详情</button>";
         return result;
+    }
+    function get_data(t) {
+        var value = $(t).parents('tr').find('td:first').text()
+        $('#order_item_table').bootstrapTable('destroy');
+        $('#order_item_table').bootstrapTable({
+            url: 'http://localhost:8080/user/order/'+value,
+            method: 'get',
+            toolbar: "#toolbar",
+            pagination: "false",
+            striped: true, // 是否显示行间隔色
+            //search : "true",
+            uniqueId: "id",
+            dataType: "json",
+            pagination: false, // 是否分页
+            sortable: false, // 是否启用排序
+            columns: [{
+                field: 'bookId',
+                title: '编号'
+            },
+            {
+                field: 'bookName',
+                title: '书名'
+            },
+            {
+                field: 'price',
+                title: '价格'
+            },
+            {
+                field: 'quantity',
+                title: '数量'
+            }]
+        });
+        $("#order_items_id").modal("toggle");
     }
     $(function () {
         init()
     })
 </script>
+
 </html>

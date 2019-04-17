@@ -8,12 +8,14 @@ import com.gxy.vbook.dao.*;
 import com.gxy.vbook.pojo.*;
 import com.gxy.vbook.service.OrderService;
 import com.gxy.vbook.utils.BigDecimalUtil;
+import com.gxy.vbook.vo.OrderItemVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -102,5 +104,24 @@ public class OrderServiceImpl implements OrderService {
         }
         List<OrderItem> list = orderItemMapper.selectByOrderNo(orderNo);
         return ServerResponse.createBySuccess(list);
+    }
+
+    @Override
+    public PageResponse orderItemList(String orderNo) {
+        List<OrderItem> list = orderItemMapper.selectByOrderNo(orderNo);
+        List<OrderItemVo> responseList = new ArrayList<>();
+        for (OrderItem orderItem : list) {
+            OrderItemVo vo = new OrderItemVo();
+            vo.setBookId(orderItem.getBookid());
+            Book book = bookMapper.selectByPrimaryKey(orderItem.getBookid());
+            vo.setBookName(book.getName());
+            vo.setPrice(book.getPrice());
+            vo.setQuantity(orderItem.getQuantity());
+            responseList.add(vo);
+        }
+        PageResponse response = new PageResponse();
+        response.setTotal(responseList.size());
+        response.setRows(responseList);
+        return response;
     }
 }
