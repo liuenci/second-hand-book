@@ -85,17 +85,6 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public ServerResponse list() {
-        Integer userId = Integer.parseInt(redisTemplate.opsForValue().get(Const.CURRENT_USER));
-        User admin = userMapper.selectByPrimaryKey(userId);
-        if (admin.getRole() != 0) {
-            return ServerResponse.createByErrorCodeMessage(ResponseCode.NOT_ADMIN.getCode(), ResponseCode.NOT_ADMIN.getDesc());
-        }
-        List<Order> list = orderMapper.selectAllList();
-        return ServerResponse.createBySuccess(list);
-    }
-
-    @Override
     public ServerResponse item(String orderNo) {
         Integer userId = Integer.parseInt(redisTemplate.opsForValue().get(Const.CURRENT_USER));
         User admin = userMapper.selectByPrimaryKey(userId);
@@ -122,6 +111,16 @@ public class OrderServiceImpl implements OrderService {
         PageResponse response = new PageResponse();
         response.setTotal(responseList.size());
         response.setRows(responseList);
+        return response;
+    }
+
+    @Override
+    public PageResponse findOrderList(String orderNo) {
+        orderNo = new StringBuffer("%").append(orderNo).append("%").toString();
+        List<Order> list = orderMapper.selectOrderList(orderNo);
+        PageResponse response = new PageResponse();
+        response.setRows(list);
+        response.setTotal(list.size());
         return response;
     }
 }

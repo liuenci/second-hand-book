@@ -11,9 +11,12 @@ public interface OrderService {
 
 
     PageResponse orderItemList(String orderNo);
-    ServerResponse list();
+
+
 
     ServerResponse item(String orderId);
+
+    PageResponse findOrderList(String orderNo);
 
 
 }

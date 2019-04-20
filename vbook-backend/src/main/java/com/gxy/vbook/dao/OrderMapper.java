@@ -22,5 +22,5 @@ public interface OrderMapper {
     List<Order> selectListByUserId(Integer userId);
 
 
-    List<Order> selectAllList();
+    List<Order> selectOrderList(String orderNo);
 }

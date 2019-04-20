@@ -80,11 +80,12 @@
         userId = #{userId}
     </select>
 
-    <select id="selectAllList" resultType="com.gxy.vbook.pojo.Order">
+    <select id="selectOrderList" resultType="com.gxy.vbook.pojo.Order" parameterType="string">
         select
         <include refid="Base_Column_List"/>
         from
         vbook_order
+        where orderNo like #{orderNo}
     </select>
 
 </mapper>
