@@ -1,49 +1,65 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>我要卖书</title>
+    <link rel="stylesheet" href="../../css/common/bootstrap.css">
 </head>
+
 <body>
-        <h2>添加书籍</h2>
-        <div>
-            <p>用户id:</p>
-            <br>
-            <input type="text" name="id" id="id">
-            <p>书名:</p>
-            <input type="text" name="name" id="name">
-            <p>价格:</p>
-            <input type="text" name="price" id="price">
-            <br>
-            <button type="button" id="btn-book-add">添加</button>
-        </div>
-    </body>
-    <script src="../../js/common/jquery-3.1.1.min.js"></script>
-    <script>
-$(function(){
-    $('#btn-book-add').click(function(){
-        $.ajax({
-            url: 'http://localhost:8080/book/add',
-            type: 'post',
-            data: {
-                userId: $('#id').val(),
-                name: $('#name').val(),
-                price: $('#price').val()
-            },
-            success : function(result){
-                if(result.status == 0 && result.data != null) {
-                    window.location = '../../../index.html'
+    <embed src="../common/header.html" width="100%" height="72px" />
+    <div class="container">
+            <h3 class="col-sm-offset-2">我要卖书</h2>
+            <form class="form-horizontal" role="form">
+                <div class="form-group">
+                    <label for="name" class="col-sm-2 control-label">书名</label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control" id="name" placeholder="请输入书名">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="price" class="col-sm-2 control-label">价格</label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control" id="price" placeholder="请输入价格">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <button type="button" class="btn btn-default" id="btn-book-add">确认出售</button>
+                    </div>
+                </div>
+            </form>
+    </div>
+
+    <embed src="../common/footer.html" width="100%" height="72px" style="position: absolute;bottom:0px" />
+</body>
+<script src="../../js/common/jquery-3.1.1.min.js"></script>
+<script>
+    $(function () {
+        $('#btn-book-add').click(function () {
+            $.ajax({
+                url: 'http://localhost:8080/book/add',
+                type: 'post',
+                data: {
+                    name: $('#name').val(),
+                    price: $('#price').val()
+                },
+                success: function (result) {
+                    if (result.status == 0 && result.data != null) {
+                        window.location = '../../../index.html'
+                    }
+                    if (result.status == 11) {
+                        alert('用户不存在')
+                        window.location = './register.html'
+                    }
                 }
-                if(result.status == 11) {
-                    alert('用户不存在')
-                    window.location = './register.html'
-                }
-            }
-            
+
+            })
         })
     })
-})
 </script>
+
 </html>
