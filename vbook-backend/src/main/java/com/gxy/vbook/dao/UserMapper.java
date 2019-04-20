@@ -24,5 +24,5 @@ public interface UserMapper {
 
     User selectByNameAndPassword(@Param("name") String name, @Param("password") String password);
 
-    List<User> selectAllList();
+    List<User> selectUserList(String name);
 }

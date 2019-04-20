@@ -1,5 +1,6 @@
 package com.gxy.vbook.service;
 
+import com.gxy.vbook.common.PageResponse;
 import com.gxy.vbook.common.ServerResponse;
 
 public interface UserService {
@@ -12,5 +13,5 @@ public interface UserService {
 
     ServerResponse profile();
 
-    ServerResponse list();
+    PageResponse findUserList(String name);
 }

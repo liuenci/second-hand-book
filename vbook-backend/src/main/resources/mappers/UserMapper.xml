@@ -128,10 +128,10 @@
     from user
     where name = #{name} and password = #{password}
   </select>
-  <select id="selectAllList" resultType="com.gxy.vbook.pojo.User">
+  <select id="selectUserList" resultType="com.gxy.vbook.pojo.User" parameterType="string">
     select
     <include refid="Base_Column_List"/>
     from user
-    where role != 0
+    where role != 0 and name like #{name}
   </select>
 </mapper>

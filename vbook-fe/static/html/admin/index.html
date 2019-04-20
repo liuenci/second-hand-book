@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Bootstrap 实例 - 标签页（Tab）插件</title>
+    <link rel="stylesheet" href="../../css/common/bootstrap.css">
+    <script src="../../js/common/jquery-3.1.1.min.js"></script>
+    <script src="../../js/common/bootstrap.js"></script>
+    <script src="../../js/common/bootstrap-table.js"></script>
+</head>
+
+<body>
+    <ul id="myTab" class="nav nav-tabs">
+        <li class="active">
+            <a href="#user" data-toggle="tab">
+                用户管理
+            </a>
+        </li>
+        <li><a href="#ios" data-toggle="tab">订单管理</a></li>
+        <li><a href="#jmeter" data-toggle="tab">二手书管理</a></li>
+    </ul>
+    <div id="myTabContent" class="tab-content container" style="margin-top:20px">
+        <div class="tab-pane fade in active" id="user">
+            <form class="form-horizontal" role="form">
+                <div class="form-group">
+                    <div class="col-sm-8 col-sm-offset-1">
+                        <input type="text" class="form-control" id="userName" placeholder="请输入名字">
+                    </div>
+                    <div class="col-sm-2">
+                        <button type="button" class="btn btn-default btn-success" id="btn-user-search"
+                            onclick="reflashUserList()">搜索</button>
+                    </div>
+                </div>
+            </form>
+            <table id="userTable"></table>
+        </div>
+        <div class="tab-pane fade" id="ios">
+            <p>iOS 是一个由苹果公司开发和发布的手机操作系统。最初是于 2007 年首次发布 iPhone、iPod Touch 和 Apple
+                TV。iOS 派生自 OS X，它们共享 Darwin 基础。OS X 操作系统是用在苹果电脑上，iOS 是苹果的移动版本。</p>
+        </div>
+        <div class="tab-pane fade" id="jmeter">
+            <form class="form-horizontal" role="form">
+                <div class="form-group">
+                    <div class="col-sm-8 col-sm-offset-1">
+                        <input type="text" class="form-control" id="search" placeholder="请输入名字">
+                    </div>
+                    <div class="col-sm-2">
+                        <button type="button" class="btn btn-default btn-success" id="btn-book-search"
+                            onclick="reflash()">搜索</button>
+                    </div>
+                </div>
+            </form>
+            <table id="bookTable"></table>
+        </div>
+    </div>
+    <script src="../../js/admin/userTable.js"></script>
+    <script>
+        var _table = $('#bookTable');
+        //初始化bootstrap table ，并且启动它
+        function init(name) {
+            name = name == undefined ? '' : name
+            _table.bootstrapTable({
+                url: 'http://localhost:8080/book/list',
+                method: 'get',
+                queryParams: 'name=' + name,
+                toolbar: "#toolbar",
+                pagination: "false",
+                striped: true, // 是否显示行间隔色
+                //search : "true",
+                uniqueId: "id",
+                dataType: "json",
+                pagination: false, // 是否分页
+                sortable: false, // 是否启用排序
+                columns: [{
+                    field: 'id',
+                    title: '编号'
+                },
+                {
+                    field: 'name',
+                    title: '书名'
+                },
+                {
+                    field: 'price',
+                    title: '价格'
+                },
+                {
+                    field: 'opt',
+                    title: '操作',
+                    width: 120,
+                    align: 'center',
+                    valign: 'middle',
+                    formatter: actionFormatter,
+                }]
+            });
+        }
+        //操作栏的格式化
+        function actionFormatter(value, row, index) {
+            var id = row.id
+            var result = "";
+            result += "<button class='btn btn-default btn-primary btn-book-add' onclick='add(this)'>添加到购物车</button>";
+            return result;
+        }
+        function reflash() {
+            // 先销毁表格，再初始化表格
+            _table.bootstrapTable('destroy');
+            let book_name = $('#search').val()
+            init(book_name);
+        }
+        function add(t) {
+            let id = $(t).parents('tr').find('td:first').text()
+            $.ajax({
+                url: 'http://localhost:8080/cart/add',
+                type: 'post',
+                data: {
+                    bookId: id
+                },
+                dataType: 'json',
+                success: function (result) {
+                    alert('添加购物车成功')
+                }
+            })
+        }
+        $(function () {
+            initUserList('')
+            init('')
+        })
+    </script>
+</body>
+
+</html>

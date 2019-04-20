@@ -1,6 +1,7 @@
 package com.gxy.vbook.service.impl;
 
 import com.gxy.vbook.common.Const;
+import com.gxy.vbook.common.PageResponse;
 import com.gxy.vbook.common.ResponseCode;
 import com.gxy.vbook.common.ServerResponse;
 import com.gxy.vbook.dao.UserMapper;
@@ -67,12 +68,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public ServerResponse list() {
-        Integer userId = Integer.parseInt(redisTemplate.opsForValue().get(Const.CURRENT_USER));
-        if (userId == null) {
-            ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), ResponseCode.NEED_LOGIN.getDesc());
-        }
-        List<User> list = userMapper.selectAllList();
-        return ServerResponse.createBySuccess(list);
+    public PageResponse findUserList(String name) {
+        name = new StringBuffer("%").append(name).append("%").toString();
+        List<User> list = userMapper.selectUserList(name);
+        PageResponse response = new PageResponse();
+        response.setTotal(list.size());
+        response.setRows(list);
+        return response;
     }
 }
