@@ -20,4 +20,6 @@ public interface BookMapper {
     int updateByPrimaryKey(Book record);
 
     List<Book> selectListByName(@Param("name") String name);
+
+    Book selectByBookIdAndUserId(@Param("id")Integer id, @Param("userId") Integer userId);
 }

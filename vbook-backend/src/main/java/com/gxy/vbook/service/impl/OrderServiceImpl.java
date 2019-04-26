@@ -69,6 +69,12 @@ public class OrderServiceImpl implements OrderService {
             orderItem.setTotalprice(cart.getQuantity() * bookMapper.selectByPrimaryKey(cart.getBookid()).getPrice());
             orderItem.setUserid(userId);
             orderItemMapper.insert(orderItem);
+
+            // 更新二手书的状态
+            Book book = new Book();
+            book.setId(cart.getBookid());
+            book.setStatus(0);
+            bookMapper.updateByPrimaryKeySelective(book);
         }
         // 删除购物车
         cartMapper.deleteByUserId(userId);

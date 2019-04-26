@@ -1,106 +1,125 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.gxy.vbook.dao.BookMapper" >
-  <resultMap id="BaseResultMap" type="com.gxy.vbook.pojo.Book" >
-    <constructor >
-      <idArg column="id" jdbcType="INTEGER" javaType="java.lang.Integer" />
-      <arg column="name" jdbcType="VARCHAR" javaType="java.lang.String" />
-      <arg column="price" jdbcType="DOUBLE" javaType="java.lang.Double" />
-      <arg column="userId" jdbcType="INTEGER" javaType="java.lang.Integer" />
-      <arg column="status" jdbcType="TINYINT" javaType="java.lang.Byte" />
-    </constructor>
-  </resultMap>
-  <sql id="Base_Column_List" >
-    id, name, price, userId, status
-  </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select 
-    <include refid="Base_Column_List" />
-    from book
-    where id = #{id,jdbcType=INTEGER}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+<mapper namespace="com.gxy.vbook.dao.BookMapper">
+    <resultMap id="BaseResultMap" type="com.gxy.vbook.pojo.Book">
+        <result column="id" property="id" jdbcType="INTEGER"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="originalPrice" property="originalPrice" jdbcType="DOUBLE"/>
+        <result column="discount" property="discount" jdbcType="INTEGER"/>
+        <result column="price" property="price" jdbcType="DOUBLE"/>
+        <result column="userId" property="userId" jdbcType="INTEGER"/>
+        <result column="status" property="status" jdbcType="INTEGER"/>
+        <result column="author" property="author" jdbcType="VARCHAR"/>
+        <result column="type" property="type" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, name, author,originalPrice,discount,price, userId, status,`type`
+</sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from book
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from book
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.gxy.vbook.pojo.Book" >
-    insert into book (id, name, price, 
-      userId, status)
-    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{price,jdbcType=DECIMAL}, 
-      #{userid,jdbcType=INTEGER}, #{status,jdbcType=TINYINT})
-  </insert>
-  <insert id="insertSelective" parameterType="com.gxy.vbook.pojo.Book" >
-    insert into book
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        id,
-      </if>
-      <if test="name != null" >
-        name,
-      </if>
-      <if test="price != null" >
-        price,
-      </if>
-      <if test="userid != null" >
-        userId,
-      </if>
-      <if test="status != null" >
-        status,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        #{id,jdbcType=INTEGER},
-      </if>
-      <if test="name != null" >
-        #{name,jdbcType=VARCHAR},
-      </if>
-      <if test="price != null" >
-        #{price,jdbcType=DECIMAL},
-      </if>
-      <if test="userid != null" >
-        #{userid,jdbcType=INTEGER},
-      </if>
-      <if test="status != null" >
-        #{status,jdbcType=TINYINT},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.gxy.vbook.pojo.Book" >
-    update book
-    <set >
-      <if test="name != null" >
-        name = #{name,jdbcType=VARCHAR},
-      </if>
-      <if test="price != null" >
-        price = #{price,jdbcType=DECIMAL},
-      </if>
-      <if test="userid != null" >
-        userId = #{userid,jdbcType=INTEGER},
-      </if>
-      <if test="status != null" >
-        status = #{status,jdbcType=TINYINT},
-      </if>
-    </set>
-    where id = #{id,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.gxy.vbook.pojo.Book" >
-    update book
-    set name = #{name,jdbcType=VARCHAR},
-      price = #{price,jdbcType=DECIMAL},
-      userId = #{userid,jdbcType=INTEGER},
-      status = #{status,jdbcType=TINYINT}
-    where id = #{id,jdbcType=INTEGER}
+    <insert id="insert" parameterType="com.gxy.vbook.pojo.Book">
+        INSERT INTO book (
+            id,
+            `name`,
+            originalPrice,
+            discount,
+            price,
+            userId,
+            `status`,
+            author,
+            `type`
+        ) VALUES (
+            #{id,jdbcType=INTEGER},
+            #{name,jdbcType=VARCHAR},
+            #{originalPrice,jdbcType=DOUBLE},
+            #{discount,jdbcType=INTEGER},
+            #{price,jdbcType=DOUBLE},
+            #{userId,jdbcType=INTEGER},
+            #{status,jdbcType=INTEGER},
+            #{author,jdbcType=VARCHAR},
+            #{type,jdbcType=VARCHAR}
+        )
+</insert>
+    <insert id="insertSelective" parameterType="com.gxy.vbook.pojo.Book">
+        INSERT INTO book
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id!=null">id,</if>
+            <if test="name!=null">`name`,</if>
+            <if test="originalPrice!=null">originalPrice,</if>
+            <if test="discount!=null">discount,</if>
+            <if test="price!=null">price,</if>
+            <if test="userId!=null">userId,</if>
+            <if test="status!=null">`status`,</if>
+            <if test="author!=null">author,</if>
+            <if test="type!=null">`type`</if>
+        </trim>
+        VALUES
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id!=null">#{id,jdbcType=INTEGER},</if>
+            <if test="name!=null">#{name,jdbcType=VARCHAR},</if>
+            <if test="originalPrice!=null">#{originalPrice,jdbcType=DOUBLE},</if>
+            <if test="discount!=null">#{discount,jdbcType=INTEGER},</if>
+            <if test="price!=null">#{price,jdbcType=DOUBLE},</if>
+            <if test="userId!=null">#{userId,jdbcType=INTEGER},</if>
+            <if test="status!=null">#{status,jdbcType=INTEGER},</if>
+            <if test="author!=null">#{author,jdbcType=VARCHAR},</if>
+            <if test="type!=null">#{type,jdbcType=VARCHAR}</if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.gxy.vbook.pojo.Book">
+        UPDATE book
+        <set>
+            <if test="id != null">id = #{id,jdbcType=INTEGER},</if>
+            <if test="name != null">`name` = #{name,jdbcType=VARCHAR},</if>
+            <if test="originalPrice != null">originalPrice = #{originalPrice,jdbcType=DOUBLE},</if>
+            <if test="discount != null">discount = #{discount,jdbcType=INTEGER},</if>
+            <if test="price != null">price = #{price,jdbcType=DOUBLE},</if>
+            <if test="userId != null">userId = #{userId,jdbcType=INTEGER},</if>
+            <if test="status != null">`status` = #{status,jdbcType=INTEGER},</if>
+            <if test="author != null">author = #{author,jdbcType=VARCHAR},</if>
+            <if test="type != null">`type` = #{type,jdbcType=VARCHAR}</if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.gxy.vbook.pojo.Book">
+        UPDATE book
+        set
+                id = #{id,jdbcType=INTEGER},
+                `name` = #{name,jdbcType=VARCHAR},
+                originalPrice = #{originalPrice,jdbcType=DOUBLE},
+                discount = #{discount,jdbcType=INTEGER},
+                price = #{price,jdbcType=DOUBLE},
+                userId = #{userId,jdbcType=INTEGER},
+                `status` = #{status,jdbcType=INTEGER},
+                author = #{author,jdbcType=VARCHAR},
+                `type` = #{type,jdbcType=VARCHAR}
+		where id = #{id,jdbcType=INTEGER}
   </update>
 
-  <select id="selectListByName" resultType="com.gxy.vbook.pojo.Book" parameterType="string">
-    select
-    <include refid="Base_Column_List"/>
-    from book
-    <where>
-      <if test="name != null and name != ''">
-        and name LIKE #{name}
-      </if>
-    </where>
-  </select>
+    <select id="selectListByName" resultType="com.gxy.vbook.pojo.Book" parameterType="string">
+        select
+        <include refid="Base_Column_List"/>
+        from book
+        <where>
+            <if test="name != null and name != ''">
+                and name LIKE #{name}
+            </if>
+            and status != 0
+        </where>
+    </select>
+
+    <select id="selectByBookIdAndUserId" parameterType="map" resultType="com.gxy.vbook.pojo.Book">
+        select
+        <include refid="Base_Column_List"/>
+        from book
+        where id = #{id} and userId = #{userId}
+    </select>
 </mapper>

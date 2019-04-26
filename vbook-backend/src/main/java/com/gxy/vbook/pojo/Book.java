@@ -9,12 +9,12 @@ import lombok.*;
 @ToString
 public class Book {
     private Integer id;
-
     private String name;
-
+    private String author;
+    private String type;
+    private Double originalPrice;
+    private Integer discount;
     private Double price;
-
-    private Integer userid;
-
-    private Byte status;
+    private Integer userId;
+    private Integer status;
 }

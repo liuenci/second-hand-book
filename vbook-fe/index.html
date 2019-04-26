@@ -35,7 +35,7 @@
             <tbody></tbody>
         </table>
     </div>
-    <embed src="static/html/common/footer.html" width="100%" height="72px" style="position: absolute;bottom:0px" />
+    <embed src="static/html/common/footer.html" width="100%" height="72px" />
 </body>
 <script src="./static/js/common/jquery-3.1.1.min.js"></script>
 <script src="./static/js/common/bootstrap.js"></script>
@@ -44,7 +44,7 @@
     var _table = $('#table');
     //初始化bootstrap table ，并且启动它
     function init(name) {
-        name = name == undefined ? '' : name 
+        name = name == undefined ? '' : name
         _table.bootstrapTable({
             url: 'http://localhost:8080/book/list',
             method: 'get',
@@ -64,6 +64,22 @@
             {
                 field: 'name',
                 title: '书名'
+            },
+            {
+                field: 'author',
+                title: '作者'
+            },
+            {
+                field: 'type',
+                title: '类型'
+            },
+            {
+                field: 'originalPrice',
+                title: '原价'
+            },
+            {
+                field: 'discount',
+                title: '成色'
             },
             {
                 field: 'price',
@@ -94,17 +110,35 @@
     }
     function add(t) {
         let id = $(t).parents('tr').find('td:first').text()
+        // 不能购买自己的书籍
         $.ajax({
-            url: 'http://localhost:8080/cart/add',
-            type: 'post',
+            url: 'http://localhost:8080/book/isMine',
+            type: 'get',
+            async: false,
             data: {
-                bookId: id
+                id: id
             },
             dataType: 'json',
             success: function (result) {
-                alert('添加购物车成功')
+                if (result.status == 1) {
+                    alert('无法购买自己出售的二手书')
+                } else {
+                    $.ajax({
+                        url: 'http://localhost:8080/cart/add',
+                        type: 'post',
+                        async: false,
+                        data: {
+                            bookId: id
+                        },
+                        dataType: 'json',
+                        success: function (result) {
+                            alert('添加购物车成功')
+                        }
+                    })
+                }
             }
         })
+
     }
     $(function () {
         init('')

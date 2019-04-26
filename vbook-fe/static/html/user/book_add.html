@@ -12,26 +12,62 @@
 <body>
     <embed src="../common/header.html" width="100%" height="72px" />
     <div class="container">
-            <h3 class="col-sm-offset-2">我要卖书</h2>
-            <form class="form-horizontal" role="form">
-                <div class="form-group">
-                    <label for="name" class="col-sm-2 control-label">书名</label>
-                    <div class="col-sm-4">
-                        <input type="text" class="form-control" id="name" placeholder="请输入书名">
-                    </div>
+        <h3 class="col-sm-offset-2">我要卖书</h3>
+        <form class="form-horizontal" role="form">
+            <div class="form-group">
+                <label for="name" class="col-sm-2 control-label">书名</label>
+                <div class="col-sm-4">
+                    <input type="text" class="form-control" id="name" placeholder="请输入书名">
                 </div>
-                <div class="form-group">
-                    <label for="price" class="col-sm-2 control-label">价格</label>
-                    <div class="col-sm-4">
-                        <input type="text" class="form-control" id="price" placeholder="请输入价格">
-                    </div>
+            </div>
+            <div class="form-group">
+                <label for="author" class="col-sm-2 control-label">作者</label>
+                <div class="col-sm-4">
+                    <input type="text" class="form-control" id="author" placeholder="请输入作者">
                 </div>
-                <div class="form-group">
-                    <div class="col-sm-offset-2 col-sm-10">
-                        <button type="button" class="btn btn-default" id="btn-book-add">确认出售</button>
-                    </div>
+            </div>
+            <div class="form-group">
+                <label for="type" class="col-sm-2 control-label">类型</label>
+                <div class="col-sm-4">
+                    <select class="form-control" id="type">
+                        <option value="编程语言">编程语言</option>
+                        <option value="网络文学">网络文学</option>
+                        <option value="通信技术">通信技术</option>
+                        <option value="项目实战">项目实战</option>
+                        <option value="其他">其他</option>
+                    </select>
                 </div>
-            </form>
+            </div>
+            <div class="form-group">
+                <label for="originalPrice" class="col-sm-2 control-label">原价</label>
+                <div class="col-sm-4">
+                    <input type="text" class="form-control" id="originalPrice" placeholder="请输入原价">
+                </div>
+                <label class="control-label" id="price"></label>
+            </div>
+            <div class="form-group">
+                <label for="discount" class="col-sm-2 control-label">几成新</label>
+                <div class="col-sm-4">
+                    <select class="form-control" id="discount">
+                        <option value="1">1成新</option>
+                        <option value="2">2成新</option>
+                        <option value="3">3成新</option>
+                        <option value="4">4成新</option>
+                        <option value="5">5成新</option>
+                        <option value="6">6成新</option>
+                        <option value="7">7成新</option>
+                        <option value="8">8成新</option>
+                        <option value="9">9成新</option>
+                        <option value="10">全新未开封</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <button type="button" class="btn btn-default" id="btn-book-add">确认出售</button>
+                </div>
+            </div>
+        </form>
     </div>
 
     <embed src="../common/footer.html" width="100%" height="72px" style="position: absolute;bottom:0px" />
@@ -39,14 +75,33 @@
 <script src="../../js/common/jquery-3.1.1.min.js"></script>
 <script>
     $(function () {
+        $('#originalPrice').blur(function(){
+            var discount = $('#discount').val()
+            var value = $('#originalPrice').val() * discount / 10
+            $('#price').text('折旧后可卖' + value + '元')
+        })
+        $('#discount').blur(function(){
+            var discount = $('#discount').val()
+            var value = $('#originalPrice').val() * discount / 10
+            $('#price').text('折旧后可卖' + value + '元')
+        })
+        $('#discount').change(function(){
+            var discount = $('#discount').val()
+            var value = $('#originalPrice').val() * discount / 10
+            $('#price').text('折旧后可卖' + value + '元')
+        })
         $('#btn-book-add').click(function () {
             $.ajax({
                 url: 'http://localhost:8080/book/add',
                 type: 'post',
-                data: {
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify({
                     name: $('#name').val(),
-                    price: $('#price').val()
-                },
+                    author: $('#author').val(),
+                    type: $('#type').val(),
+                    originalPrice: $('#originalPrice').val(),
+                    discount: $('#discount').val(),
+                }),
                 success: function (result) {
                     if (result.status == 0 && result.data != null) {
                         window.location = '../../../index.html'
