@@ -41,6 +41,50 @@
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
+    <div class="modal fade" id="order_comment" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×
+                    </button>
+                    <h4 class="modal-title">
+                        评论
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal" role="form">
+                        <div class="form-group">
+                            <label for="score" class="col-sm-2 control-label">评分</label>
+                            <div class="col-sm-4">
+                                <select class="form-control" id="score">
+                                    <option value="1">1 星</option>
+                                    <option value="2">2 星</option>
+                                    <option value="3">3 星</option>
+                                    <option value="4">4 星</option>
+                                    <option value="5" selected>5 星</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="comment" class="col-sm-2 control-label">评论</label>
+                            <div class="col-sm-8">
+                                <textarea class="form-control" rows="3" id="comment"></textarea>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">
+                        关闭
+                    </button>
+                    <button type="button" class="btn btn-primary" id="btn-order-comment" data-dismiss="modal">
+                        提交
+                    </button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
     <embed src="../common/footer.html" width="100%" height="72px" />
 </body>
 <script src="../../js/common/jquery-3.1.1.min.js"></script>
@@ -76,7 +120,7 @@
             {
                 field: 'opt',
                 title: '操作',
-                width: 120,
+                width: 320,
                 align: 'center',
                 valign: 'middle',
                 formatter: actionFormatter,
@@ -88,6 +132,7 @@
         var id = row.id
         var result = "";
         result += "<button class='btn btn-default btn-primary btn-order-item' data-toggle='modal' onclick='get_data(this)'>订单详情</button>";
+        result += " <button class='btn btn-default btn-primary btn-order-comment' data-toggle='modal' onclick='comment(this)'>评论</button>";
         return result;
     }
     function get_data(t) {
@@ -123,6 +168,32 @@
         });
         $("#order_items_id").modal("toggle");
     }
+    var value;
+    function comment(t) {
+        value = $(t).parents('tr').find('td:first').text()
+        $("#order_comment").modal("toggle");
+    }
+
+    $('#btn-order-comment').click(function(){
+        $.ajax({
+            url: 'http://localhost:8080/comment/add',
+            type: 'post',
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify({
+                    orderNo: value,
+                    score: $('#score').val(),
+                    comment: $('#comment').val(),
+                }),
+                success: function (result) {
+                    if (result.status == 0) {
+                        alert('评论成功')
+                    }
+                    if (result.status == 1) {
+                        alert('评论失败')
+                    }
+                }
+        })
+    })
     $(function () {
         init()
     })

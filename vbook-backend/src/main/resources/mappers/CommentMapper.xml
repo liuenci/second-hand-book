@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.gxy.vbook.dao.CommentMapper">
+    <!--auto generated Code-->
+    <resultMap id="BaseResultMap" type="com.gxy.vbook.pojo.Comment">
+        <result column="id" property="id" jdbcType="INTEGER"/>
+        <result column="orderNo" property="orderNo" jdbcType="VARCHAR"/>
+        <result column="score" property="score" jdbcType="INTEGER"/>
+        <result column="comment" property="comment" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--auto generated Code-->
+    <sql id="Base_Column_List">
+        id,
+        orderNo,
+        score,
+        `comment`
+    </sql>
+
+    <!--auto generated Code-->
+    <insert id="insert" useGeneratedKeys="true" keyProperty="comment.id">
+        INSERT INTO comment (
+            id,
+            orderNo,
+            score,
+            `comment`
+        ) VALUES (
+            #{comment.id,jdbcType=INTEGER},
+            #{comment.orderNo,jdbcType=VARCHAR},
+            #{comment.score,jdbcType=INTEGER},
+            #{comment.comment,jdbcType=VARCHAR}
+        )
+    </insert>
+
+    <!--auto generated Code-->
+    <insert id="insertSelective" useGeneratedKeys="true" keyProperty="comment.id">
+        INSERT INTO comment
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="comment.id!=null"> id,</if>
+            <if test="comment.orderNo!=null"> orderNo,</if>
+            <if test="comment.score!=null"> score,</if>
+            <if test="comment.comment!=null"> `comment`,</if>
+        </trim>
+        VALUES
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="comment.id!=null">#{comment.id,jdbcType=INTEGER},
+            </if>
+            <if test="comment.orderNo!=null">#{comment.orderNo,jdbcType=VARCHAR},
+            </if>
+            <if test="comment.score!=null">#{comment.score,jdbcType=INTEGER},
+            </if>
+            <if test="comment.comment!=null">#{comment.comment,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+
+    <!--auto generated Code-->
+    <insert id="insertList">
+        INSERT INTO comment (
+            id,
+            orderNo,
+            score,
+            `comment`
+        )VALUES
+        <foreach collection="comments" item="comment" index="index" separator=",">
+            (
+            #{comment.id,jdbcType=INTEGER},
+            #{comment.orderNo,jdbcType=VARCHAR},
+            #{comment.score,jdbcType=INTEGER},
+            #{comment.comment,jdbcType=VARCHAR}
+            )
+        </foreach>
+    </insert>
+
+    <!--auto generated Code-->
+    <update id="updateByPrimaryKeySelective">
+        UPDATE comment
+        <set>
+            <if test="comment.orderNo != null"> orderNo= #{comment.orderNo,jdbcType=VARCHAR},</if>
+            <if test="comment.score != null"> score= #{comment.score,jdbcType=INTEGER},</if>
+            <if test="comment.comment != null"> `comment`= #{comment.comment,jdbcType=VARCHAR}</if>
+        </set>
+        WHERE id = #{comment.id,jdbcType=INTEGER}
+    </update>
+</mapper>
+
