@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.gxy.vbook.dao.DonateBookMapper">
+    <!--auto generated Code-->
+    <resultMap id="BaseResultMap" type="com.gxy.vbook.pojo.DonateBook">
+        <result column="id" property="id" jdbcType="INTEGER"/>
+        <result column="userId" property="userId" jdbcType="INTEGER"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="author" property="author" jdbcType="VARCHAR"/>
+        <result column="originalPrice" property="originalPrice" jdbcType="DOUBLE"/>
+        <result column="discount" property="discount" jdbcType="INTEGER"/>
+        <result column="createTime" property="createTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <!--auto generated Code-->
+    <sql id="Base_Column_List">
+        id,
+        userId,
+        `name`,
+        author,
+        originalPrice,
+        discount,
+createTime
+</sql>
+
+    <!--auto generated Code-->
+    <insert id="insert" useGeneratedKeys="true" keyProperty="donateBook.id">
+        INSERT INTO vbook_donate_book (
+            id,
+            userId,
+            `name`,
+            author,
+            originalPrice,
+            discount,
+            createTime
+        ) VALUES (
+            #{donateBook.id,jdbcType=INTEGER},
+            #{donateBook.userId,jdbcType=INTEGER},
+            #{donateBook.name,jdbcType=VARCHAR},
+            #{donateBook.author,jdbcType=VARCHAR},
+            #{donateBook.originalPrice,jdbcType=DOUBLE},
+            #{donateBook.discount,jdbcType=INTEGER},
+            now()
+        )
+</insert>
+
+    <!--auto generated Code-->
+    <insert id="insertSelective" useGeneratedKeys="true" keyProperty="donateBook.id">
+        INSERT INTO vbook_donate_book
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="donateBook.id!=null">id,</if>
+            <if test="donateBook.userId!=null">userId,</if>
+            <if test="donateBook.name!=null">`name`,</if>
+            <if test="donateBook.author!=null">author,</if>
+            <if test="donateBook.originalPrice!=null">originalPrice,</if>
+            <if test="donateBook.discount!=null">discount,</if>
+            <if test="donateBook.createTime!=null">createTime</if>
+        </trim>
+        VALUES
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="donateBook.id!=null">#{donateBook.id,jdbcType=INTEGER},</if>
+            <if test="donateBook.userId!=null">#{donateBook.userId,jdbcType=INTEGER},</if>
+            <if test="donateBook.name!=null">#{donateBook.name,jdbcType=VARCHAR},</if>
+            <if test="donateBook.author!=null">#{donateBook.author,jdbcType=VARCHAR},</if>
+            <if test="donateBook.originalPrice!=null">#{donateBook.originalPrice,jdbcType=DOUBLE},</if>
+            <if test="donateBook.discount!=null">#{donateBook.discount,jdbcType=INTEGER},</if>
+            <if test="donateBook.createTime!=null">#{donateBook.createTime,jdbcType=TIMESTAMP}</if>
+        </trim>
+    </insert>
+
+    <!--auto generated Code-->
+    <insert id="insertList">
+        INSERT INTO vbook_donate_book(
+        id,
+        userId,
+        `name`,
+        author,
+        originalPrice,
+        discount,
+        createTime
+        )VALUES
+        <foreach collection="donateBooks" item="donateBook" index="index" separator=",">
+            (
+            #{donateBook.id,jdbcType=INTEGER},
+            #{donateBook.userId,jdbcType=INTEGER},
+            #{donateBook.name,jdbcType=VARCHAR},
+            #{donateBook.author,jdbcType=VARCHAR},
+            #{donateBook.originalPrice,jdbcType=DOUBLE},
+            #{donateBook.discount,jdbcType=INTEGER},
+            now()
+            )
+        </foreach>
+    </insert>
+
+    <!--auto generated Code-->
+    <update id="updateByPrimaryKeySelective">
+        UPDATE vbook_donate_book
+        <set>
+            <if test="donateBook.id != null">id = #{donateBook.id,jdbcType=INTEGER},</if>
+            <if test="donateBook.userId != null">userId = #{donateBook.userId,jdbcType=INTEGER},</if>
+            <if test="donateBook.name != null">`name` = #{donateBook.name,jdbcType=VARCHAR},</if>
+            <if test="donateBook.author != null">author = #{donateBook.author,jdbcType=VARCHAR},</if>
+            <if test="donateBook.originalPrice != null">originalPrice = #{donateBook.originalPrice,jdbcType=DOUBLE},
+            </if>
+            <if test="donateBook.discount != null">discount = #{donateBook.discount,jdbcType=INTEGER},</if>
+            <if test="donateBook.createTime != null">createTime = #{donateBook.createTime,jdbcType=TIMESTAMP}</if>
+        </set>
+        WHERE id = #{donateBook.id,jdbcType=INTEGER}
+    </update>
+
+    <select id="selectAllList" resultType="com.gxy.vbook.pojo.DonateBook">
+        select
+        <include refid="Base_Column_List"/>
+        from vbook_donate_book
+    </select>
+</mapper>
+
