@@ -29,4 +29,9 @@ public class BookController {
         Integer userId = Integer.parseInt(redisTemplate.opsForValue().get(Const.CURRENT_USER));
         return bookService.isMine(id,userId);
     }
+    @GetMapping("recommended")
+    public PageResponse recommendedList() {
+        return bookService.recommendedList();
+    }
+
 }

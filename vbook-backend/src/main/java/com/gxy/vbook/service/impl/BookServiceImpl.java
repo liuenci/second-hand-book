@@ -4,7 +4,9 @@ import com.gxy.vbook.common.Const;
 import com.gxy.vbook.common.PageResponse;
 import com.gxy.vbook.common.ServerResponse;
 import com.gxy.vbook.dao.BookMapper;
+import com.gxy.vbook.dao.UserMapper;
 import com.gxy.vbook.pojo.Book;
+import com.gxy.vbook.pojo.User;
 import com.gxy.vbook.service.BookService;
 import com.gxy.vbook.utils.BigDecimalUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +14,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -19,6 +22,9 @@ public class BookServiceImpl implements BookService {
 
     @Autowired
     private BookMapper bookMapper;
+
+    @Autowired
+    private UserMapper userMapper;
 
     @Autowired
     private RedisTemplate<String,String> redisTemplate;
@@ -51,5 +57,24 @@ public class BookServiceImpl implements BookService {
             return ServerResponse.createByError();
         }
         return ServerResponse.createBySuccess();
+    }
+
+    @Override
+    public PageResponse recommendedList() {
+        // 按照评分对所有用户排序
+        List<User> list = userMapper.selectListOrderByLevel();
+        // 存储推荐二手书
+        List<Book> bookList = new ArrayList<>();
+        for (User user : list) {
+            Integer userId = user.getId();
+            List<Book> userBookList = bookMapper.selectByUserId(userId);
+            if (userBookList.size() != 0) {
+                bookList.addAll(userBookList);
+            }
+        }
+        PageResponse response = new PageResponse();
+        response.setTotal(bookList.size());
+        response.setRows(bookList);
+        return response;
     }
 }

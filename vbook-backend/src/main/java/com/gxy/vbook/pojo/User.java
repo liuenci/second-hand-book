@@ -20,5 +20,11 @@ public class User {
 
     private Double balance;
 
+    private Integer totalScore;
+
+    private Integer commentNumber;
+
+    private Double level;
+
     private Integer role;
 }

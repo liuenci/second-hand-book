@@ -25,4 +25,6 @@ public interface UserMapper {
     User selectByNameAndPassword(@Param("name") String name, @Param("password") String password);
 
     List<User> selectUserList(String name);
+
+    List<User> selectListOrderByLevel();
 }

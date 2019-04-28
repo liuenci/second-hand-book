@@ -10,4 +10,6 @@ public interface BookService {
     PageResponse findList(String name);
 
     ServerResponse isMine(Integer id,Integer userId);
+
+    PageResponse recommendedList();
 }

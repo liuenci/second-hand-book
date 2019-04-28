@@ -122,4 +122,9 @@
         from book
         where id = #{id} and userId = #{userId}
     </select>
+    <select id="selectByUserId" resultMap="BaseResultMap" parameterType="integer">
+        select
+        <include refid="Base_Column_List"/>
+        from book where userId = #{userId} and status = 1
+    </select>
 </mapper>
