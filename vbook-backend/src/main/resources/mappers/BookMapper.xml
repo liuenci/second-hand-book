@@ -11,9 +11,10 @@
         <result column="status" property="status" jdbcType="INTEGER"/>
         <result column="author" property="author" jdbcType="VARCHAR"/>
         <result column="type" property="type" jdbcType="VARCHAR"/>
+        <result column="imgName" property="imgName" jdbcType="VARCHAR"/>
     </resultMap>
     <sql id="Base_Column_List">
-    id, name, author,originalPrice,discount,price, userId, status,`type`
+    id, name, author,originalPrice,discount,price, userId, status,`type`,imgName
 </sql>
     <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
         select
@@ -25,7 +26,7 @@
     delete from book
     where id = #{id,jdbcType=INTEGER}
   </delete>
-    <insert id="insert" parameterType="com.gxy.vbook.pojo.Book">
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="com.gxy.vbook.pojo.Book">
         INSERT INTO book (
             id,
             `name`,
@@ -35,7 +36,8 @@
             userId,
             `status`,
             author,
-            `type`
+            `type`,
+            imgName
         ) VALUES (
             #{id,jdbcType=INTEGER},
             #{name,jdbcType=VARCHAR},
@@ -45,7 +47,8 @@
             #{userId,jdbcType=INTEGER},
             #{status,jdbcType=INTEGER},
             #{author,jdbcType=VARCHAR},
-            #{type,jdbcType=VARCHAR}
+            #{type,jdbcType=VARCHAR},
+            #{imgName,jdbcType=VARCHAR}
         )
 </insert>
     <insert id="insertSelective" parameterType="com.gxy.vbook.pojo.Book">
@@ -60,6 +63,7 @@
             <if test="status!=null">`status`,</if>
             <if test="author!=null">author,</if>
             <if test="type!=null">`type`</if>
+            <if test="imgName!=null">`type`</if>
         </trim>
         VALUES
         <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -72,6 +76,7 @@
             <if test="status!=null">#{status,jdbcType=INTEGER},</if>
             <if test="author!=null">#{author,jdbcType=VARCHAR},</if>
             <if test="type!=null">#{type,jdbcType=VARCHAR}</if>
+            <if test="imgName!=null">#{imgName,jdbcType=VARCHAR}</if>
         </trim>
     </insert>
     <update id="updateByPrimaryKeySelective" parameterType="com.gxy.vbook.pojo.Book">

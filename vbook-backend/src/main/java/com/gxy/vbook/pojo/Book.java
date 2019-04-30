@@ -44,6 +44,10 @@ public class Book {
      */
     private Integer userId;
     /**
+     * 图片名称
+     */
+    private String imgName;
+    /**
      * 二手书状态 0 卖出 1 在售
      */
     private Integer status;

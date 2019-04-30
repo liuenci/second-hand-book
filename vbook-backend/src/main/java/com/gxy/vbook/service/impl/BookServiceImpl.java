@@ -9,6 +9,7 @@ import com.gxy.vbook.pojo.Book;
 import com.gxy.vbook.pojo.User;
 import com.gxy.vbook.service.BookService;
 import com.gxy.vbook.utils.BigDecimalUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
@@ -18,6 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@Slf4j
 public class BookServiceImpl implements BookService {
 
     @Autowired
@@ -44,8 +46,18 @@ public class BookServiceImpl implements BookService {
         BigDecimal value = BigDecimalUtil.mul(book.getOriginalPrice(),book.getDiscount().doubleValue() / 10);
         book.setPrice(value.doubleValue());
         // 插入二手书
-        bookMapper.insert(book);
+        bookMapper.updateByPrimaryKeySelective(book);
         // 返回正确的状态码
+        return ServerResponse.createBySuccess(book);
+    }
+
+    @Override
+    public ServerResponse saveBookImage(Book book) {
+        Integer userId = Integer.parseInt(redisTemplate.opsForValue().get(Const.CURRENT_USER));
+        book.setUserId(userId);
+        book.setStatus(1);
+        // 插入二手书
+        bookMapper.insert(book);
         return ServerResponse.createBySuccess(book);
     }
 

@@ -15,6 +15,8 @@ public interface BookService {
      */
     ServerResponse save(Book book);
 
+    ServerResponse saveBookImage(Book book);
+
     /**
      * 模糊查询二手书集合
      * @param name

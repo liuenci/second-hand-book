@@ -7,6 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>我要卖书</title>
     <link rel="stylesheet" href="../../css/common/bootstrap.css">
+    <link rel="stylesheet" href="../../css/common/fileinput.css">
 </head>
 
 <body>
@@ -17,6 +18,9 @@
             <div class="form-group">
                 <label for="name" class="col-sm-2 control-label">书名</label>
                 <div class="col-sm-4">
+                    <input type="hidden" class="form-control" id="id">
+                    <input type="hidden" class="form-control" id="imgName">
+                    <input type="hidden" class="form-control" id="userId">
                     <input type="text" class="form-control" id="name" placeholder="请输入书名">
                 </div>
             </div>
@@ -63,6 +67,16 @@
                 </div>
             </div>
             <div class="form-group">
+                <label for="img" class="col-sm-2 control-label">图片</label>
+                <div class="col-sm-4">
+                    <form class="form" action="#" method="post" enctype="multipart/form-data" id="pollutionForm">
+                        <!-- 注意事项：Input type类型为file class为样式 id随意 name随意  
+                                 multiple（如果是要多图上传一定要加上，不加的话每次只能选中一张图）-->
+                        <input type="file" class="file form-control" id="img" name="images"><br>
+                    </form>
+                </div>
+            </div>
+            <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-10">
                     <button type="button" class="btn btn-default" id="btn-book-add">确认出售</button>
                 </div>
@@ -70,22 +84,51 @@
         </form>
     </div>
 
-    <embed src="../common/footer.html" width="100%" height="72px" style="position: absolute;bottom:0px" />
+    <embed src="../common/footer.html" width="100%" height="72px" style="margin-top:100px" />
 </body>
 <script src="../../js/common/jquery-3.1.1.min.js"></script>
+<script src="../../js/common/bootstrap.js"></script>
+<script src="../../js/common/fileinput.js"></script>
+<script src="../../js/common/fileinput_locale_zh.js"></script>
 <script>
+    var imageData = []; //多图上传返回的图片属性接受数组  这里是因为我在做表单其他属性提交的时候使用，在这里我没有将别的input写出来
+    $("#img").fileinput({
+        language: 'zh',
+        uploadUrl: "http://localhost:8080/book/upload",
+        showUpload: true, //是否显示上传按钮
+        showRemove: true, //显示移除按钮
+        showPreview: true, //是否显示预览
+        showCaption: false,//是否显示标题
+        autoReplace: true,
+        minFileCount: 0,
+        uploadAsync: true,
+        maxFileCount: 11,//最大上传数量
+        browseOnZoneClick: true,
+        msgFilesTooMany: "选择上传的文件数量 超过允许的最大数值！",
+        enctype: 'multipart/form-data',
+        // overwriteInitial: false,//不覆盖已上传的图片
+        allowedFileExtensions: ["jpg", "png", "gif"],
+        browseClass: "btn btn-primary", //按钮样式
+        previewFileIcon: "<i class='glyphicon glyphicon-king'></i>"
+    }).on("fileuploaded", function (e, result) {//文件上传成功的回调函数，还有其他的一些回调函数，比如上传之前...
+        result = result.response
+        $('#id').val(result.data.id)
+        $('#imgName').val(result.data.imgName)
+        $('#userId').val(result.data.userId)
+    });
     $(function () {
-        $('#originalPrice').blur(function(){
+
+        $('#originalPrice').blur(function () {
             var discount = $('#discount').val()
             var value = $('#originalPrice').val() * discount / 10
             $('#price').text('折旧后可卖' + value + '元')
         })
-        $('#discount').blur(function(){
+        $('#discount').blur(function () {
             var discount = $('#discount').val()
             var value = $('#originalPrice').val() * discount / 10
             $('#price').text('折旧后可卖' + value + '元')
         })
-        $('#discount').change(function(){
+        $('#discount').change(function () {
             var discount = $('#discount').val()
             var value = $('#originalPrice').val() * discount / 10
             $('#price').text('折旧后可卖' + value + '元')
@@ -96,6 +139,9 @@
                 type: 'post',
                 contentType: "application/json; charset=utf-8",
                 data: JSON.stringify({
+                    id: $('#id').val(),
+                    userId: $('#userId').val(),
+                    imgName: $('#imgName').val(),
                     name: $('#name').val(),
                     author: $('#author').val(),
                     type: $('#type').val(),
