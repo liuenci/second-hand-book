@@ -25,7 +25,7 @@
   <insert id="insert" parameterType="com.gxy.vbook.pojo.Cart" >
     insert into cart (id, userId, bookId, 
       quantity)
-    values (#{id,jdbcType=INTEGER}, #{userid,jdbcType=INTEGER}, #{bookid,jdbcType=INTEGER}, 
+    values (#{id,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{bookId,jdbcType=INTEGER},
       #{quantity,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.gxy.vbook.pojo.Cart" >

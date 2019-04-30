@@ -28,8 +28,8 @@
     insert into orderitem (id, userId, orderNo, 
       bookId, quantity, totalPrice
       )
-    values (#{id,jdbcType=INTEGER}, #{userid,jdbcType=INTEGER}, #{orderno,jdbcType=INTEGER}, 
-      #{bookid,jdbcType=INTEGER}, #{quantity,jdbcType=VARCHAR}, #{totalprice,jdbcType=DECIMAL}
+    values (#{id,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{orderNo,jdbcType=INTEGER},
+      #{bookId,jdbcType=INTEGER}, #{quantity,jdbcType=VARCHAR}, #{totalPrice,jdbcType=DECIMAL}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.gxy.vbook.pojo.OrderItem" >

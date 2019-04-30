@@ -49,7 +49,8 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public ServerResponse pay(int userId) {
         // 获取用户余额
-        double balance = userMapper.selectByPrimaryKey(userId).getBalance();
+        User buyUser = userMapper.selectByPrimaryKey(userId);
+        double balance = buyUser.getBalance();
         List<Cart> list = cartMapper.selectListByUserId(userId);
         BigDecimal totalPrice = new BigDecimal("0");
         for (Cart cart : list) {
@@ -59,6 +60,9 @@ public class OrderServiceImpl implements OrderService {
         if (balance < totalPrice.doubleValue()) {
             return ServerResponse.createByErrorCodeMessage(ResponseCode.BLANCE_NOT_ENOUGH.getCode(), ResponseCode.BLANCE_NOT_ENOUGH.getDesc());
         }
+        // 减去交易所用的金额
+        buyUser.setBalance(BigDecimalUtil.sub(balance,totalPrice.doubleValue()).doubleValue());
+        userMapper.updateByPrimaryKey(buyUser);
         Order order = new Order();
         order.setUserId(userId);
         order.setTotalPrice(totalPrice.doubleValue());
@@ -80,6 +84,16 @@ public class OrderServiceImpl implements OrderService {
             book.setId(cart.getBookId());
             book.setStatus(0);
             bookMapper.updateByPrimaryKeySelective(book);
+
+            // 支付给卖家金额
+            Integer bookId = cart.getBookId();
+            Integer sellerUserId = bookMapper.selectByPrimaryKey(bookId).getUserId();
+            User sellerUser = userMapper.selectByPrimaryKey(sellerUserId);
+            Double currentBalance = sellerUser.getBalance();
+            Double money = cart.getQuantity() *  bookMapper.selectByPrimaryKey(cart.getBookId()).getPrice();
+            sellerUser.setBalance(BigDecimalUtil.add(currentBalance,money).doubleValue());
+            // 更新买家的余额
+            userMapper.updateByPrimaryKey(sellerUser);
         }
         // 删除购物车
         cartMapper.deleteByUserId(userId);
