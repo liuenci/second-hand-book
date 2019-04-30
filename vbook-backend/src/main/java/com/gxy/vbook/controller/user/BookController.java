@@ -9,6 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.*;
 
+/**
+ * 二手书接口
+ */
 @RestController
 @RequestMapping("book")
 public class BookController {
@@ -16,19 +19,43 @@ public class BookController {
     private RedisTemplate<String,String> redisTemplate;
     @Autowired
     private BookService bookService;
+
+    /**
+     * 添加新书
+     * @param book
+     * @return
+     */
     @RequestMapping("add")
     public ServerResponse add(@RequestBody Book book) {
         return bookService.save(book);
     }
+
+    /**
+     * 获取所有的二手书列表
+     * @param name
+     * @return
+     */
     @GetMapping("list")
     public PageResponse findList(@RequestParam(value = "name",required = false,defaultValue = "") String name) {
         return bookService.findList(name);
     }
+
+    /**
+     * 添加购物车的时候判断是否是自己的二手书
+     * 如果是自己的二手书就无法添加到购物车中
+     * @param id
+     * @return
+     */
     @RequestMapping("isMine")
     public ServerResponse isMine(@RequestParam("id") Integer id){
         Integer userId = Integer.parseInt(redisTemplate.opsForValue().get(Const.CURRENT_USER));
         return bookService.isMine(id,userId);
     }
+
+    /**
+     * 二手书推荐列表
+     * @return
+     */
     @GetMapping("recommended")
     public PageResponse recommendedList() {
         return bookService.recommendedList();

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>会员登录</title>
+    <link rel="stylesheet" href="../../css/common/bootstrap.css">
+</head>
+
+<body>
+    <embed src="../common/header.html" width="100%" height="72px" />
+
+    <form class="form-horizontal" role="form">
+        <div class="form-group">
+            <label for="currentBalanece" class="col-sm-2 control-label">当前余额：</label>
+            <div class="col-sm-1">
+                <p class="control-label">1000<span>元</span></p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="money" class="col-sm-2 control-label">充值金额：</label>
+            <div class="col-sm-2">
+                <input type="text" class="form-control" id="name" placeholder="请输入金额">
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <button type="button" class="btn btn-default" id="btn-user-recharge">充值</button>
+            </div>
+        </div>
+    </form>
+    <embed src="../common/footer.html" width="100%" height="72px" />
+</body>
+<script src="../../js/common/jquery-3.1.1.min.js"></script>
+<script src="../../js/common/bootstrap.js"></script>
+<script>
+    $(function () {
+        $('#btn-user-login').click(function () {
+            $.ajax({
+                url: 'http://localhost:8080/user/login',
+                type: 'post',
+                data: {
+                    name: $('#name').val(),
+                    password: $('#password').val()
+                },
+                success: function (result) {
+                    if (result.status == 0 && result.data != null) {
+                        alert('登录成功')
+                        window.location = '../../../index.html'
+                    }
+                    if (result.status == 11) {
+                        alert('用户不存在')
+                        window.location = './register.html'
+                    }
+                }
+
+            })
+        })
+    })
+</script>
+
+</html>

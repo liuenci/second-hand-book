@@ -22,12 +22,22 @@ public class CartController {
     @Autowired
     private RedisTemplate<String, String> redisTemplate;
 
+    /**
+     * 获取当前登录用户的购物车列表
+     * @return
+     */
     @RequestMapping("list")
     public PageResponse list() {
         Integer userId = Integer.parseInt(redisTemplate.opsForValue().get(Const.CURRENT_USER));
         return cartService.list(userId);
     }
 
+    /**
+     * 添加二手书到购物车
+     * @param count
+     * @param bookId
+     * @return
+     */
     @PostMapping("add")
     public ServerResponse add(@RequestParam(value = "count", defaultValue = "1", required = false) Integer count, Integer bookId) {
         Integer userId = Integer.parseInt(redisTemplate.opsForValue().get(Const.CURRENT_USER));
@@ -37,6 +47,11 @@ public class CartController {
         ServerResponse response = cartService.add(bookId, count, userId);
         return ServerResponse.createBySuccess(response);
     }
+
+    /**
+     * 计算购物车中的总价
+     * @return
+     */
     @GetMapping("totalPrice")
     public ServerResponse totalPrice(){
         Integer userId = Integer.parseInt(redisTemplate.opsForValue().get(Const.CURRENT_USER));

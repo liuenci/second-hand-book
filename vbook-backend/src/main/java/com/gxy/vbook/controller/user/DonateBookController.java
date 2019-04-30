@@ -10,6 +10,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+/**
+ * 捐赠二手书接口
+ */
 @RestController
 @RequestMapping("book/donate")
 public class DonateBookController {
@@ -17,8 +20,11 @@ public class DonateBookController {
     @Autowired
     private DonateBookService donateBookService;
 
-
-
+    /**
+     * 新增捐赠的二手书
+     * @param book
+     * @return
+     */
     @RequestMapping("save")
     public ServerResponse save(@RequestBody DonateBook book){
 
@@ -28,6 +34,11 @@ public class DonateBookController {
         }
         return ServerResponse.createBySuccess();
     }
+
+    /**
+     * 获取所有捐赠的二手书列表
+     * @return
+     */
     @RequestMapping("list")
     public ServerResponse list(){
         List<DonateBook> list = donateBookService.selectAllList();

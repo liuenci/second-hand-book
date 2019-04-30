@@ -10,6 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.*;
 
+/**
+ * 用户订单接口
+ */
 @RestController
 @RequestMapping("user/order")
 public class OrderController {
@@ -18,24 +21,41 @@ public class OrderController {
     private OrderService orderService;
 
     @Autowired
-    private RedisTemplate<String,String> redisTemplate;
+    private RedisTemplate<String, String> redisTemplate;
 
+    /**
+     * 订单支付
+     *
+     * @return
+     */
     @PostMapping("pay")
-    public ServerResponse pay(){
+    public ServerResponse pay() {
         Integer userId = Integer.parseInt(redisTemplate.opsForValue().get(Const.CURRENT_USER));
         if (userId == null) {
-            return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(),ResponseCode.NEED_LOGIN.getDesc());
+            return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), ResponseCode.NEED_LOGIN.getDesc());
         }
         orderService.pay(userId);
         return ServerResponse.createBySuccess();
     }
+
+    /**
+     * 获取当前用户所有订单
+     *
+     * @return
+     */
     @GetMapping("list")
-    public PageResponse list(){
+    public PageResponse list() {
         Integer userId = Integer.parseInt(redisTemplate.opsForValue().get(Const.CURRENT_USER));
         return orderService.list(userId);
     }
+
+    /**
+     * 根据订单编号模糊查询订单列表
+     * @param orderNo
+     * @return
+     */
     @GetMapping("{orderNo}")
-    public PageResponse orderItemList(@PathVariable("orderNo") String orderNo){
+    public PageResponse orderItemList(@PathVariable("orderNo") String orderNo) {
         return orderService.orderItemList(orderNo);
     }
 }
