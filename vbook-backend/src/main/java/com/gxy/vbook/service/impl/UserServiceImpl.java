@@ -7,6 +7,7 @@ import com.gxy.vbook.common.ServerResponse;
 import com.gxy.vbook.dao.UserMapper;
 import com.gxy.vbook.pojo.User;
 import com.gxy.vbook.service.UserService;
+import com.gxy.vbook.utils.BigDecimalUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
@@ -106,5 +107,15 @@ public class UserServiceImpl implements UserService {
         response.setTotal(list.size());
         response.setRows(list);
         return response;
+    }
+
+    @Override
+    public ServerResponse recharge(Double money) {
+        // 拿到当前 redis 中的用户 ID
+        Integer userId = Integer.parseInt(redisTemplate.opsForValue().get(Const.CURRENT_USER));
+        User user = userMapper.selectByPrimaryKey(userId);
+        user.setBalance(BigDecimalUtil.add(user.getBalance(),money).doubleValue());
+        userMapper.updateByPrimaryKeySelective(user);
+        return ServerResponse.createBySuccess();
     }
 }

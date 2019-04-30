@@ -16,13 +16,13 @@
         <div class="form-group">
             <label for="currentBalanece" class="col-sm-2 control-label">当前余额：</label>
             <div class="col-sm-1">
-                <p class="control-label">1000<span>元</span></p>
+                <p class="control-label"><span id="currentBalanece"></span><span>元</span></p>
             </div>
         </div>
         <div class="form-group">
             <label for="money" class="col-sm-2 control-label">充值金额：</label>
             <div class="col-sm-2">
-                <input type="text" class="form-control" id="name" placeholder="请输入金额">
+                <input type="text" class="form-control" id="money" placeholder="请输入金额">
             </div>
         </div>
         <div class="form-group">
@@ -37,22 +37,30 @@
 <script src="../../js/common/bootstrap.js"></script>
 <script>
     $(function () {
-        $('#btn-user-login').click(function () {
+        $.ajax({
+            url: 'http://localhost:8080/user/profile',
+            type: 'get',
+            async: false,
+            success: function (result) {
+                if (result.status == 0 && result.data != null) {
+                    var user = result.data;
+                    $('#currentBalanece').text(user.balance)
+                }
+            }
+        })
+        $('#btn-user-recharge').click(function () {
             $.ajax({
-                url: 'http://localhost:8080/user/login',
+                url: 'http://localhost:8080/user/recharge',
                 type: 'post',
                 data: {
-                    name: $('#name').val(),
-                    password: $('#password').val()
+                    money: $('#money').val()
                 },
                 success: function (result) {
-                    if (result.status == 0 && result.data != null) {
-                        alert('登录成功')
-                        window.location = '../../../index.html'
-                    }
-                    if (result.status == 11) {
-                        alert('用户不存在')
-                        window.location = './register.html'
+                    if (result.status == 0) {
+                        alert('充值成功')
+                        window.location = 'profile.html'
+                    } else {
+                        alert('充值失败')
                     }
                 }
 

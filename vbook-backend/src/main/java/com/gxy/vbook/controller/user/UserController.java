@@ -21,10 +21,11 @@ public class UserController {
     private UserService userService;
 
     @Autowired
-    private RedisTemplate<String,String> redisTemplate;
+    private RedisTemplate<String, String> redisTemplate;
 
     /**
      * 注册新用户
+     *
      * @param name
      * @param password
      * @param email
@@ -32,19 +33,20 @@ public class UserController {
      * @return
      */
     @PostMapping("register")
-    public ServerResponse<User> register(@RequestParam("name") String name, @RequestParam("password") String password,@RequestParam("email") String email,@RequestParam("phone") String phone) {
+    public ServerResponse<User> register(@RequestParam("name") String name, @RequestParam("password") String password, @RequestParam("email") String email, @RequestParam("phone") String phone) {
         return userService.save(name, password, email, phone);
     }
 
     /**
      * 用户登录
+     *
      * @param name
      * @param password
      * @return
      */
     @PostMapping("login")
     public ServerResponse<User> login(@RequestParam("name") String name, @RequestParam("password") String password) {
-        ServerResponse<User> response = userService.login(name,password);
+        ServerResponse<User> response = userService.login(name, password);
         if (response.isSuccess()) {
             redisTemplate.opsForValue().set(Const.CURRENT_USER, response.getData().getId().toString());
         }
@@ -53,6 +55,7 @@ public class UserController {
 
     /**
      * 更新用户资料
+     *
      * @param id
      * @param phone
      * @param email
@@ -60,25 +63,27 @@ public class UserController {
      * @return
      */
     @PostMapping("update")
-    public ServerResponse<User> update(@RequestParam("id") Integer id, @RequestParam("phone") String phone, @RequestParam("email") String email,@RequestParam("password") String password ) {
-        return userService.update(id, phone, email,password);
+    public ServerResponse<User> update(@RequestParam("id") Integer id, @RequestParam("phone") String phone, @RequestParam("email") String email, @RequestParam("password") String password) {
+        return userService.update(id, phone, email, password);
     }
 
     /**
      * 查看用户资料
+     *
      * @return
      */
     @GetMapping("profile")
-    public ServerResponse<User> profile(){
+    public ServerResponse<User> profile() {
         return userService.profile();
     }
 
     /**
      * 判断用户是否在线
+     *
      * @return
      */
     @RequestMapping("online")
-    public ServerResponse isLogin(){
+    public ServerResponse isLogin() {
         String userId = redisTemplate.opsForValue().get(Const.CURRENT_USER);
         if (userId == null) {
             return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), ResponseCode.NOT_ADMIN.getDesc());
@@ -88,11 +93,16 @@ public class UserController {
 
     /**
      * 退出登录
+     *
      * @return
      */
     @RequestMapping("logout")
-    public ServerResponse logout(){
+    public ServerResponse logout() {
         redisTemplate.delete(Const.CURRENT_USER);
         return ServerResponse.createBySuccess();
+    }
+    @RequestMapping("recharge")
+    public ServerResponse recharge(@RequestParam("money") Double money) {
+        return userService.recharge(money);
     }
 }

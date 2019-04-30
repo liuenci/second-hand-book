@@ -48,4 +48,6 @@ public interface UserService {
      * @return
      */
     PageResponse findUserList(String name);
+
+    ServerResponse recharge(Double money);
 }
