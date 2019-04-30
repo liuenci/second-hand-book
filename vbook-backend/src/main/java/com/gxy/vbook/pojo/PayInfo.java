@@ -1,67 +1,31 @@
 package com.gxy.vbook.pojo;
 
+import lombok.Data;
+
+
 import java.util.Date;
 
+@Data
 public class PayInfo {
+    /**
+     * 主键ID
+     */
     private Integer id;
+    /**
+     * 用户ID 标明是哪个用户的支付信息
+     */
+    private Integer userId;
 
-    private Integer userid;
-
-    private Integer orderno;
-
+    /**
+     * 订单编号 标明是为哪个订单支付的
+     */
+    private Integer orderNo;
+    /**
+     * 状态
+     */
     private Integer status;
-
+    /**
+     * 支付时间
+     */
     private Date time;
-
-    public PayInfo(Integer id, Integer userid, Integer orderno, Integer status, Date time) {
-        this.id = id;
-        this.userid = userid;
-        this.orderno = orderno;
-        this.status = status;
-        this.time = time;
-    }
-
-    public PayInfo() {
-        super();
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public Integer getUserid() {
-        return userid;
-    }
-
-    public void setUserid(Integer userid) {
-        this.userid = userid;
-    }
-
-    public Integer getOrderno() {
-        return orderno;
-    }
-
-    public void setOrderno(Integer orderno) {
-        this.orderno = orderno;
-    }
-
-    public Integer getStatus() {
-        return status;
-    }
-
-    public void setStatus(Integer status) {
-        this.status = status;
-    }
-
-    public Date getTime() {
-        return time;
-    }
-
-    public void setTime(Date time) {
-        this.time = time;
-    }
 }

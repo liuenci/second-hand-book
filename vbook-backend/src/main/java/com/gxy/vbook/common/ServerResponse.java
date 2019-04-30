@@ -5,11 +5,26 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import java.io.Serializable;
 
+/**
+ * 响应对象
+ * @param <T>
+ */
 @JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
-// 保证序列化json的时候，如果是null的对象，key也会消失
+/**
+ * 保证序列化json的时候，如果是null的对象，key也会消失
+  */
 public class ServerResponse<T> implements Serializable {
+    /**
+     * 状态码
+     */
     private int status;
+    /**
+     * 返回信息
+     */
     private String msg;
+    /**
+     * 返回数据
+     */
     private T data;
 
     private ServerResponse(int status) {

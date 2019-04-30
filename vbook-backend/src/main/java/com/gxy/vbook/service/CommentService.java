@@ -1,14 +1,15 @@
 package com.gxy.vbook.service;
 
-import java.util.List;
 import com.gxy.vbook.pojo.Comment;
+
+/**
+ * 评论接口
+ */
 public interface CommentService{
-
+    /**
+     * 插入新评论
+     * @param comment
+     * @return
+     */
     int insert(Comment comment);
-
-    int insertSelective(Comment comment);
-
-    int insertList(List<Comment> comments);
-
-    int updateByPrimaryKeySelective(Comment comment);
 }

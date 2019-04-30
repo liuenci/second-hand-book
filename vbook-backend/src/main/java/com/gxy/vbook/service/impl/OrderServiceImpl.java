@@ -40,6 +40,11 @@ public class OrderServiceImpl implements OrderService {
     @Autowired
     private RedisTemplate<String,String> redisTemplate;
 
+    /**
+     * 订单支付
+     * @param userId
+     * @return
+     */
     @Transactional(rollbackFor = Exception.class)
     @Override
     public ServerResponse pay(int userId) {
@@ -48,7 +53,7 @@ public class OrderServiceImpl implements OrderService {
         List<Cart> list = cartMapper.selectListByUserId(userId);
         BigDecimal totalPrice = new BigDecimal("0");
         for (Cart cart : list) {
-            Book book = bookMapper.selectByPrimaryKey(cart.getBookid());
+            Book book = bookMapper.selectByPrimaryKey(cart.getBookId());
             totalPrice = BigDecimalUtil.add(totalPrice.doubleValue(), BigDecimalUtil.mul(book.getPrice(), cart.getQuantity()).doubleValue());
         }
         if (balance < totalPrice.doubleValue()) {
@@ -57,22 +62,22 @@ public class OrderServiceImpl implements OrderService {
         Order order = new Order();
         order.setUserId(userId);
         order.setTotalPrice(totalPrice.doubleValue());
-        order.setOrderno(UUID.randomUUID().toString());
-        order.setCreatetime(new Date());
+        order.setOrderNo(UUID.randomUUID().toString());
+        order.setCreateTime(new Date());
         // 插入订单主表
         orderMapper.insert(order);
         for (Cart cart : list) {
             OrderItem orderItem = new OrderItem();
-            orderItem.setBookid(cart.getBookid());
-            orderItem.setOrderno(order.getOrderno());
+            orderItem.setBookId(cart.getBookId());
+            orderItem.setOrderNo(order.getOrderNo());
             orderItem.setQuantity(cart.getQuantity());
-            orderItem.setTotalprice(cart.getQuantity() * bookMapper.selectByPrimaryKey(cart.getBookid()).getPrice());
-            orderItem.setUserid(userId);
+            orderItem.setTotalPrice(cart.getQuantity() * bookMapper.selectByPrimaryKey(cart.getBookId()).getPrice());
+            orderItem.setUserId(userId);
             orderItemMapper.insert(orderItem);
 
             // 更新二手书的状态
             Book book = new Book();
-            book.setId(cart.getBookid());
+            book.setId(cart.getBookId());
             book.setStatus(0);
             bookMapper.updateByPrimaryKeySelective(book);
         }
@@ -81,6 +86,11 @@ public class OrderServiceImpl implements OrderService {
         return ServerResponse.createBySuccess();
     }
 
+    /**
+     * 查询某个用户的所有订单
+     * @param userId
+     * @return
+     */
     @Override
     public PageResponse list(int userId) {
         List<Order> list = orderMapper.selectListByUserId(userId);
@@ -90,6 +100,12 @@ public class OrderServiceImpl implements OrderService {
         return response;
     }
 
+    /**
+     * 管理员操作
+     * 通过订单编号查询订单中所有的订单子表记录
+     * @param orderNo
+     * @return
+     */
     @Override
     public ServerResponse item(String orderNo) {
         Integer userId = Integer.parseInt(redisTemplate.opsForValue().get(Const.CURRENT_USER));
@@ -101,14 +117,19 @@ public class OrderServiceImpl implements OrderService {
         return ServerResponse.createBySuccess(list);
     }
 
+    /**
+     * 通过订单编号查询所有订单的子表信息
+     * @param orderNo
+     * @return
+     */
     @Override
     public PageResponse orderItemList(String orderNo) {
         List<OrderItem> list = orderItemMapper.selectByOrderNo(orderNo);
         List<OrderItemVo> responseList = new ArrayList<>();
         for (OrderItem orderItem : list) {
             OrderItemVo vo = new OrderItemVo();
-            vo.setBookId(orderItem.getBookid());
-            Book book = bookMapper.selectByPrimaryKey(orderItem.getBookid());
+            vo.setBookId(orderItem.getBookId());
+            Book book = bookMapper.selectByPrimaryKey(orderItem.getBookId());
             vo.setBookName(book.getName());
             vo.setPrice(book.getPrice());
             vo.setQuantity(orderItem.getQuantity());
@@ -120,6 +141,11 @@ public class OrderServiceImpl implements OrderService {
         return response;
     }
 
+    /**
+     * 通过订单编号模糊查询订单列表
+     * @param orderNo
+     * @return
+     */
     @Override
     public PageResponse findOrderList(String orderNo) {
         orderNo = new StringBuffer("%").append(orderNo).append("%").toString();

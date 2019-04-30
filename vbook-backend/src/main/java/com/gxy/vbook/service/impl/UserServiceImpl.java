@@ -20,6 +20,14 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private RedisTemplate<String, String> redisTemplate;
 
+    /**
+     * 用户注册
+     * @param name
+     * @param password
+     * @param email
+     * @param phone
+     * @return
+     */
     @Override
     public ServerResponse save(String name, String password,String email, String phone) {
         User user = userMapper.selectByName(name);
@@ -37,6 +45,12 @@ public class UserServiceImpl implements UserService {
         return ServerResponse.createBySuccess(insertUser);
     }
 
+    /**
+     * 用户登录
+     * @param name
+     * @param password
+     * @return
+     */
     @Override
     public ServerResponse login(String name, String password) {
         User user = userMapper.selectByNameAndPassword(name, password);
@@ -46,6 +60,14 @@ public class UserServiceImpl implements UserService {
         return ServerResponse.createBySuccess(user);
     }
 
+    /**
+     * 更新用户信息
+     * @param id
+     * @param phone
+     * @param email
+     * @param password
+     * @return
+     */
     @Override
     public ServerResponse update(int id, String phone, String email, String password) {
         User u = new User();
@@ -57,6 +79,10 @@ public class UserServiceImpl implements UserService {
         return ServerResponse.createBySuccess(u);
     }
 
+    /**
+     * 查看用户信息
+     * @return
+     */
     @Override
     public ServerResponse profile() {
         Integer userId = Integer.parseInt(redisTemplate.opsForValue().get(Const.CURRENT_USER));
@@ -67,6 +93,11 @@ public class UserServiceImpl implements UserService {
         return ServerResponse.createBySuccess(user);
     }
 
+    /**
+     * 模糊查询所有用户集合
+     * @param name
+     * @return
+     */
     @Override
     public PageResponse findUserList(String name) {
         name = new StringBuffer("%").append(name).append("%").toString();

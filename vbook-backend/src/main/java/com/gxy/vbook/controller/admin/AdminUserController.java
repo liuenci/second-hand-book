@@ -11,6 +11,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+/***
+ * 后台用户接口
+ */
 @RestController
 @RequestMapping("admin/user")
 public class AdminUserController {
@@ -21,10 +24,22 @@ public class AdminUserController {
     @Autowired
     private RedisTemplate<String, String> redisTemplate;
 
+    /**
+     * 查看已注册用户
+     * @param name
+     * @return
+     */
     @RequestMapping("list")
     public PageResponse list(@RequestParam("name") String name){
         return userService.findUserList(name);
     }
+
+    /**
+     * 管理员登录
+     * @param name
+     * @param password
+     * @return
+     */
     @RequestMapping("login")
     public ServerResponse login(@RequestParam("name") String name, @RequestParam("password") String password){
         ServerResponse response = userService.login(name,password);

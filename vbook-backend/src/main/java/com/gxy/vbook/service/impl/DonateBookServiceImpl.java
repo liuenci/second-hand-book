@@ -19,6 +19,11 @@ public class DonateBookServiceImpl implements DonateBookService{
     @Autowired
     private RedisTemplate<String,String> redisTemplate;
 
+    /**
+     * 新增捐赠二手书
+     * @param donateBook
+     * @return
+     */
     @Override
     public int insert(DonateBook donateBook){
         Integer userId = Integer.parseInt(redisTemplate.opsForValue().get(Const.CURRENT_USER));
@@ -26,21 +31,10 @@ public class DonateBookServiceImpl implements DonateBookService{
         return donateBookMapper.insert(donateBook);
     }
 
-    @Override
-    public int insertSelective(DonateBook donateBook){
-        return donateBookMapper.insertSelective(donateBook);
-    }
-
-    @Override
-    public int insertList(List<DonateBook> donateBooks){
-        return donateBookMapper.insertList(donateBooks);
-    }
-
-    @Override
-    public int updateByPrimaryKeySelective(DonateBook donateBook){
-        return donateBookMapper.updateByPrimaryKeySelective(donateBook);
-    }
-
+    /**
+     * 查询所有的捐赠二手书集合
+     * @return
+     */
     @Override
     public List<DonateBook> selectAllList() {
         return donateBookMapper.selectAllList();

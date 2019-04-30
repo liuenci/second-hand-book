@@ -28,37 +28,64 @@ public class BookServiceImpl implements BookService {
 
     @Autowired
     private RedisTemplate<String,String> redisTemplate;
+
+    /**
+     * 保存二手书
+     * @param book
+     * @return
+     */
     @Override
     public ServerResponse save(Book book) {
+        // 从 redis 中拿到当前用户的ID
         Integer userId = Integer.parseInt(redisTemplate.opsForValue().get(Const.CURRENT_USER));
         book.setUserId(userId);
         book.setStatus(1);
         // 计算折旧金额
         BigDecimal value = BigDecimalUtil.mul(book.getOriginalPrice(),book.getDiscount().doubleValue() / 10);
         book.setPrice(value.doubleValue());
+        // 插入二手书
         bookMapper.insert(book);
+        // 返回正确的状态码
         return ServerResponse.createBySuccess(book);
     }
 
+    /**
+     * 通过 name 模糊查询二手书列表
+     * @param name
+     * @return
+     */
     @Override
     public PageResponse findList(String name) {
+        // 拼接模糊查询的条件
         name = new StringBuffer().append("%").append(name).append("%").toString();
         List<Book> list = bookMapper.selectListByName(name);
+        // 组装返回对象
         PageResponse<Book> response = new PageResponse<>();
         response.setRows(list);
         response.setTotal(list.size());
         return response;
     }
 
+    /**
+     * 添加购物车时判断是否是自己的二手书
+     * @param id
+     * @param userId
+     * @return
+     */
     @Override
     public ServerResponse isMine(Integer id, Integer userId) {
-        Book user = bookMapper.selectByBookIdAndUserId(id,userId);
-        if (user != null) {
+        // 通过二手书ID以及用户ID判断是否是自己的二手书
+        Book book = bookMapper.selectByBookIdAndUserId(id,userId);
+        if (book != null) {
             return ServerResponse.createByError();
         }
         return ServerResponse.createBySuccess();
     }
 
+    /**
+     * 推荐列表
+     * @return
+     */
     @Override
     public PageResponse recommendedList() {
         // 按照评分对所有用户排序
@@ -72,6 +99,7 @@ public class BookServiceImpl implements BookService {
                 bookList.addAll(userBookList);
             }
         }
+        // 组装返回对象
         PageResponse response = new PageResponse();
         response.setTotal(bookList.size());
         response.setRows(bookList);

@@ -9,6 +9,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * 后台订单接口
+ */
 @RestController
 @RequestMapping("admin/order")
 public class AdminOrderController {
@@ -16,10 +19,21 @@ public class AdminOrderController {
     @Autowired
     private OrderService orderService;
 
+    /**
+     * 查看订单列表
+     * @param orderNo
+     * @return
+     */
     @RequestMapping("list")
     public PageResponse list(@RequestParam("orderNo") String orderNo) {
         return orderService.findOrderList(orderNo);
     }
+
+    /**
+     * 查看某一个订单的信息
+     * @param orderNo
+     * @return
+     */
     @RequestMapping("{orderNo}")
     public ServerResponse item(@PathVariable("orderNo") String orderNo) {
         return orderService.item(orderNo);

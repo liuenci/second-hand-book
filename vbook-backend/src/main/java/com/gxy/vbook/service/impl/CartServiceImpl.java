@@ -20,16 +20,22 @@ public class CartServiceImpl implements CartService {
 
     @Autowired
     private BookMapper bookMapper;
+
+    /**
+     * 查询某个用户的购物车
+     * @param userId
+     * @return
+     */
     @Override
     public PageResponse list(int userId) {
         List<Cart> list = cartMapper.selectListByUserId(userId);
         List<CartVo> cartVos = new ArrayList<>();
         for (Cart cart : list) {
             CartVo cartVo = new CartVo();
-            String name = bookMapper.selectByPrimaryKey(cart.getBookid()).getName();
-            cartVo.setBookId(cart.getBookid());
+            String name = bookMapper.selectByPrimaryKey(cart.getBookId()).getName();
+            cartVo.setBookId(cart.getBookId());
             cartVo.setName(name);
-            cartVo.setPrice(bookMapper.selectByPrimaryKey(cart.getBookid()).getPrice());
+            cartVo.setPrice(bookMapper.selectByPrimaryKey(cart.getBookId()).getPrice());
             cartVo.setQuantity(cart.getQuantity());
             cartVos.add(cartVo);
         }
@@ -39,12 +45,19 @@ public class CartServiceImpl implements CartService {
         return response;
     }
 
+    /**
+     * 添加二手书到购物车
+     * @param bookId
+     * @param count
+     * @param userId
+     * @return
+     */
     @Override
     public ServerResponse add(int bookId, int count,int userId) {
         Cart cart = new Cart();
-        cart.setBookid(bookId);
+        cart.setBookId(bookId);
         cart.setQuantity(count);
-        cart.setUserid(userId);
+        cart.setUserId(userId);
         int result = cartMapper.insert(cart);
         return ServerResponse.createBySuccess(result);
     }

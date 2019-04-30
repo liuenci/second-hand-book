@@ -29,13 +29,18 @@ public class CommentServiceImpl implements CommentService{
     @Autowired
     private OrderItemMapper orderItemMapper;
 
+    /**
+     * 插入新的评论
+     * @param comment
+     * @return
+     */
     @Override
     public int insert(Comment comment){
         Integer score = comment.getScore();
         String orderNo = comment.getOrderNo();
         List<OrderItem> orderItems = orderItemMapper.selectByOrderNo(orderNo);
         for (OrderItem orderItem : orderItems) {
-            Integer userId = orderItem.getUserid();
+            Integer userId = orderItem.getUserId();
             User user = userMapper.selectByPrimaryKey(userId);
             int totalScore = user.getTotalScore() == null ? 0 : user.getTotalScore();
             user.setTotalScore(totalScore + score);
@@ -45,20 +50,5 @@ public class CommentServiceImpl implements CommentService{
             userMapper.updateByPrimaryKeySelective(user);
         }
         return commentMapper.insert(comment);
-    }
-
-    @Override
-    public int insertSelective(Comment comment){
-        return commentMapper.insertSelective(comment);
-    }
-
-    @Override
-    public int insertList(List<Comment> comments){
-        return commentMapper.insertList(comments);
-    }
-
-    @Override
-    public int updateByPrimaryKeySelective(Comment comment){
-        return commentMapper.updateByPrimaryKeySelective(comment);
     }
 }

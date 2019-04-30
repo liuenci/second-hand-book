@@ -13,6 +13,9 @@ import org.springframework.web.servlet.config.annotation.*;
 
 import java.util.List;
 
+/**
+ * 跨域配置
+ */
 @Configuration
 public class GlobalCorsConfig {
 
@@ -56,6 +59,7 @@ public class GlobalCorsConfig {
 
             @Override
             public void addCorsMappings(CorsRegistry registry) {
+                // 允许所有请求访问
                 registry.addMapping("/**");
             }
 
