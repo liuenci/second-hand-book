@@ -78,7 +78,7 @@ public class BookController {
                 uploadFile.mkdirs();
             }
             //获取文件后缀名
-            String suffix = ".jpg";
+            String suffix = "jpg";
             String name = UUID.randomUUID().toString();
             String diskFileName = name + "." + suffix;
             String pathName = uploadFile.getPath() + "/" + diskFileName;
@@ -89,5 +89,10 @@ public class BookController {
             return bookService.saveBookImage(book);
         }
         return ServerResponse.createByError();
+    }
+
+    @RequestMapping("{id}")
+    public ServerResponse getBook(@PathVariable("id") Integer id) {
+        return bookService.getBook(id);
     }
 }

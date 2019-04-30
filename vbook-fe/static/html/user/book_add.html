@@ -117,7 +117,6 @@
         $('#userId').val(result.data.userId)
     });
     $(function () {
-
         $('#originalPrice').blur(function () {
             var discount = $('#discount').val()
             var value = $('#originalPrice').val() * discount / 10
@@ -150,7 +149,7 @@
                 }),
                 success: function (result) {
                     if (result.status == 0 && result.data != null) {
-                        window.location = '../../../index.html'
+                        window.location = '../../../newIndex.html'
                     }
                     if (result.status == 11) {
                         alert('用户不存在')

@@ -117,4 +117,10 @@ public class BookServiceImpl implements BookService {
         response.setRows(bookList);
         return response;
     }
+
+    @Override
+    public ServerResponse getBook(Integer id) {
+        Book book = bookMapper.selectByPrimaryKey(id);
+        return ServerResponse.createBySuccess(book);
+    }
 }

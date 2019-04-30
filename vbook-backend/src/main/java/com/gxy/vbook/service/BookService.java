@@ -37,4 +37,6 @@ public interface BookService {
      * @return
      */
     PageResponse recommendedList();
+
+    ServerResponse getBook(Integer id);
 }
