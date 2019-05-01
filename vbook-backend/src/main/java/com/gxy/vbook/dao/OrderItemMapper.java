@@ -58,4 +58,6 @@ public interface OrderItemMapper {
      * @return
      */
     List<OrderItem> selectByOrderNo(String orderNo);
+
+    OrderItem selectByBookId(Integer bookId);
 }

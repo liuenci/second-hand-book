@@ -4,11 +4,15 @@ import com.gxy.vbook.common.Const;
 import com.gxy.vbook.common.PageResponse;
 import com.gxy.vbook.common.ServerResponse;
 import com.gxy.vbook.dao.BookMapper;
+import com.gxy.vbook.dao.OrderItemMapper;
+import com.gxy.vbook.dao.OrderMapper;
 import com.gxy.vbook.dao.UserMapper;
 import com.gxy.vbook.pojo.Book;
+import com.gxy.vbook.pojo.OrderItem;
 import com.gxy.vbook.pojo.User;
 import com.gxy.vbook.service.BookService;
 import com.gxy.vbook.utils.BigDecimalUtil;
+import com.gxy.vbook.vo.BookRecordVo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -27,6 +31,12 @@ public class BookServiceImpl implements BookService {
 
     @Autowired
     private UserMapper userMapper;
+
+    @Autowired
+    private OrderMapper orderMapper;
+
+    @Autowired
+    private OrderItemMapper orderItemMapper;
 
     @Autowired
     private RedisTemplate<String,String> redisTemplate;
@@ -122,5 +132,33 @@ public class BookServiceImpl implements BookService {
     public ServerResponse getBook(Integer id) {
         Book book = bookMapper.selectByPrimaryKey(id);
         return ServerResponse.createBySuccess(book);
+    }
+
+    @Override
+    public ServerResponse bookRecord() {
+        Integer userId = Integer.parseInt(redisTemplate.opsForValue().get(Const.CURRENT_USER));
+        // 通过 userId 查询自己售卖的二手书
+        List<Book> bookList = bookMapper.selectByUserId(userId);
+        List<BookRecordVo> bookRecordVos = new ArrayList<>();
+        for (Book book : bookList) {
+            BookRecordVo record = new BookRecordVo();
+            record.setBookId(book.getId());
+            record.setBookName(book.getName());
+            record.setUserId(userId);
+            record.setImgName(book.getImgName());
+            record.setPrice(book.getPrice());
+            Integer status = book.getStatus();
+            if (status == 1) {
+                record.setStatus(Const.BookStatus.ON_SALE.getDesc());
+            }else if (status == 0) {
+                OrderItem orderItem = orderItemMapper.selectByBookId(book.getId());
+                User buyerUser = userMapper.selectByPrimaryKey(orderItem.getUserId());
+                record.setBuyerUserId(buyerUser.getId());
+                record.setBuyerUserName(buyerUser.getName());
+                record.setStatus(Const.BookStatus.OUT_SALE.getDesc());
+            }
+            bookRecordVos.add(record);
+        }
+        return ServerResponse.createBySuccess(bookRecordVos);
     }
 }

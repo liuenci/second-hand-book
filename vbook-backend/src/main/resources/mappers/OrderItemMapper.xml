@@ -112,4 +112,10 @@
     from orderItem
     where orderNo = #{orderNo}
   </select>
+
+  <select id="selectByBookId" parameterType="integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+   from orderItem where bookId = #{bookId}
+  </select>
 </mapper>

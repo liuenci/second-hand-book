@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>卖书记录</title>
+    <link rel="stylesheet" href="../../css/common/bootstrap.css">
+    <style>
+        .img {
+            width: 80px;
+            height: 120px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="rows">
+        <div class="col-sm-12">
+            <h3>卖书记录</h3>
+            <ul class="list-group" id="sell-list">
+                <li class="list-group-item" style="height:140px">
+                    <div class="rows">
+                        <div class="col-sm-2">
+                            <img src="../../image/028c5b95-ce62-4189-a7e9-de15dcc5f9fd.jpg" alt=""
+                                style="width:80px;height:120px">
+                        </div>
+                        <div class="col-sm-8">
+                            <h4 style="font-weight:bolder">Java编程思想</h4>
+                            <h5 style="color:red">$100</h5>
+                            <h6>当前状态:在售</h6>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <script src="../../js/common/jquery-3.1.1.min.js"></script>
+    <script src="../../js/common/bootstrap.js"></script>
+    <script src="../../js/common/bootstrap-table.js"></script>
+    <script>
+        $(function () {
+            $.ajax({
+                url: 'http://localhost:8080/book/record',
+                method: 'get',
+                success: function (result) {
+                    var ul = $('#sell-list')
+                    ul.empty()
+                    var data = result.data;
+                    for (let index = 0; index < data.length; index++) {
+                        const element = data[index];
+
+                        var li = $('<li>')
+                        li.addClass('list-group-item')
+                        li.css('height', '140px')
+                        ul.append(li)
+
+                        var rows = $('<div>')
+                        rows.addClass('rows')
+                        li.append(rows)
+
+                        var div1 = $('<div>')
+                        div1.addClass('col-sm-2')
+                        rows.append(div1)
+
+                        var img = $('<img>')
+                        img.attr('src', '../../image/' + element.imgName)
+                        img.addClass('img')
+                        div1.append(img)
+
+                        var div2 = $('<div>')
+                        div2.addClass('col-sm-10')
+                        rows.append(div2)
+
+                        var h4 = $('<h4>')
+                        h4.text(element.bookName)
+                        div2.append(h4)
+
+                        var p1 = $('<p>')
+                        p1.text('￥' + element.price)
+                        p1.css('color', 'red')
+                        div2.append(p1)
+
+                        var p2 = $('<p>')
+                        p2.text('当前状态:' + element.status)
+                        div2.append(p2)
+                    }
+                }
+            })
+        })
+    </script>
+</body>
+
+</html>

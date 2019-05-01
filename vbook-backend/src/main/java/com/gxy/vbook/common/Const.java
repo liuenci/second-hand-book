@@ -13,9 +13,30 @@ public class Const {
      * 角色接口
      */
     public interface Role {
-        // 普通用户的角色为 1
+        /**
+         * 普通用户的角色为 1
+         */
         int ROLE_USER = 1;
-        // 管理员的角色为 0
+        /**
+         * 管理员的角色为 0
+         */
         int ROLE_ADMIN = 0;
+    }
+
+    public enum BookStatus {
+        ON_SALE(1,"在售"),
+        OUT_SALE(0,"售出");
+        private int code;
+        private String desc;
+        BookStatus(int code,String desc){
+            this.code = code;
+            this.desc = desc;
+        }
+        public Integer getCode(){
+            return code;
+        }
+        public String getDesc(){
+            return desc;
+        }
     }
 }

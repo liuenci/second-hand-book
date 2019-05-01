@@ -11,13 +11,12 @@
 </head>
 
 <body>
-    <embed src="../common/header.html" width="100%" height="72px" />
     <div class="container">
         <h3 class="col-sm-offset-2">我要卖书</h3>
         <form class="form-horizontal" role="form">
             <div class="form-group">
                 <label for="name" class="col-sm-2 control-label">书名</label>
-                <div class="col-sm-4">
+                <div class="col-sm-6">
                     <input type="hidden" class="form-control" id="id">
                     <input type="hidden" class="form-control" id="imgName">
                     <input type="hidden" class="form-control" id="userId">
@@ -26,13 +25,13 @@
             </div>
             <div class="form-group">
                 <label for="author" class="col-sm-2 control-label">作者</label>
-                <div class="col-sm-4">
+                <div class="col-sm-6">
                     <input type="text" class="form-control" id="author" placeholder="请输入作者">
                 </div>
             </div>
             <div class="form-group">
                 <label for="type" class="col-sm-2 control-label">类型</label>
-                <div class="col-sm-4">
+                <div class="col-sm-6">
                     <select class="form-control" id="type">
                         <option value="编程语言">编程语言</option>
                         <option value="网络文学">网络文学</option>
@@ -44,14 +43,14 @@
             </div>
             <div class="form-group">
                 <label for="originalPrice" class="col-sm-2 control-label">原价</label>
-                <div class="col-sm-4">
+                <div class="col-sm-6">
                     <input type="text" class="form-control" id="originalPrice" placeholder="请输入原价">
                 </div>
                 <label class="control-label" id="price"></label>
             </div>
             <div class="form-group">
                 <label for="discount" class="col-sm-2 control-label">几成新</label>
-                <div class="col-sm-4">
+                <div class="col-sm-6">
                     <select class="form-control" id="discount">
                         <option value="1">1成新</option>
                         <option value="2">2成新</option>
@@ -68,7 +67,7 @@
             </div>
             <div class="form-group">
                 <label for="bindingType" class="col-sm-2 control-label">装帧方式</label>
-                <div class="col-sm-4">
+                <div class="col-sm-6">
                     <select class="form-control" id="bindingType">
                         <option value="精装">精装</option>
                         <option value="平装">平装</option>
@@ -77,7 +76,7 @@
             </div>
             <div class="form-group">
                 <label for="press" class="col-sm-2 control-label">出版社</label>
-                <div class="col-sm-4">
+                <div class="col-sm-6">
                     <select class="form-control" id="press">
                         <option value="机械工业出版社">机械工业出版社</option>
                         <option value="电子工业出版社">电子工业出版社</option>
@@ -89,7 +88,7 @@
             </div>
             <div class="form-group">
                 <label for="paperType" class="col-sm-2 control-label">纸张类型</label>
-                <div class="col-sm-4">
+                <div class="col-sm-6">
                     <select class="form-control" id="paperType">
                         <option value="铜版纸">铜版纸</option>
                         <option value="胶版纸">胶版纸</option>
@@ -101,19 +100,19 @@
             </div>
             <div class="form-group">
                 <label for="paperNumber" class="col-sm-2 control-label">页数</label>
-                <div class="col-sm-4">
+                <div class="col-sm-6">
                     <input type="text" class="form-control" id="paperNumber" placeholder="请输入页数">
                 </div>
             </div>
             <div class="form-group">
                 <label for="ISBN" class="col-sm-2 control-label">ISBN</label>
-                <div class="col-sm-4">
+                <div class="col-sm-6">
                     <input type="text" class="form-control" id="ISBN" placeholder="请输入ISBN">
                 </div>
             </div>
             <div class="form-group">
-                <label for="img" class="col-sm-2 control-label">图片</label>
-                <div class="col-sm-4">
+                <label for="img" class="col-sm-2 control-label">封面</label>
+                <div class="col-sm-6">
                     <form class="form" action="#" method="post" enctype="multipart/form-data" id="pollutionForm">
                         <!-- 注意事项：Input type类型为file class为样式 id随意 name随意  
                                  multiple（如果是要多图上传一定要加上，不加的话每次只能选中一张图）-->
@@ -128,8 +127,6 @@
             </div>
         </form>
     </div>
-
-    <embed src="../common/footer.html" width="100%" height="72px" style="margin-top:100px" />
 </body>
 <script src="../../js/common/jquery-3.1.1.min.js"></script>
 <script src="../../js/common/bootstrap.js"></script>

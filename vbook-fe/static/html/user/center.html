@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>用户中心</title>
+    <link rel="stylesheet" href="../../css/common/bootstrap.css">
+    <style>
+        .meau-li {
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <embed src="../common/header.html" width="100%" height="72px" />
+    <div class="container">
+        <div class="rows">
+            <div class="col-sm-2" style="height:500px;border-right:  1px solid grey;">
+                <h4>个人菜单</h4>
+                <hr>
+                <ul class="list-unstyled">
+                    <a  class="text-center meau-li" id="profile">
+                        <li>个人信息</li>
+                    </a>
+                    <a class="text-center meau-li" id="sell">
+                        <li>我要卖书</li>
+                    </a>
+                    <a  class="text-center meau-li" id="donate">
+                        <li>我要捐书</li>
+                    </a>
+                    <a  class="text-center meau-li" id="sellRecord">
+                        <li>卖书记录</li>
+                    </a>
+                    <a  class="text-center meau-li" id="donateRecore">
+                        <li>捐书记录</li>
+                    </a>
+                    <a  class="text-center meau-li" id="cart">
+                        <li>我的购物车</li>
+                    </a>
+                    <a  class="text-center meau-li" id="order">
+                        <li>我的订单</li>
+                    </a>
+                    <a  class="text-center meau-li" id="comment">
+                        <li>评论记录</li>
+                    </a>
+                </ul>
+            </div>
+
+            <div class="col-sm-10">
+                <iframe id="iframe" seamless="seamless" src="profile.html" name="profile" frameborder="0" scrolling="no"
+                    height="2000px" width="100%"></iframe>
+            </div>
+
+        </div>
+    </div>
+    <script src="../../js/common/jquery-3.1.1.min.js"></script>
+    <script src="../../js/common/bootstrap.js"></script>
+    <script>
+    $(function(){
+        $('#profile').click(function(){
+            $('#iframe').attr('src','profile.html')
+        })
+        $('#sell').click(function(){
+            $('#iframe').attr('src','sell.html')
+        })
+        $('#donate').click(function(){
+            $('#iframe').attr('src','donate.html')
+        })
+        $('#cart').click(function(){
+            $('#iframe').attr('src','cart.html')
+        })
+        $('#order').click(function(){
+            $('#iframe').attr('src','order.html')
+        })
+        $('#sellRecord').click(function(){
+            $('#iframe').attr('src','sellRecord.html')
+        })
+    })
+    </script>
+</body>
+
+</html>

@@ -95,4 +95,9 @@ public class BookController {
     public ServerResponse getBook(@PathVariable("id") Integer id) {
         return bookService.getBook(id);
     }
+
+    @RequestMapping("record")
+    public ServerResponse bookRecordList() {
+        return bookService.bookRecord();
+    }
 }

@@ -38,5 +38,16 @@ public interface BookService {
      */
     PageResponse recommendedList();
 
+    /**
+     * 通过二手书主键ID查找二手书信息
+     * @param id
+     * @return
+     */
     ServerResponse getBook(Integer id);
+
+    /**
+     * 当前用户的卖书记录
+     * @return
+     */
+    ServerResponse bookRecord();
 }
