@@ -10,7 +10,34 @@
 </head>
 
 <body>
-    <embed src="static/html/common/header.html" width="100%" height="72px" />
+    <nav class="navbar navbar-default" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="index.html">老夫子二手书交易平台</a>
+            </div>
+            <div>
+                <ul class="nav navbar-nav navbar-left">
+                    <li id="btn-donate-book"><a href="donate-list.html">爱心捐赠列表</a></li>
+                </ul>
+            </div>
+            <div>
+                <ul class="nav navbar-nav navbar-right">
+                    <li id="btn-user-login"><a href="static/html/user/login.html">登录</a></li>
+                    <li id="btn-user-register"><a href="static/html/user/register.html">注册</a></li>
+                    <li class="dropdown" id="btn-user-center">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            <span id="name"></span>
+                            <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="static/html/user/center.html">个人中心</a></li>
+                            <li><a href="#" id="logout">退出登录</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
     <div class="container">
         <h4 id="name" style="font-weight:bold"></h4>
         <hr>

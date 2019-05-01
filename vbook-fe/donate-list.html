@@ -10,7 +10,34 @@
 </head>
 
 <body>
-    <embed src="static/html/common/header.html" width="100%" height="72px" />
+    <nav class="navbar navbar-default" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="index.html">老夫子二手书交易平台</a>
+            </div>
+            <div>
+                <ul class="nav navbar-nav navbar-left">
+                    <li id="btn-donate-book"><a href="donate-list.html">爱心捐赠列表</a></li>
+                </ul>
+            </div>
+            <div>
+                <ul class="nav navbar-nav navbar-right">
+                    <li id="btn-user-login"><a href="static/html/user/login.html">登录</a></li>
+                    <li id="btn-user-register"><a href="static/html/user/register.html">注册</a></li>
+                    <li class="dropdown" id="btn-user-center">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            <span id="name"></span>
+                            <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="static/html/user/center.html">个人中心</a></li>
+                            <li><a href="#" id="logout">退出登录</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
     <div class="container">
         <h3>爱心捐赠列表</h3>
         <ul class="list-group" id="donate-list-id">
@@ -20,29 +47,59 @@
             <p class="text-success">以上所有书籍将捐赠给贫困山区小学。</p>
         </div>
     </div>
-    <embed src="static/html/common/footer.html" width="100%" height="72px" style="position: absolute;bottom:0px" />
     <script src="./static/js/common/jquery-3.1.1.min.js"></script>
     <script src="./static/js/common/bootstrap.js"></script>
     <script>
-        $(function(){
+        $(function () {
+            // 判断是否在线
             $.ajax({
-            url: 'http://localhost:8080/book/donate/list',
-            type: 'get',
-            dataType: 'json',
-            success: function (result) {
-                $('#donate-list-id').empty()
-                var data = result.data
-                for (let i = 0; i < data.length; i++) {
-                    const element = data[i];
-                    var li = $('<li>')
-                    li.addClass('list-group-item')
-                    li.html('*** 在<p class="text-success">' + element.createTime + '</p>捐赠了一本 ' + element.discount + ' 成新的 <strong>' +element.author +'</strong> 的'+'《' + element.name + '》。')
-                    $('#donate-list-id').append(li)
-                    
+                url: 'http://localhost:8080/user/online',
+                async: false,
+                success: function (result) {
+                    if (result.status == 0) {
+                        $('#btn-user-login').remove();
+                        $('#btn-user-register').remove();
+                        $('#name').text(result.data.name)
+                    } else {
+                        $('#btn-user-center').remove();
+                    }
+
+                    $('#logout').click(function () {
+                        $.ajax({
+                            url: 'http://localhost:8080/user/logout',
+                            async: false,
+                            success: function (result) {
+                                if (result.status == 0) {
+                                    window.location.href = 'index.html'
+                                }
+                            }
+                        })
+                    })
                 }
-                
-            }
+            })
         })
+    </script>
+    <script>
+
+        $(function () {
+            $.ajax({
+                url: 'http://localhost:8080/book/donate/list',
+                type: 'get',
+                dataType: 'json',
+                success: function (result) {
+                    $('#donate-list-id').empty()
+                    var data = result.data
+                    for (let i = 0; i < data.length; i++) {
+                        const element = data[i];
+                        var li = $('<li>')
+                        li.addClass('list-group-item')
+                        li.html('*** 在<p class="text-success">' + element.createTime + '</p>捐赠了一本 ' + element.discount + ' 成新的 <strong>' + element.author + '</strong> 的' + '《' + element.name + '》。')
+                        $('#donate-list-id').append(li)
+
+                    }
+
+                }
+            })
         })
     </script>
 </body>

@@ -11,7 +11,7 @@
 </head>
 
 <body>
-    <div class="container">
+    <div class="col-sm-12">
         <h3>订单列表</h3>
         <table id="table"></table>
     </div>
@@ -104,7 +104,7 @@
             pagination: false, // 是否分页
             sortable: false, // 是否启用排序
             columns: [{
-                field: 'orderno',
+                field: 'orderNo',
                 title: '订单号'
             },
             {
@@ -112,7 +112,7 @@
                 title: '订单金额'
             },
             {
-                field: 'createtime',
+                field: 'createTime',
                 title: '价格'
             },
             {
@@ -130,7 +130,7 @@
         var id = row.id
         var result = "";
         result += "<button class='btn btn-default btn-primary btn-order-item' data-toggle='modal' onclick='get_data(this)'>订单详情</button>";
-        result += " <button class='btn btn-default btn-primary btn-order-comment' data-toggle='modal' onclick='comment(this)'>评论</button>";
+        result += " <button class='btn btn-default btn-info btn-order-comment' data-toggle='modal' onclick='comment(this)'>评论</button>";
         return result;
     }
     function get_data(t) {
