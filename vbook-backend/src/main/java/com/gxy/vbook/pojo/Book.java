@@ -2,6 +2,8 @@ package com.gxy.vbook.pojo;
 
 import lombok.*;
 
+import java.util.Date;
+
 /**
  * 二手书类
  */
@@ -47,6 +49,30 @@ public class Book {
      * 图片名称
      */
     private String imgName;
+    /**
+     * 装帧方式
+     */
+    private String bindingType;
+    /**
+     * 出版社
+     */
+    private String press;
+    /**
+     * 纸张类型
+     */
+    private String paperType;
+    /**
+     * 出版时间
+     */
+    private Date publicationDate;
+    /**
+     * 页数
+     */
+    private Integer paperNumber;
+    /**
+     * ISBN
+     */
+    private String ISBN;
     /**
      * 二手书状态 0 卖出 1 在售
      */

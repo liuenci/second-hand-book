@@ -75,7 +75,7 @@
             <if test="userId!=null">#{userId,jdbcType=INTEGER},</if>
             <if test="status!=null">#{status,jdbcType=INTEGER},</if>
             <if test="author!=null">#{author,jdbcType=VARCHAR},</if>
-            <if test="type!=null">#{type,jdbcType=VARCHAR}</if>
+            <if test="type!=null">#{type,jdbcType=VARCHAR},</if>
             <if test="imgName!=null">#{imgName,jdbcType=VARCHAR}</if>
         </trim>
     </insert>
