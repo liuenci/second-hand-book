@@ -12,9 +12,14 @@
         <result column="author" property="author" jdbcType="VARCHAR"/>
         <result column="type" property="type" jdbcType="VARCHAR"/>
         <result column="imgName" property="imgName" jdbcType="VARCHAR"/>
+        <result column="bindingType" property="bindingType" jdbcType="VARCHAR"/>
+        <result column="press" property="press" jdbcType="VARCHAR"/>
+        <result column="paperType" property="paperType" jdbcType="VARCHAR"/>
+        <result column="paperNumber" property="paperNumber" jdbcType="INTEGER"/>
+        <result column="isbn" property="isbn" jdbcType="VARCHAR"/>
     </resultMap>
     <sql id="Base_Column_List">
-    id, name, author,originalPrice,discount,price, userId, status,`type`,imgName
+    id, name, author,originalPrice,discount,price, userId, status,`type`,imgName,bindingType,press,paperType,paperNumber,isbn
 </sql>
     <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
         select
@@ -37,7 +42,12 @@
             `status`,
             author,
             `type`,
-            imgName
+            imgName,
+            bindingType,
+            press,
+            paperType,
+            paperNumber,
+            isbn
         ) VALUES (
             #{id,jdbcType=INTEGER},
             #{name,jdbcType=VARCHAR},
@@ -48,7 +58,12 @@
             #{status,jdbcType=INTEGER},
             #{author,jdbcType=VARCHAR},
             #{type,jdbcType=VARCHAR},
-            #{imgName,jdbcType=VARCHAR}
+            #{imgName,jdbcType=VARCHAR},
+            #{bindingType,jdbcType=VARCHAR},
+            #{press,jdbcType=VARCHAR},
+            #{paperType,jdbcType=VARCHAR},
+            #{paperNumber,jdbcType=VARCHAR},
+            #{isbn,jdbcType=VARCHAR}
         )
 </insert>
     <insert id="insertSelective" parameterType="com.gxy.vbook.pojo.Book">
@@ -64,6 +79,11 @@
             <if test="author!=null">author,</if>
             <if test="type!=null">`type`</if>
             <if test="imgName!=null">`type`</if>
+            <if test="bindingType!=null">bindingType</if>
+            <if test="press!=null">press</if>
+            <if test="paperType!=null">paperType</if>
+            <if test="paperNumber!=null">paperNumber</if>
+            <if test="isbn!=null">isbn</if>
         </trim>
         VALUES
         <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -77,6 +97,11 @@
             <if test="author!=null">#{author,jdbcType=VARCHAR},</if>
             <if test="type!=null">#{type,jdbcType=VARCHAR},</if>
             <if test="imgName!=null">#{imgName,jdbcType=VARCHAR}</if>
+            <if test="bindingType!=null">#{bindingType,jdbcType=VARCHAR}</if>
+            <if test="press!=null">#{press,jdbcType=VARCHAR}</if>
+            <if test="paperType!=null">#{paperType,jdbcType=VARCHAR}</if>
+            <if test="paperNumber!=null">#{paperNumber,jdbcType=VARCHAR}</if>
+            <if test="isbn!=null">#{isbn,jdbcType=VARCHAR}</if>
         </trim>
     </insert>
     <update id="updateByPrimaryKeySelective" parameterType="com.gxy.vbook.pojo.Book">
@@ -90,7 +115,12 @@
             <if test="userId != null">userId = #{userId,jdbcType=INTEGER},</if>
             <if test="status != null">`status` = #{status,jdbcType=INTEGER},</if>
             <if test="author != null">author = #{author,jdbcType=VARCHAR},</if>
-            <if test="type != null">`type` = #{type,jdbcType=VARCHAR}</if>
+            <if test="type != null">`type` = #{type,jdbcType=VARCHAR},</if>
+            <if test="bindingType != null">bindingType = #{bindingType,jdbcType=VARCHAR},</if>
+            <if test="press != null">press = #{press,jdbcType=VARCHAR},</if>
+            <if test="paperType != null">paperType = #{paperType,jdbcType=VARCHAR},</if>
+            <if test="paperNumber != null">paperNumber = #{paperNumber,jdbcType=VARCHAR},</if>
+            <if test="isbn != null">isbn = #{isbn,jdbcType=VARCHAR}</if>
         </set>
         where id = #{id,jdbcType=INTEGER}
     </update>
@@ -105,7 +135,12 @@
                 userId = #{userId,jdbcType=INTEGER},
                 `status` = #{status,jdbcType=INTEGER},
                 author = #{author,jdbcType=VARCHAR},
-                `type` = #{type,jdbcType=VARCHAR}
+                `type` = #{type,jdbcType=VARCHAR},
+                bindingType = #{bindingType,jdbcType=VARCHAR},
+                press = #{press,jdbcType=VARCHAR},
+                paperType = #{paperType,jdbcType=VARCHAR},
+                paperNumber = #{paperNumber,jdbcType=VARCHAR},
+                isbn = #{isbn,jdbcType=VARCHAR},
 		where id = #{id,jdbcType=INTEGER}
   </update>
 

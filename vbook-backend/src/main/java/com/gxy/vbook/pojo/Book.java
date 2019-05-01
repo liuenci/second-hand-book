@@ -62,17 +62,13 @@ public class Book {
      */
     private String paperType;
     /**
-     * 出版时间
-     */
-    private Date publicationDate;
-    /**
      * 页数
      */
     private Integer paperNumber;
     /**
      * ISBN
      */
-    private String ISBN;
+    private String isbn;
     /**
      * 二手书状态 0 卖出 1 在售
      */
