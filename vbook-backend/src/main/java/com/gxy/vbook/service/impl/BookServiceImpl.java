@@ -82,7 +82,7 @@ public class BookServiceImpl implements BookService {
         name = new StringBuffer().append("%").append(name).append("%").toString();
         List<Book> list = bookMapper.selectListByName(name);
         // 组装返回对象
-        PageResponse<Book> response = new PageResponse<>();
+        PageResponse response = new PageResponse<>();
         response.setRows(list);
         response.setTotal(list.size());
         return response;

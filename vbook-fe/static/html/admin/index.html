@@ -2,71 +2,98 @@
 <html>
 
 <head>
-    <meta charset="utf-8">
-    <title>Bootstrap 实例 - 标签页（Tab）插件</title>
-    <link rel="stylesheet" href="../../css/common/bootstrap.css">
-    <script src="../../js/common/jquery-3.1.1.min.js"></script>
-    <script src="../../js/common/bootstrap.js"></script>
-    <script src="../../js/common/bootstrap-table.js"></script>
+	<meta charset="utf-8" />
+	<title></title>
 </head>
+<link rel="stylesheet" type="text/css" href="../../css/common/font-awesome.min.css">
+<link rel="stylesheet" href="../../css/admin/index/index.css" />
+<style>
+	.r-side {
+		min-width: 200px;
+		position: fixed;
+		top: 0;
+		right: 0;
+		width: 80%;
+		bottom: 0;
+		padding: 10px;
+	}
+</style>
 
 <body>
-    <ul id="myTab" class="nav nav-tabs">
-        <li class="active">
-            <a href="#user" data-toggle="tab">
-                用户管理
-            </a>
-        </li>
-        <li><a href="#order" data-toggle="tab">订单管理</a></li>
-        <li><a href="#book" data-toggle="tab">二手书管理</a></li>
-    </ul>
-    <div id="myTabContent" class="tab-content container" style="margin-top:20px">
-        <div class="tab-pane fade in active" id="user">
-            <form class="form-horizontal" role="form">
-                <div class="form-group">
-                    <div class="col-sm-8 col-sm-offset-1">
-                        <input type="text" class="form-control" id="userName" placeholder="请输入名字">
-                    </div>
-                    <div class="col-sm-2">
-                        <button type="button" class="btn btn-default btn-success" id="btn-user-search"
-                            onclick="reflashUserList()">搜索</button>
-                    </div>
-                </div>
-            </form>
-            <table id="userTable"></table>
-        </div>
-        <div class="tab-pane fade" id="order">
-            <form class="form-horizontal" role="form">
-                <div class="form-group">
-                    <div class="col-sm-8 col-sm-offset-1">
-                        <input type="text" class="form-control" id="orderNo" placeholder="请输入名字">
-                    </div>
-                    <div class="col-sm-2">
-                        <button type="button" class="btn btn-default btn-success" id="btn-order-search"
-                            onclick="reflashOrderList()">搜索</button>
-                    </div>
-                </div>
-            </form>
-            <table id="orderTable"></table>
-        </div>
-        <div class="tab-pane fade" id="book">
-            <form class="form-horizontal" role="form">
-                <div class="form-group">
-                    <div class="col-sm-8 col-sm-offset-1">
-                        <input type="text" class="form-control" id="bookName" placeholder="请输入名字">
-                    </div>
-                    <div class="col-sm-2">
-                        <button type="button" class="btn btn-default btn-success" id="btn-book-search"
-                            onclick="reflashBookTable()">搜索</button>
-                    </div>
-                </div>
-            </form>
-            <table id="bookTable"></table>
-        </div>
-    </div>
-    <script src="../../js/admin/userTable.js"></script>
-    <script src="../../js/admin/bookTable.js"></script>
-    <script src="../../js/admin/orderTable.js"></script>
+	<div class="s-side">
+		<ul>
+			<!--这部分是导航栏信息。-->
+			<li class="s-firstItem first">
+				<a href="#">
+					<i class="fa fa-home"></i>
+					<span>首页</span>
+				</a>
+			</li>
+			<li class="first">
+				<div class="d-firstNav s-firstNav">
+					<i class="fa fa-bars"></i>
+					<span>用户管理</span>
+					<i class="fa fa-caret-right fr"></i>
+				</div>
+				<ul class="d-firstDrop s-firstDrop">
+					<li class="s-secondItem">
+						<i class="fa fa-minus-square-o"></i>
+						<a href="javascript:void(0)" id="btn-user-manage">用户管理</a>
+					</li>
+				</ul>
+			</li>
+			<li class="first">
+				<div class="d-firstNav s-firstNav">
+					<i class="fa fa-bars"></i>
+					<span>订单管理</span>
+					<i class="fa fa-caret-right fr"></i>
+				</div>
+				<ul class="d-firstDrop s-firstDrop">
+					<li class="s-secondItem">
+						<i class="fa fa-minus-square-o"></i>
+						<a href="javascript:void(0)" id="btn-order-manage">订单管理</a>
+					</li>
+				</ul>
+			</li>
+			<li class="first">
+				<div class="d-firstNav s-firstNav">
+					<i class="fa fa-bars"></i>
+					<span>二手书管理</span>
+					<i class="fa fa-caret-right fr"></i>
+				</div>
+				<ul class="d-firstDrop s-firstDrop">
+					<li class="s-secondItem">
+						<i class="fa fa-minus-square-o"></i>
+						<a href="javascript:void(0)">二手书推荐</a>
+					</li>
+					<li class="s-secondItem">
+						<i class="fa fa-minus-square-o"></i>
+						<a href="javascript:void(0)" id="btn-book-manage">二手书管理</a>
+					</li>
+				</ul>
+			</li>
+		</ul>
+	</div>
+	<div class="r-side">
+		<iframe id="iframe" seamless="seamless" src="admin_index.html" name="profile" frameborder="0" scrolling="no"
+			height="900px" width="100%">
+		</iframe>
+	</div>
 </body>
+<script src="../../js/common/jquery-3.1.1.min.js"></script>
+<script type="text/javascript" src="../../js/admin/index.js"></script>
+<script>
+	$(function () {
+		$("#btn-user-manage").click(function () {
+			$("#iframe").attr("src", "user_manage.html")
+		})
+		$("#btn-book-manage").click(function () {
+			$("#iframe").attr("src", "book_manage.html")
+		})
+		$("#btn-order-manage").click(function () {
+			$("#iframe").attr("src", "order_manage.html")
+		})
+	})
+</script>
 
 </html>

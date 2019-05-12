@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="../../css/common/bootstrap.css">
+    <script src="../../js/common/jquery-3.1.1.min.js"></script>
+    <script src="../../js/common/bootstrap.js"></script>
+    <script src="../../js/common/bootstrap-table.js"></script>
+</head>
+
+<body>
+    <div class="container">
+        <form class="form-horizontal" role="form">
+            <div class="form-group">
+                <div class="col-sm-8 col-sm-offset-1">
+                    <input type="text" class="form-control" id="orderNo" placeholder="请输入名字">
+                </div>
+                <div class="col-sm-2">
+                    <button type="button" class="btn btn-default btn-success" id="btn-order-search"
+                        onclick="reflashOrderList()">搜索</button>
+                </div>
+            </div>
+        </form>
+        <table id="orderTable"></table>
+    </div>
+    <script src="../../js/admin/orderTable.js"></script>
+</body>
+
+</html>
