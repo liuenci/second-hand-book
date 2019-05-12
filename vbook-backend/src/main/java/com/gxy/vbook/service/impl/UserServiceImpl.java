@@ -42,6 +42,9 @@ public class UserServiceImpl implements UserService {
         insertUser.setRole(1);
         insertUser.setEmail(email);
         insertUser.setPhone(phone);
+        insertUser.setLevel(0D);
+        insertUser.setCommentNumber(0);
+        insertUser.setTotalScore(0);
         int result = userMapper.insert(insertUser);
         return ServerResponse.createBySuccess(insertUser);
     }
@@ -110,12 +113,30 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public ServerResponse lockOrUnLock(Integer userId, Integer userStatus) {
+        User user = userMapper.selectByPrimaryKey(userId);
+        if (userStatus == Const.UserStatus.LOCK){
+            user.setRole(Const.UserStatus.LOCK);
+        } else if (userStatus == Const.UserStatus.UNLOCK) {
+            user.setRole(Const.UserStatus.UNLOCK);
+        }
+        userMapper.updateByPrimaryKey(user);
+        return ServerResponse.createBySuccess();
+    }
+
+    @Override
     public ServerResponse recharge(Double money) {
         // 拿到当前 redis 中的用户 ID
         Integer userId = Integer.parseInt(redisTemplate.opsForValue().get(Const.CURRENT_USER));
         User user = userMapper.selectByPrimaryKey(userId);
         user.setBalance(BigDecimalUtil.add(user.getBalance(),money).doubleValue());
         userMapper.updateByPrimaryKeySelective(user);
+        return ServerResponse.createBySuccess();
+    }
+
+    @Override
+    public ServerResponse delete(Integer userId) {
+        userMapper.deleteByPrimaryKey(userId);
         return ServerResponse.createBySuccess();
     }
 }

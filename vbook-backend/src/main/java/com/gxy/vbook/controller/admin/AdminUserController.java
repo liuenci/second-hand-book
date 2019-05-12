@@ -7,9 +7,7 @@ import com.gxy.vbook.pojo.User;
 import com.gxy.vbook.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /***
  * 后台用户接口
@@ -52,5 +50,14 @@ public class AdminUserController {
             }
         }
         return response;
+    }
+
+    @PostMapping("lockOrUnLock")
+    public ServerResponse lockOrUnLock(@RequestParam("userId") Integer userId,@RequestParam("userStatus") Integer userStatus){
+        return userService.lockOrUnLock(userId,userStatus);
+    }
+    @PostMapping("delete")
+    public ServerResponse delete(@RequestParam("userId") Integer userId){
+        return userService.delete(userId);
     }
 }

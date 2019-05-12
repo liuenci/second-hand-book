@@ -22,7 +22,16 @@ public class Const {
          */
         int ROLE_ADMIN = 0;
     }
-
+    public interface UserStatus {
+        /**
+         * 锁定用户为 2
+         */
+        int LOCK = 2;
+        /**
+         * 解锁用户为 1
+         */
+        int UNLOCK = 1;
+    }
     public enum BookStatus {
         ON_SALE(1,"在售"),
         OUT_SALE(0,"售出");
@@ -39,4 +48,5 @@ public class Const {
             return desc;
         }
     }
+
 }

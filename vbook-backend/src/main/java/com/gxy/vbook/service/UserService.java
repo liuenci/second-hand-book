@@ -49,5 +49,14 @@ public interface UserService {
      */
     PageResponse findUserList(String name);
 
+    /**
+     * 充值
+     * @param money
+     * @return
+     */
     ServerResponse recharge(Double money);
+
+    ServerResponse lockOrUnLock(Integer userId,Integer userStatus);
+
+    ServerResponse delete(Integer userId);
 }
