@@ -7,6 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>会员登录</title>
     <link rel="stylesheet" href="../../css/common/bootstrap.css">
+    <link rel="stylesheet" href="../../css/user/signin.css">
 </head>
 
 <body>
@@ -38,25 +39,16 @@
             </div>
         </div>
     </nav>
-    <form class="form-horizontal" role="form">
-        <div class="form-group">
-            <label for="firstname" class="col-sm-2 control-label">用户名</label>
-            <div class="col-sm-4">
-                <input type="text" class="form-control" id="username" placeholder="请输入名字">
-            </div>
-        </div>
-        <div class="form-group">
-            <label for="lastname" class="col-sm-2 control-label">密码</label>
-            <div class="col-sm-4">
-                <input type="password" class="form-control" id="password" placeholder="请输入密码">
-            </div>
-        </div>
-        <div class="form-group">
-            <div class="col-sm-offset-2 col-sm-10">
-                <button type="button" class="btn btn-default" id="btn-user-login">登录</button>
-            </div>
-        </div>
-    </form>
+    <div class="container">
+        <form class="form-signin">
+            <h2 class="form-signin-heading">Please sign in</h2>
+            <label for="username" class="sr-only">用户名</label>
+            <input type="text" id="username" class="form-control" placeholder="username" required autofocus>
+            <label for="password" class="sr-only">密码</label>
+            <input type="password" id="password" class="form-control" placeholder="password" required>
+            <button class="btn btn-lg btn-primary btn-block" type="button" id="btn-user-login">Sign in</button>
+        </form>
+    </div>
 </body>
 <script src="../../js/common/jquery-3.1.1.min.js"></script>
 <script src="../../js/common/bootstrap.js"></script>

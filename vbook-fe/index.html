@@ -42,80 +42,82 @@
 </head>
 
 <body>
-    <nav class="navbar navbar-default" role="navigation">
-        <div class="container-fluid">
-            <div class="navbar-header">
-                <a class="navbar-brand" href="index.html">老夫子二手书交易平台</a>
-            </div>
-            <div>
-                <ul class="nav navbar-nav navbar-left">
-                    <li id="btn-donate-book"><a href="donate-list.html">爱心捐赠列表</a></li>
-                </ul>
-            </div>
-            <div>
-                <ul class="nav navbar-nav navbar-right">
-                    <li id="btn-user-login"><a href="static/html/user/login.html">登录</a></li>
-                    <li id="btn-user-register"><a href="static/html/user/register.html">注册</a></li>
-                    <li class="dropdown" id="btn-user-center">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                            <span id="name"></span>
-                            <b class="caret"></b>
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li><a href="static/html/user/center.html">个人中心</a></li>
-                            <li><a href="#" id="logout">退出登录</a></li>
-                        </ul>
-                    </li>
-                </ul>
-            </div>
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="index.html">老夫子二手书交易平台</a>
         </div>
-    </nav>
-    <div class="container">
-        <form class="form-horizontal" role="form">
-            <div class="form-group">
-                <div class="col-sm-8 col-sm-offset-2">
-                    <input type="text" class="form-control" id="search" placeholder="请输入名字">
-                </div>
-                <div class="col-sm-2">
-                    <button type="button" class="btn btn-default btn-success" id="btn-book-search"
-                        onclick="searchByBookName()">搜索</button>
-                </div>
-            </div>
-        </form>
-        <div class="slide-box-ex">
-            <div class="slide-box ">
-                <!-- 轮播图主体模块 -->
-                <div class="slide-con">
-                    <div class="slide-out">
-                        <div class="slide-li"><img src="static/image/slide/1.png" style="width: 100%" alt=""></div>
-                        <div class="slide-li"><img src="static/image/slide/2.png" style="width: 100%" alt=""></div>
-                        <div class="slide-li"><img src="static/image/slide/3.png" style="width: 100%" alt=""></div>
-                    </div>
-                </div>
-                <!-- 自定义上一页下一页 -->
-                <div class="slide-page">
-                    <div class="slide-button-prev"><i></i></div>
-                    <div class="slide-button-next"><i></i></div>
-                </div>
-            </div>
+        <div>
+            <ul class="nav navbar-nav navbar-left">
+                <li id="btn-donate-book"><a href="donate-list.html">爱心捐赠列表</a></li>
+            </ul>
         </div>
-        <div class="row" style="margin-top:20px">
-            <div class="col-sm-12">
-                <h4>老夫子图书广场</h4>
-                <hr>
-            </div>
-            <div id="div-container"></div>
-        </div>
-        <div class="row" id="recommend-row" style="margin-top:20px">
-            <div class="col-sm-12">
-                <h4>图书推荐</h4>
-                <hr>
-            </div>
-            <div id="recommend"></div>
+        <div>
+            <ul class="nav navbar-nav navbar-right">
+                <li id="btn-user-login"><a href="static/html/user/login.html">登录</a></li>
+                <li id="btn-user-register"><a href="static/html/user/register.html">注册</a></li>
+                <li class="dropdown" id="btn-user-center">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        <span id="name"></span>
+                        <b class="caret"></b>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a href="static/html/user/center.html">个人中心</a></li>
+                        <li><a href="#" id="logout">退出登录</a></li>
+                    </ul>
+                </li>
+            </ul>
         </div>
     </div>
+</nav>
+<div class="container">
+    <form class="form-horizontal" role="form">
+        <div class="form-group">
+            <div class="col-sm-8 col-sm-offset-2">
+                <input type="text" class="form-control" id="search" placeholder="请输入名字">
+            </div>
+            <div class="col-sm-2">
+                <button type="button" class="btn btn-default btn-success" id="btn-book-search"
+                        onclick="searchByBookName()">搜索
+                </button>
+            </div>
+        </div>
+    </form>
+    <div class="slide-box-ex">
+        <div class="slide-box ">
+            <!-- 轮播图主体模块 -->
+            <div class="slide-con">
+                <div class="slide-out">
+                    <div class="slide-li"><img src="static/image/slide/1.png" style="width: 100%" alt=""></div>
+                    <div class="slide-li"><img src="static/image/slide/2.png" style="width: 100%" alt=""></div>
+                    <div class="slide-li"><img src="static/image/slide/3.png" style="width: 100%" alt=""></div>
+                </div>
+            </div>
+            <!-- 自定义上一页下一页 -->
+            <div class="slide-page">
+                <div class="slide-button-prev"><i></i></div>
+                <div class="slide-button-next"><i></i></div>
+            </div>
+        </div>
+    </div>
+    <div class="row" style="margin-top:20px">
+        <div class="col-sm-12">
+            <h4>老夫子图书广场</h4>
+            <hr>
+        </div>
+        <div id="div-container"></div>
+    </div>
+    <div class="row" id="recommend-row" style="margin-top:20px">
+        <div class="col-sm-12">
+            <h4>图书推荐</h4>
+            <hr>
+        </div>
+        <div id="recommend"></div>
+    </div>
+</div>
 </body>
 <script src="./static/js/common/jquery-3.1.1.min.js"></script>
+<script src="static/js/common/online.js"></script>
 <script src="./static/js/common/bootstrap.js"></script>
 <script src="./static/js/index.js"></script>
 <script src="./static/js/recommend.js"></script>
