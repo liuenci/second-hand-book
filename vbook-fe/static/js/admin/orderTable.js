@@ -22,7 +22,7 @@ function initOrderTable(orderNo) {
                 title: '编号'
             },
             {
-                field: 'orderno',
+                field: 'orderNo',
                 title: '订单编号'
             },
             {
@@ -30,7 +30,7 @@ function initOrderTable(orderNo) {
                 title: '总价'
             },
             {
-                field: 'createtime',
+                field: 'createTime',
                 title: '创建时间'
             }
         ]
