@@ -7,6 +7,38 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>二手书交易平台</title>
     <link rel="stylesheet" href="static/css/common/bootstrap.css">
+    <!-- 重置样式表 -->
+    <link rel="stylesheet" href="static/css/normalize.css">
+    <!-- 引入slide插件样式表 -->
+    <link rel="stylesheet" href="static/css/full-screen-slide.min.css">
+    <style>
+        .slide-li {
+            text-align: center;
+            font-size: 18px;
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: -webkit-flex;
+            display: flex;
+            -webkit-box-pack: center;
+            -ms-flex-pack: center;
+            -webkit-justify-content: center;
+            justify-content: center;
+            -webkit-box-align: center;
+            -ms-flex-align: center;
+            -webkit-align-items: center;
+            align-items: center;
+        }
+
+        .slide-li:nth-child(1) {
+            background: #01ad59;
+            color: #fff;
+        }
+
+        .slide-li:nth-child(3) {
+            background-color: #2F2F2F;
+            color: #fff;
+        }
+    </style>
 </head>
 
 <body>
@@ -50,6 +82,23 @@
                 </div>
             </div>
         </form>
+        <div class="slide-box-ex">
+            <div class="slide-box ">
+                <!-- 轮播图主体模块 -->
+                <div class="slide-con">
+                    <div class="slide-out">
+                        <div class="slide-li"><img src="static/image/slide/1.png" style="width: 100%" alt=""></div>
+                        <div class="slide-li"><img src="static/image/slide/2.png" style="width: 100%" alt=""></div>
+                        <div class="slide-li"><img src="static/image/slide/3.png" style="width: 100%" alt=""></div>
+                    </div>
+                </div>
+                <!-- 自定义上一页下一页 -->
+                <div class="slide-page">
+                    <div class="slide-button-prev"><i></i></div>
+                    <div class="slide-button-next"><i></i></div>
+                </div>
+            </div>
+        </div>
         <div class="row" style="margin-top:20px">
             <div class="col-sm-12">
                 <h4>老夫子图书广场</h4>
@@ -70,5 +119,40 @@
 <script src="./static/js/common/bootstrap.js"></script>
 <script src="./static/js/index.js"></script>
 <script src="./static/js/recommend.js"></script>
+<!-- 引入slide插件js文件 -->
+<script src="./static/js/full-screen-slide.min.js"></script>
+<!-- 插件调用 -->
+<script>
+    // 完全全屏
+    $('.slide-box-full').setSlide({
+        fullScreenw: true,
+        fullScreenh: true,
+        pagination: true
+    })
+
+    // 默认
+    $('.slide-box-simple').setSlide({
+        autoPlay: true,
+        slideTime: 2000
+    })
+
+    // 块状
+    $('.slide-box-ex').setSlide({
+        isBlock: true,
+        switchingSpeed: 400,
+        slideTime: 3000,
+        autoPlay: true,
+        prevEl: $('.slide-box-ex').find('.slide-button-prev'),
+        nextEl: $('.slide-box-ex').find('.slide-button-next'),
+        pagination: true,
+        pagingTrigger: 'hover',
+        slideLiw: 1100,
+        slideLih: 540,
+        fn: function (index) {
+            console.log(index)
+        }
+    });
+
+</script>
 
 </html>
