@@ -1,3 +1,11 @@
+function searchByBookName() {
+    // 移除轮播图
+    $('.slide-box-ex').remove()
+    // 移除推荐二手书
+    $('#recommend-row').remove()
+    getDataList()
+}
+
 function getDataList() {
     var name = $('#search').val()
     $.ajax({
@@ -17,8 +25,6 @@ function getDataList() {
                 var div = $('<div>');
                 div.addClass('col-sm-2')
                 div.css('height', '300px')
-
-
                 // 追加图片
                 var img = $('<img>');
                 img.css('cursor', 'pointer')
