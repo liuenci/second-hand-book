@@ -63,4 +63,6 @@ public interface BookService {
      * @return
      */
     ServerResponse delete(Integer bookId);
+
+    ServerResponse upOrDown(Integer bookId,Integer bookStatus);
 }

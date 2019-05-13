@@ -44,4 +44,9 @@ public class AdminBookController {
     public ServerResponse delete(@RequestParam("bookId") Integer bookId){
         return bookService.delete(bookId);
     }
+
+    @RequestMapping("upOrDown")
+    public ServerResponse upOrDown(@RequestParam("bookId") Integer bookId,@RequestParam("bookStatus")Integer bookStatus){
+        return bookService.upOrDown(bookId,bookStatus);
+    }
 }

@@ -140,7 +140,7 @@
                 press = #{press,jdbcType=VARCHAR},
                 paperType = #{paperType,jdbcType=VARCHAR},
                 paperNumber = #{paperNumber,jdbcType=VARCHAR},
-                isbn = #{isbn,jdbcType=VARCHAR},
+                isbn = #{isbn,jdbcType=VARCHAR}
 		where id = #{id,jdbcType=INTEGER}
   </update>
 

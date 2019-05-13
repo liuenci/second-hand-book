@@ -93,6 +93,12 @@ function initBookTable(bookName) {
                 valign: 'middle'
             },
             {
+                field: 'type',
+                title: '类型',
+                align: 'center',
+                valign: 'middle'
+            },
+            {
                 field: 'opt',
                 title: '操作',
                 width: 320,
@@ -108,9 +114,9 @@ function initBookTable(bookName) {
 function optFormatter(value, row, index) {
     var result = ""
     if (row.status == 1 || row.status == 10) {
-        result = "<button class='btn btn-default btn-success' onclick='get_data(this)'>下架</button>"
+        result = "<button class='btn btn-default btn-success' onclick='bookupordown(this,2)'>下架</button>"
     } else if (row.status == 2) {
-        result = "<button class='btn btn-default btn-info' onclick='get_data(this)'>上架</button>"
+        result = "<button class='btn btn-default btn-info' onclick='bookupordown(this,1)'>上架</button>"
     }
     result += " <button class='btn btn-default btn-danger' onclick='deleteBookByUserId(this)'>删除</button>"
     return result;
@@ -126,6 +132,29 @@ function deleteBookByUserId(t){
         success: function (result) {
             if (result.status == 0) {
                 alert("删除成功")
+            }
+            var _body = window.parent;
+            var _iframe1 = _body.document.getElementById('iframe');
+            _iframe1.contentWindow.location.reload(true);
+        }
+    })
+}
+function bookupordown(t,bookStatus) {
+    var id = $(t).parents('tr').find('td:first').text()
+    $.ajax({
+        url: 'http://localhost:8080/admin/book/upOrDown',
+        type: 'post',
+        data: {
+            bookId: id,
+            bookStatus: bookStatus
+        },
+        success: function (result) {
+            if (result.status == 0) {
+                if(bookStatus == 1){
+                    alert("上架成功")
+                } else if(bookStatus == 2) {
+                    alert("下架成功")
+                }
             }
             var _body = window.parent;
             var _iframe1 = _body.document.getElementById('iframe');

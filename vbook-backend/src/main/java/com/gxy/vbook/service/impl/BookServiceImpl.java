@@ -175,4 +175,12 @@ public class BookServiceImpl implements BookService {
         bookMapper.deleteByPrimaryKey(bookId);
         return ServerResponse.createBySuccess();
     }
+
+    @Override
+    public ServerResponse upOrDown(Integer bookId, Integer bookStatus) {
+        Book book = bookMapper.selectByPrimaryKey(bookId);
+        book.setStatus(bookStatus);
+        bookMapper.updateByPrimaryKey(book);
+        return ServerResponse.createBySuccess();
+    }
 }
