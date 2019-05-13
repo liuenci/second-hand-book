@@ -93,6 +93,7 @@ public class BookController {
 
     /**
      * restful 接口
+     *
      * @param id
      * @return
      */
@@ -103,6 +104,7 @@ public class BookController {
 
     /**
      * 卖书记录
+     *
      * @return
      */
     @RequestMapping("record/sell")
@@ -112,6 +114,7 @@ public class BookController {
 
     /**
      * 捐赠记录
+     *
      * @return
      */
     @RequestMapping("record/donate")
