@@ -104,21 +104,23 @@ function initBookTable(bookName) {
     });
 }
 //操作栏的格式化
+function optFormatter(value, row, index) {
+    var result = ""
+    if (row.status == 1) {
+        result = "<button class='btn btn-default btn-success' data-toggle='modal' onclick='get_data(this)'>下架</button>"
+    } else if (row.status == 2) {
+        result = "<button class='btn btn-default btn-info' data-toggle='modal' onclick='get_data(this)'>上架</button>"
+    }
+    return result;
+}
 function actionFormatter(value, row, index) {
     var result = ""
     if (row.status == 1) {
         result = "<p class='text-primary'>在售</p>"
     } else if (row.status == 0) {
         result = "<p class='text-success'>已售</p>"
-    }
-    return result;
-}
-function optFormatter(value, row, index) {
-    var result = ""
-    if (row.status == 1) {
-        result = "<p class='text-primary'>在售</p>"
-    } else if (row.status == 0) {
-        result = "<p class='text-success'>已售</p>"
+    }else if (row.status == 2) {
+        result = "<p class='text-info'>下架</p>"
     }
     return result;
 }
