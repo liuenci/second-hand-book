@@ -39,7 +39,7 @@
         </div>
     </nav>
     <div class="container">
-        <h4 id="name" style="font-weight:bold"></h4>
+        <h4 id="bookname" style="font-weight:bold"></h4>
         <hr>
         <div class="rows">
             <div class="col-sm-2">
@@ -119,9 +119,10 @@
 </body>
 <script src="./static/js/common/jquery-3.1.1.min.js"></script>
 <script src="./static/js/common/bootstrap.js"></script>
+<script src="./static/js/common/online.js"></script>
 <script>
     function add() {
-        let id = localStorage.getItem("bookId")
+        var id = localStorage.getItem("bookId")
         // 不能购买自己的书籍
         $.ajax({
             url: 'http://localhost:8080/book/isMine',
@@ -161,7 +162,7 @@
             dataType: 'json',
             success: function (result) {
                 var data = result.data
-                $('#name').text(data.name)
+                $('#bookname').text(data.name)
                 $('#author').text(data.author)
                 $('#type').text(data.type)
                 $('#originalPrice').text(data.originalPrice)
