@@ -64,5 +64,14 @@ public interface BookService {
      */
     ServerResponse delete(Integer bookId);
 
+    /**
+     * 管理员
+     * 上架或者下架
+     * @param bookId
+     * @param bookStatus
+     * @return
+     */
     ServerResponse upOrDown(Integer bookId,Integer bookStatus);
+
+    ServerResponse imgRecommendList();
 }

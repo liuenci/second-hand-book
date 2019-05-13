@@ -183,4 +183,10 @@ public class BookServiceImpl implements BookService {
         bookMapper.updateByPrimaryKey(book);
         return ServerResponse.createBySuccess();
     }
+
+    @Override
+    public ServerResponse imgRecommendList() {
+        List<Book> list = bookMapper.selectRecommendList();
+        return ServerResponse.createBySuccess(list);
+    }
 }

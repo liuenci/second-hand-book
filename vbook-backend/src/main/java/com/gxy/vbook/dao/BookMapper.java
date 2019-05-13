@@ -80,4 +80,6 @@ public interface BookMapper {
      * @return
      */
     List<Book> selectByUserId(Integer userId);
+
+    List<Book> selectRecommendList();
 }

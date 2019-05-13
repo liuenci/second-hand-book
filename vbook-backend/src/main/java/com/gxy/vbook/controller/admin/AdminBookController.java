@@ -30,6 +30,14 @@ public class AdminBookController {
     }
 
     /**
+     * 轮播图推荐
+     * @return
+     */
+    @RequestMapping("recommend/list")
+    public ServerResponse recommendList() {
+        return bookService.imgRecommendList();
+    }
+    /**
      * 添加新书
      *
      * @param book

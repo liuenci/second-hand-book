@@ -176,4 +176,9 @@
         <include refid="Base_Column_List"/>
         from book where userId = #{userId} and status = 1
     </select>
+    <select id="selectRecommendList" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from book where status = 10
+    </select>
 </mapper>
