@@ -64,7 +64,7 @@
 				<ul class="d-firstDrop s-firstDrop">
 					<li class="s-secondItem">
 						<i class="fa fa-minus-square-o"></i>
-						<a href="javascript:void(0)">二手书推荐</a>
+						<a href="javascript:void(0)" id="btn-book-recommend">二手书推荐</a>
 					</li>
 					<li class="s-secondItem">
 						<i class="fa fa-minus-square-o"></i>
@@ -75,7 +75,7 @@
 		</ul>
 	</div>
 	<div class="r-side">
-		<iframe id="iframe" seamless="seamless" src="admin_index.html" name="profile" frameborder="0" scrolling="yes"
+		<iframe id="iframe" seamless="seamless" src="admin_index.html" name="profile" frameborder="0"
 			height="900px" width="100%">
 		</iframe>
 	</div>
@@ -90,6 +90,9 @@
 		$("#btn-book-manage").click(function () {
 			$("#iframe").attr("src", "book_manage.html")
 		})
+        $("#btn-book-recommend").click(function () {
+            $("#iframe").attr("src", "book-recommend.html")
+        })
 		$("#btn-order-manage").click(function () {
 			$("#iframe").attr("src", "order_manage.html")
 		})

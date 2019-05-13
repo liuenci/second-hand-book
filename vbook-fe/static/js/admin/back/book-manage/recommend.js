@@ -41,7 +41,7 @@ $(function () {
     })
     $('#btn-book-add').click(function () {
         $.ajax({
-            url: 'http://localhost:8080/book/add',
+            url: 'http://localhost:8080/admin/book/recommend/add',
             type: 'post',
             contentType: "application/json; charset=utf-8",
             data: JSON.stringify({
@@ -58,7 +58,7 @@ $(function () {
                 paperType: $('#paperType').val(),
                 isbn: $('#ISBN').val(),
                 paperNumber: $('#paperNumber').val(),
-                status: 1
+                status: 10
             }),
             success: function (result) {
                 if (result.status == 0 && result.data != null) {
