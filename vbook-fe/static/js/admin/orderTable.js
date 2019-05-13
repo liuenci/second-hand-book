@@ -1,4 +1,5 @@
 var orderTable = $('#orderTable');
+
 //初始化bootstrap table ，并且启动它
 function initOrderTable(orderNo) {
     orderNo = orderNo == undefined ? '' : orderNo
@@ -17,31 +18,42 @@ function initOrderTable(orderNo) {
         formatNoMatches: function () { //没有匹配的结果  
             return '无符合条件的记录';
         },
-        columns: [{
+        columns: [
+            {
                 field: 'id',
-                title: '编号'
+                title: '编号',
+                align: 'center',
+                valign: 'middle'
             },
             {
                 field: 'orderNo',
-                title: '订单编号'
+                title: '订单编号',
+                align: 'center',
+                valign: 'middle'
             },
             {
                 field: 'totalPrice',
-                title: '总价'
+                title: '总价',
+                align: 'center',
+                valign: 'middle'
             },
             {
                 field: 'createTime',
-                title: '创建时间'
+                title: '创建时间',
+                align: 'center',
+                valign: 'middle'
             }
         ]
     });
 }
+
 function reflashOrderList() {
     // 先销毁表格，再初始化表格
     orderTable.bootstrapTable('destroy');
     let orderNo = $('#orderNo').val()
     initOrderTable(orderNo);
 }
+
 $(function () {
     initOrderTable('')
 })

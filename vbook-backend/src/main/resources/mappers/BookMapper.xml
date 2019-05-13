@@ -155,7 +155,16 @@
             and status != 0
         </where>
     </select>
-
+    <select id="selectAllListByName" resultType="com.gxy.vbook.pojo.Book" parameterType="string">
+        select
+        <include refid="Base_Column_List"/>
+        from book
+        <where>
+            <if test="name != null and name != ''">
+                and name LIKE #{name}
+            </if>
+        </where>
+    </select>
     <select id="selectByBookIdAndUserId" parameterType="map" resultType="com.gxy.vbook.pojo.Book">
         select
         <include refid="Base_Column_List"/>

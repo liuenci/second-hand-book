@@ -3,10 +3,10 @@ function searchByBookName() {
     $('.slide-box-ex').remove()
     // 移除推荐二手书
     $('#recommend-row').remove()
-    getDataList()
+    getDataList(true)
 }
 
-function getDataList() {
+function getDataList(flag) {
     var name = $('#search').val()
     $.ajax({
         url: 'http://localhost:8080/book/list',
@@ -19,7 +19,13 @@ function getDataList() {
         success: function (result) {
             $('#div-container').empty()
             var data = result.rows
-            for (let index = 0; index < data.length; index++) {
+            var length = 0
+            if(flag){
+                length = data.length
+            }else {
+                length = data.length > 12 ? 12 : data.length
+            }
+            for (var index = 0; index < length; index++) {
                 const element = data[index];
                 console.log(element);
                 var div = $('<div>');
@@ -64,5 +70,5 @@ function getDataList() {
     })
 }
 $(function () {
-    getDataList()
+    getDataList(false)
 })

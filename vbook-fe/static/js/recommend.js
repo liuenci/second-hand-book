@@ -8,7 +8,8 @@ function getRecommendDataList() {
         success: function (result) {
             $('#recommend').empty()
             var data = result.rows
-            for (let index = 0; index < data.length; index++) {
+            var length = data.length > 12 ? 12 : data.length
+            for (var index = 0; index < length; index++) {
                 const element = data[index];
                 console.log(element);
                 var div = $('<div>');

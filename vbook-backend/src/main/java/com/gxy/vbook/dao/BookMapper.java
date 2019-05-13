@@ -61,6 +61,12 @@ public interface BookMapper {
     List<Book> selectListByName(@Param("name") String name);
 
     /**
+     * 管理员
+     * @param name
+     * @return
+     */
+    List<Book> selectAllListByName(@Param("name") String name);
+    /**
      * 通过二手书ID以及用户ID查询用户
      * @param id
      * @param userId

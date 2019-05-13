@@ -18,58 +18,110 @@ function initBookTable(bookName) {
         formatNoMatches: function () { //没有匹配的结果  
             return '无符合条件的记录';
         },
-        columns: [{
-            field: 'id',
-            title: '编号'
-        },
+        columns: [
+            {
+                field: 'id',
+                title: '编号',
+                align: 'center',
+                valign: 'middle'
+            },
             {
                 field: 'name',
-                title: '书名'
+                title: '书名',
+                align: 'center',
+                valign: 'middle'
             },
             {
                 field: 'author',
-                title: '作者'
+                title: '作者',
+                align: 'center',
+                valign: 'middle'
             },
             {
                 field: 'originalPrice',
-                title: '原价'
+                title: '原价',
+                align: 'center',
+                valign: 'middle'
             },
             {
                 field: 'discount',
-                title: '折旧率'
+                title: '折旧率',
+                align: 'center',
+                valign: 'middle'
             },
             {
                 field: 'price',
-                title: '现价'
+                title: '现价',
+                align: 'center',
+                valign: 'middle'
             },
             {
                 field: 'status',
-                title: '状态'
+                title: '状态',
+                align: 'center',
+                valign: 'middle',
+                formatter: actionFormatter
             },
             {
                 field: 'bindingType',
-                title: '装订方式'
+                title: '装订方式',
+                align: 'center',
+                valign: 'middle'
             },
             {
                 field: 'press',
-                title: '出版社'
+                title: '出版社',
+                align: 'center',
+                valign: 'middle'
             },
             {
                 field: 'paperType',
-                title: '纸张类型'
+                title: '纸张类型',
+                align: 'center',
+                valign: 'middle'
             },
             {
                 field: 'paperNumber',
-                title: '页数'
+                title: '页数',
+                align: 'center',
+                valign: 'middle'
             },
             {
                 field: 'isbn',
-                title: 'ISBN'
+                title: 'ISBN',
+                align: 'center',
+                valign: 'middle'
+            },
+            {
+                field: 'opt',
+                title: '操作',
+                width: 320,
+                align: 'center',
+                valign: 'middle',
+                formatter: optFormatter,
             }
         ]
     });
 }
-
+//操作栏的格式化
+function actionFormatter(value, row, index) {
+    var result = ""
+    if (row.status == 1) {
+        result = "<p class='text-primary'>在售</p>"
+    } else if (row.status == 0) {
+        result = "<p class='text-success'>已售</p>"
+    }
+    return result;
+}
+function optFormatter(value, row, index) {
+    var result = ""
+    if (row.status == 1) {
+        result = "<p class='text-primary'>在售</p>"
+    } else if (row.status == 0) {
+        result = "<p class='text-success'>已售</p>"
+    }
+    return result;
+}
 function reflashBookTable() {
     // 先销毁表格，再初始化表格
     bookTable.bootstrapTable('destroy');

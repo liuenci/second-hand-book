@@ -80,7 +80,7 @@ public class BookServiceImpl implements BookService {
     public PageResponse findList(String name) {
         // 拼接模糊查询的条件
         name = new StringBuffer().append("%").append(name).append("%").toString();
-        List<Book> list = bookMapper.selectListByName(name);
+        List<Book> list = bookMapper.selectAllListByName(name);
         // 组装返回对象
         PageResponse response = new PageResponse<>();
         response.setRows(list);

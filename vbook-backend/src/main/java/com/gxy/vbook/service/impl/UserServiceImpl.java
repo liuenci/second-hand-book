@@ -60,6 +60,10 @@ public class UserServiceImpl implements UserService {
         User user = userMapper.selectByNameAndPassword(name, password);
         if (user == null) {
             return ServerResponse.createByErrorCodeMessage(ResponseCode.USER_NOT_EXIST.getCode(),ResponseCode.USER_NOT_EXIST.getDesc());
+        }else {
+            if (user.getRole() == Const.UserStatus.LOCK) {
+                return ServerResponse.createByErrorMessage("用户已被锁定,无法登录");
+            }
         }
         return ServerResponse.createBySuccess(user);
     }

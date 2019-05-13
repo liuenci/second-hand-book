@@ -71,6 +71,9 @@
                         alert('用户不存在')
                         window.location = './register.html'
                     }
+                    if (result.status == 1) {
+                        alert(result.msg)
+                    }
                 }
 
             })

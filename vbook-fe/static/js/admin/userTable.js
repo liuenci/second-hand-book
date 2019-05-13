@@ -1,4 +1,5 @@
 var userTable = $('#userTable');
+
 //初始化bootstrap table ，并且启动它
 function initUserList(userName) {
     userName = userName == undefined ? '' : userName
@@ -17,29 +18,42 @@ function initUserList(userName) {
         formatNoMatches: function () { //没有匹配的结果  
             return '无符合条件的记录';
         },
-        columns: [{
+        columns: [
+            {
                 field: 'id',
-                title: '编号'
+                title: '编号',
+                align: 'center',
+                valign: 'middle'
             },
             {
                 field: 'name',
-                title: '用户名'
+                title: '用户名',
+                align: 'center',
+                valign: 'middle'
             },
             {
                 field: 'phone',
-                title: '手机号'
+                title: '手机号',
+                align: 'center',
+                valign: 'middle'
             },
             {
                 field: 'email',
-                title: '邮箱'
+                title: '邮箱',
+                align: 'center',
+                valign: 'middle'
             },
             {
                 field: 'balance',
-                title: '余额'
+                title: '余额',
+                align: 'center',
+                valign: 'middle'
             },
             {
                 field: 'level',
-                title: '推荐级别'
+                title: '推荐级别',
+                align: 'center',
+                valign: 'middle'
             },
             {
                 field: 'opt',
@@ -52,67 +66,72 @@ function initUserList(userName) {
         ]
     });
 }
+
 //操作栏的格式化
 function actionFormatter(value, row, index) {
     var status = row.role
     var result = "";
-    if(status == 1) {
+    if (status == 1) {
         result += "<button class='btn btn-default btn-primary btn-order-item' data-toggle='modal' onclick='lock_or_unlock_user(this,2)'>冻结会员</button>"
-    } else if(status == 2){
+    } else if (status == 2) {
         result += " <button class='btn btn-default btn-info btn-order-comment' data-toggle='modal' onclick='lock_or_unlock_user(this,1)'>解封会员</button>"
     }
     result += " <button class='btn btn-default btn-danger btn-order-comment' data-toggle='modal' onclick='deleteUserByUserId(this)'>删除会员</button>";
     return result;
 }
-function lock_or_unlock_user(t,type) {
+
+function lock_or_unlock_user(t, type) {
     var id = $(t).parents('tr').find('td:first').text()
     id = Number(id)
     $.ajax({
-        url:'http://localhost:8080/admin/user/lockOrUnLock',
-        type:'post',
+        url: 'http://localhost:8080/admin/user/lockOrUnLock',
+        type: 'post',
         data: {
             userId: id,
             userStatus: type
         },
         success: function (response) {
-            if(response.status == 0) {
-                if(type == 1) {
+            if (response.status == 0) {
+                if (type == 1) {
                     alert('解冻成功')
-                }else if(type == 2){
+                } else if (type == 2) {
                     alert('冻结成功')
                 }
             }
             var _body = window.parent;
-            var _iframe1=_body.document.getElementById('iframe');
+            var _iframe1 = _body.document.getElementById('iframe');
             _iframe1.contentWindow.location.reload(true);
         }
     })
 }
-function deleteUserByUserId(t){
+
+function deleteUserByUserId(t) {
     var id = $(t).parents('tr').find('td:first').text()
     id = Number(id)
     $.ajax({
-        url:'http://localhost:8080/admin/user/delete',
-        type:'post',
+        url: 'http://localhost:8080/admin/user/delete',
+        type: 'post',
         data: {
             userId: id
         },
         success: function (response) {
-            if(response.status == 0) {
+            if (response.status == 0) {
                 alert("删除成功")
             }
             var _body = window.parent;
-            var _iframe1=_body.document.getElementById('iframe');
+            var _iframe1 = _body.document.getElementById('iframe');
             _iframe1.contentWindow.location.reload(true);
         }
     })
 }
+
 function reflashUserList() {
     // 先销毁表格，再初始化表格
     userTable.bootstrapTable('destroy');
     let userName = $('#userName').val()
     initUserList(userName);
 }
+
 $(function () {
     initUserList('')
 })
