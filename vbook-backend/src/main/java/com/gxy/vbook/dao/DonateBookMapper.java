@@ -41,4 +41,6 @@ public interface DonateBookMapper {
      * @return
      */
     List<DonateBook> selectAllList();
+
+    List<DonateBook> selectAllListByUserId(Integer userId);
 }

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>捐书记录</title>
+    <link rel="stylesheet" href="../../css/common/bootstrap.css">
+</head>
+
+<body>
+<div class="container">
+    <h3>捐书记录</h3>
+    <ul class="list-group" id="donate-list-id">
+        <li class="list-group-item"></li>
+    </ul>
+    <div>
+        <p class="text-success">以上所有书籍将捐赠给贫困山区小学。</p>
+    </div>
+</div>
+<script src="../../js/common/jquery-3.1.1.min.js"></script>
+<script src="../../js/common/bootstrap.js"></script>
+<script src="../../js/common/bootstrap-table.js"></script>
+<script>
+    $(function () {
+        $.ajax({
+            url: 'http://localhost:8080/book/donate/list',
+            type: 'get',
+            dataType: 'json',
+            success: function (result) {
+                $('#donate-list-id').empty()
+                var data = result.data
+                for (var i = 0; i < data.length; i++) {
+                    const element = data[i];
+                    var li = $('<li>')
+                    li.addClass('list-group-item')
+                    li.html('<label>你在<p class="text-success">' + element.createTime + '</p>捐赠了一本 ' + element.discount + ' 成新的 <strong>' + element.author + '</strong> 的' + '《' + element.name + '》。</label>')
+                    $('#donate-list-id').append(li)
+
+                }
+
+            }
+        })
+    })
+</script>
+</body>
+
+</html>

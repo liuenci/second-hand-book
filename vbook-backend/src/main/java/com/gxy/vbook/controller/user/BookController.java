@@ -91,13 +91,31 @@ public class BookController {
         return ServerResponse.createByError();
     }
 
+    /**
+     * restful 接口
+     * @param id
+     * @return
+     */
     @RequestMapping("{id}")
     public ServerResponse getBook(@PathVariable("id") Integer id) {
         return bookService.getBook(id);
     }
 
-    @RequestMapping("record")
-    public ServerResponse bookRecordList() {
-        return bookService.bookRecord();
+    /**
+     * 卖书记录
+     * @return
+     */
+    @RequestMapping("record/sell")
+    public ServerResponse bookSellRecordList() {
+        return bookService.bookSellRecord();
+    }
+
+    /**
+     * 捐赠记录
+     * @return
+     */
+    @RequestMapping("record/donate")
+    public ServerResponse bookDonateRecordList() {
+        return bookService.bookDonateRecord();
     }
 }

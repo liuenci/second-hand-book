@@ -3,11 +3,9 @@ package com.gxy.vbook.service.impl;
 import com.gxy.vbook.common.Const;
 import com.gxy.vbook.common.PageResponse;
 import com.gxy.vbook.common.ServerResponse;
-import com.gxy.vbook.dao.BookMapper;
-import com.gxy.vbook.dao.OrderItemMapper;
-import com.gxy.vbook.dao.OrderMapper;
-import com.gxy.vbook.dao.UserMapper;
+import com.gxy.vbook.dao.*;
 import com.gxy.vbook.pojo.Book;
+import com.gxy.vbook.pojo.DonateBook;
 import com.gxy.vbook.pojo.OrderItem;
 import com.gxy.vbook.pojo.User;
 import com.gxy.vbook.service.BookService;
@@ -40,6 +38,9 @@ public class BookServiceImpl implements BookService {
 
     @Autowired
     private RedisTemplate<String,String> redisTemplate;
+
+    @Autowired
+    private DonateBookMapper donateBookMapper;
 
     /**
      * 保存二手书
@@ -135,7 +136,7 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public ServerResponse bookRecord() {
+    public ServerResponse bookSellRecord() {
         Integer userId = Integer.parseInt(redisTemplate.opsForValue().get(Const.CURRENT_USER));
         // 通过 userId 查询自己售卖的二手书
         List<Book> bookList = bookMapper.selectByUserId(userId);
@@ -160,5 +161,12 @@ public class BookServiceImpl implements BookService {
             bookRecordVos.add(record);
         }
         return ServerResponse.createBySuccess(bookRecordVos);
+    }
+
+    @Override
+    public ServerResponse bookDonateRecord() {
+        Integer userId = Integer.parseInt(redisTemplate.opsForValue().get(Const.CURRENT_USER));
+        List<DonateBook> list = donateBookMapper.selectAllListByUserId(userId);
+        return ServerResponse.createBySuccess(list);
     }
 }

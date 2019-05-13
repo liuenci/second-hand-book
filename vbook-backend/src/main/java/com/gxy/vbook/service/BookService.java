@@ -49,5 +49,11 @@ public interface BookService {
      * 当前用户的卖书记录
      * @return
      */
-    ServerResponse bookRecord();
+    ServerResponse bookSellRecord();
+
+    /**
+     * 当前用户的捐赠记录
+     * @return
+     */
+    ServerResponse bookDonateRecord();
 }

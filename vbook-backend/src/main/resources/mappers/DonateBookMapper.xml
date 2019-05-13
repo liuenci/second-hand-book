@@ -113,5 +113,12 @@ createTime
         <include refid="Base_Column_List"/>
         from vbook_donate_book
     </select>
+    <select id="selectAllListByUserId" parameterType="integer" resultType="com.gxy.vbook.pojo.DonateBook">
+        select
+        <include refid="Base_Column_List"/>
+        from
+        vbook_donate_book
+        where userId = #{userId}
+    </select>
 </mapper>
 
