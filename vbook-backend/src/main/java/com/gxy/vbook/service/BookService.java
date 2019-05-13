@@ -56,4 +56,11 @@ public interface BookService {
      * @return
      */
     ServerResponse bookDonateRecord();
+
+    /**
+     * 管理员
+     * 删除二手书
+     * @return
+     */
+    ServerResponse delete(Integer bookId);
 }

@@ -1,5 +1,6 @@
 package com.gxy.vbook.service.impl;
 
+import com.fasterxml.jackson.databind.ser.std.SerializableSerializer;
 import com.gxy.vbook.common.Const;
 import com.gxy.vbook.common.PageResponse;
 import com.gxy.vbook.common.ServerResponse;
@@ -52,7 +53,6 @@ public class BookServiceImpl implements BookService {
         // 从 redis 中拿到当前用户的ID
         Integer userId = Integer.parseInt(redisTemplate.opsForValue().get(Const.CURRENT_USER));
         book.setUserId(userId);
-        book.setStatus(1);
         // 计算折旧金额
         BigDecimal value = BigDecimalUtil.mul(book.getOriginalPrice(),book.getDiscount().doubleValue() / 10);
         book.setPrice(value.doubleValue());
@@ -168,5 +168,11 @@ public class BookServiceImpl implements BookService {
         Integer userId = Integer.parseInt(redisTemplate.opsForValue().get(Const.CURRENT_USER));
         List<DonateBook> list = donateBookMapper.selectAllListByUserId(userId);
         return ServerResponse.createBySuccess(list);
+    }
+
+    @Override
+    public ServerResponse delete(Integer bookId) {
+        bookMapper.deleteByPrimaryKey(bookId);
+        return ServerResponse.createBySuccess();
     }
 }

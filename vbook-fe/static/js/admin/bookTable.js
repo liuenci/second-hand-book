@@ -103,15 +103,35 @@ function initBookTable(bookName) {
         ]
     });
 }
+
 //操作栏的格式化
 function optFormatter(value, row, index) {
     var result = ""
-    if (row.status == 1) {
-        result = "<button class='btn btn-default btn-success' data-toggle='modal' onclick='get_data(this)'>下架</button>"
+    if (row.status == 1 || row.status == 10) {
+        result = "<button class='btn btn-default btn-success' onclick='get_data(this)'>下架</button>"
     } else if (row.status == 2) {
-        result = "<button class='btn btn-default btn-info' data-toggle='modal' onclick='get_data(this)'>上架</button>"
+        result = "<button class='btn btn-default btn-info' onclick='get_data(this)'>上架</button>"
     }
+    result += " <button class='btn btn-default btn-danger' onclick='deleteBookByUserId(this)'>删除</button>"
     return result;
+}
+function deleteBookByUserId(t){
+    var id = $(t).parents('tr').find('td:first').text()
+    $.ajax({
+        url: 'http://localhost:8080/admin/book/delete',
+        type: 'post',
+        data: {
+            bookId: id
+        },
+        success: function (result) {
+            if (result.status == 0) {
+                alert("删除成功")
+            }
+            var _body = window.parent;
+            var _iframe1 = _body.document.getElementById('iframe');
+            _iframe1.contentWindow.location.reload(true);
+        }
+    })
 }
 function actionFormatter(value, row, index) {
     var result = ""
@@ -119,11 +139,14 @@ function actionFormatter(value, row, index) {
         result = "<p class='text-primary'>在售</p>"
     } else if (row.status == 0) {
         result = "<p class='text-success'>已售</p>"
-    }else if (row.status == 2) {
+    } else if (row.status == 2) {
         result = "<p class='text-info'>下架</p>"
+    } else if (row.status == 10) {
+        result = "<p class='text-danger'>推荐中</p>"
     }
     return result;
 }
+
 function reflashBookTable() {
     // 先销毁表格，再初始化表格
     bookTable.bootstrapTable('destroy');

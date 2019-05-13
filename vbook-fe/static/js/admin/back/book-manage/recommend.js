@@ -69,7 +69,6 @@ $(function () {
                     window.location = './register.html'
                 }
             }
-
         })
     })
 })
