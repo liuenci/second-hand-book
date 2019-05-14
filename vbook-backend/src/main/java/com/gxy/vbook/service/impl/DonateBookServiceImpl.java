@@ -39,4 +39,14 @@ public class DonateBookServiceImpl implements DonateBookService{
     public List<DonateBook> selectAllList() {
         return donateBookMapper.selectAllList();
     }
+
+    /**
+     * 获取用户捐赠的二手书
+     * @return
+     */
+    @Override
+    public List<DonateBook> selectListByUserId() {
+        Integer userId = Integer.parseInt(redisTemplate.opsForValue().get(Const.CURRENT_USER));
+        return donateBookMapper.selectAllListByUserId(userId);
+    }
 }

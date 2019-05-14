@@ -19,4 +19,6 @@ public interface DonateBookService{
      * @return
      */
     List<DonateBook> selectAllList();
+
+    List<DonateBook> selectListByUserId();
 }

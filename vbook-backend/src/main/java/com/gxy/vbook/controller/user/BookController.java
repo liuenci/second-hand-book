@@ -33,6 +33,9 @@ public class BookController {
      */
     @RequestMapping("add")
     public ServerResponse add(@RequestBody Book book) {
+        // 从 redis 中拿到当前用户的ID
+        Integer userId = Integer.parseInt(redisTemplate.opsForValue().get(Const.CURRENT_USER));
+        book.setUserId(userId);
         return bookService.save(book);
     }
 

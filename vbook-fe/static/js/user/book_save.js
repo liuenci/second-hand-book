@@ -48,7 +48,7 @@ $(function () {
                 id: $('#id').val(),
                 userId: $('#userId').val(),
                 imgName: $('#imgName').val(),
-                name: $('#name').val(),
+                name: $('#bookName').val(),
                 author: $('#author').val(),
                 type: $('#type').val(),
                 originalPrice: $('#originalPrice').val(),
@@ -63,6 +63,7 @@ $(function () {
             success: function (result) {
                 if (result.status == 0 && result.data != null) {
                     alert("上传成功")
+                    window.location = '../../../index.html';
                 }
                 if (result.status == 11) {
                     alert('用户不存在')

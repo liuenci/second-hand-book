@@ -10,62 +10,94 @@
 </head>
 
 <body>
-    <div class="container">
-            <h3 class="col-sm-offset-2">我要捐书</h3>
-            <form class="form-horizontal" role="form">
-                <div class="form-group">
-                    <label for="name" class="col-sm-2 control-label">书名</label>
-                    <div class="col-sm-4">
-                        <input type="text" class="form-control" id="name" placeholder="请输入书名">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="author" class="col-sm-2 control-label">作者</label>
-                    <div class="col-sm-4">
-                        <input type="text" class="form-control" id="author" placeholder="请输入作者">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="type" class="col-sm-2 control-label">类型</label>
-                    <div class="col-sm-4">
-                        <select class="form-control" id="type">
-                            <option value="自然科学">自然科学</option>
-                            <option value="社会科学">社会科学</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="originalPrice" class="col-sm-2 control-label">原价</label>
-                    <div class="col-sm-4">
-                        <input type="text" class="form-control" id="originalPrice" placeholder="请输入原价">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="discount" class="col-sm-2 control-label">几成新</label>
-                    <div class="col-sm-4">
-                        <select class="form-control" id="discount">
-                            <option value="1">1成新</option>
-                            <option value="2">2成新</option>
-                            <option value="3">3成新</option>
-                            <option value="4">4成新</option>
-                            <option value="5">5成新</option>
-                            <option value="6">6成新</option>
-                            <option value="7">7成新</option>
-                            <option value="8">8成新</option>
-                            <option value="9">9成新</option>
-                            <option value="10">全新未开封</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-sm-offset-2 col-sm-10">
-                        <button type="button" class="btn btn-default" id="btn-book-donate">确认捐赠</button>
-                    </div>
-                </div>
-            </form>
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="../../../index.html">老夫子二手书交易平台</a>
+        </div>
+        <div>
+            <ul class="nav navbar-nav navbar-left">
+                <li id="btn-donate-book"><a href="../../../donate-list.html">爱心捐赠列表</a></li>
+            </ul>
+        </div>
+        <div>
+            <ul class="nav navbar-nav navbar-right">
+                <li id="btn-user-sell"><a href="sell.html">我要卖书</a></li>
+                <li id="btn-user-donate"><a href="donate.html">我要捐书</a></li>
+                <li id="btn-user-login"><a href="login.html">登录</a></li>
+                <li id="btn-user-register"><a href="register.html">注册</a></li>
+                <li class="dropdown" id="btn-user-center">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        <span id="name"></span>
+                        <b class="caret"></b>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a href="center.html">个人中心</a></li>
+                        <li><a href="#" id="logout">退出登录</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
     </div>
+</nav>
+<div class="container">
+    <h3 class="col-sm-offset-2">我要捐书</h3>
+    <form class="form-horizontal" role="form">
+        <div class="form-group">
+            <label for="name" class="col-sm-2 control-label">书名</label>
+            <div class="col-sm-4">
+                <input type="text" class="form-control" id="bookName" placeholder="请输入书名">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="author" class="col-sm-2 control-label">作者</label>
+            <div class="col-sm-4">
+                <input type="text" class="form-control" id="author" placeholder="请输入作者">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="type" class="col-sm-2 control-label">类型</label>
+            <div class="col-sm-4">
+                <select class="form-control" id="type">
+                    <option value="自然科学">自然科学</option>
+                    <option value="社会科学">社会科学</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="originalPrice" class="col-sm-2 control-label">原价</label>
+            <div class="col-sm-4">
+                <input type="text" class="form-control" id="originalPrice" placeholder="请输入原价">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="discount" class="col-sm-2 control-label">几成新</label>
+            <div class="col-sm-4">
+                <select class="form-control" id="discount">
+                    <option value="1">1成新</option>
+                    <option value="2">2成新</option>
+                    <option value="3">3成新</option>
+                    <option value="4">4成新</option>
+                    <option value="5">5成新</option>
+                    <option value="6">6成新</option>
+                    <option value="7">7成新</option>
+                    <option value="8">8成新</option>
+                    <option value="9">9成新</option>
+                    <option value="10">全新未开封</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <button type="button" class="btn btn-default" id="btn-book-donate">确认捐赠</button>
+            </div>
+        </div>
+    </form>
+</div>
 </body>
 <script src="../../js/common/jquery-3.1.1.min.js"></script>
+<script src="../../js/common/bootstrap.js"></script>
+<script src="../../js/common/online.js"></script>
 <script>
     $(function () {
         $('#btn-book-donate').click(function () {
@@ -74,7 +106,7 @@
                 type: 'post',
                 contentType: "application/json; charset=utf-8",
                 data: JSON.stringify({
-                    name: $('#name').val(),
+                    name: $('#bookName').val(),
                     author: $('#author').val(),
                     type: $('#type').val(),
                     originalPrice: $('#originalPrice').val(),
@@ -83,6 +115,7 @@
                 success: function (result) {
                     if (result.status == 0) {
                         alert('捐赠书籍成功')
+                        window.location = '../../../donate-list.html';
                     }
                     if (result.status == 1) {
                         alert('捐赠书籍异常')

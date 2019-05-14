@@ -44,4 +44,14 @@ public class DonateBookController {
         List<DonateBook> list = donateBookService.selectAllList();
         return ServerResponse.createBySuccess(list);
     }
+
+    /**
+     * 获取所有捐赠的二手书列表
+     * @return
+     */
+    @RequestMapping("userList")
+    public ServerResponse userList(){
+        List<DonateBook> list = donateBookService.selectListByUserId();
+        return ServerResponse.createBySuccess(list);
+    }
 }

@@ -47,9 +47,6 @@ public class UserController {
     @PostMapping("login")
     public ServerResponse<User> login(@RequestParam("name") String name, @RequestParam("password") String password) {
         ServerResponse<User> response = userService.login(name, password);
-        if (response.isSuccess()) {
-            redisTemplate.opsForValue().set(Const.CURRENT_USER, response.getData().getId().toString());
-        }
         return response;
     }
 

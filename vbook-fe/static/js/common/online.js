@@ -10,6 +10,8 @@ $(function () {
                 $('#name').text(result.data.name)
             } else {
                 $('#btn-user-center').remove();
+                $('#btn-user-sell').remove();
+                $('#btn-user-donate').remove();
             }
 
             $('#logout').click(function () {

@@ -50,9 +50,6 @@ public class BookServiceImpl implements BookService {
      */
     @Override
     public ServerResponse save(Book book) {
-        // 从 redis 中拿到当前用户的ID
-        Integer userId = Integer.parseInt(redisTemplate.opsForValue().get(Const.CURRENT_USER));
-        book.setUserId(userId);
         // 计算折旧金额
         BigDecimal value = BigDecimalUtil.mul(book.getOriginalPrice(),book.getDiscount().doubleValue() / 10);
         book.setPrice(value.doubleValue());

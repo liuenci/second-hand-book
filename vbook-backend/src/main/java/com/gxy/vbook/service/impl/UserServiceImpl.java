@@ -13,6 +13,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -63,7 +64,10 @@ public class UserServiceImpl implements UserService {
         }else {
             if (user.getRole() == Const.UserStatus.LOCK) {
                 return ServerResponse.createByErrorMessage("用户已被锁定,无法登录");
+            }else {
+                redisTemplate.opsForValue().set(Const.CURRENT_USER,user.getId().toString(),30, TimeUnit.MINUTES);
             }
+
         }
         return ServerResponse.createBySuccess(user);
     }

@@ -41,6 +41,4 @@ public interface OrderService {
      * @return
      */
     PageResponse findOrderList(String orderNo);
-
-
 }
